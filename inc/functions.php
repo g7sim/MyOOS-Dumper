@@ -760,7 +760,11 @@ function my_strip_tags($value) {
  * @return string
  */
 function my_addslashes($string) {
-	return str_replace("'", "\'", $string);
+	if (is_string($string)) {
+		$string = str_replace("'", "\'", $string);
+	}
+	
+	return $string;
 }
 
 /**
@@ -772,7 +776,7 @@ function my_addslashes($string) {
  * @return string
  */
 function my_quotes($value) {
-	return str_replace('"', '&quot;' ,$value);
+	return str_replace('"', '&quot;', $value);
 }
 
 
