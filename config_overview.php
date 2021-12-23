@@ -470,20 +470,21 @@ if (isset($_POST['save'])) {
 					echo '<script>parent.MyOOS_Dumper_menu.location.href="menu.php";</script>';
 				}
 				else
-					$add_db_message=sprintf($lang['L_DB_MANUAL_ERROR'],$to_add);
-				$showVP=true;
+					$add_db_message=sprintf($lang['L_DB_MANUAL_ERROR'], $to_add);
+				$showVP = true;
 			}
 		}
 	}
 
-	// After a transfer of a new configuration remove superfluous indexes before writing	$anzahl_datenbanken=sizeof($databases['Name']);
-	if (sizeof($databases['praefix']) > $anzahl_datenbanken) {
-		for ($i=sizeof($databases['praefix']); $i >= $anzahl_datenbanken; $i--) {
+	// After a transfer of a new configuration remove superfluous indexes before writing	
+	$number_databases = sizeof($databases['Name']);
+	if (sizeof($databases['praefix']) > $number_databases) {
+		for ($i=sizeof($databases['praefix']); $i >= $number_databases; $i--) {
 			unset($databases['praefix'][$i]);
 			unset($databases['command_before_dump'][$i]);
 			unset($databases['command_after_dump'][$i]);
 		}
-		if ($databases['db_selected_index'] >= $anzahl_datenbanken) $databases['db_selected_index'] =0;
+		if ($databases['db_selected_index'] >= $number_databases) $databases['db_selected_index'] = 0;
 	}
 
 	// and write away
@@ -500,9 +501,9 @@ if (isset($_POST['save'])) {
 			if ($config['logcompression'] != $oldlogcompression) DeleteLog();
 			$msg .= '<p class="success">'.sprintf($lang['L_SAVE_SUCCESS'],$config['config_file']).'</p>';
 			$msg .= '<script>parent.MyOOS_Dumper_menu.location.href="menu.php?config='.$config['config_file'].'";</script>';
-		}
-		else
+		} else {
 			$msg .= '<p class="error">'.$lang['L_SAVE_ERROR'].'</p>';
+		}
 	}
 
 }
@@ -510,94 +511,95 @@ if (isset($_POST['save'])) {
 ReadSQL();
 ?>
 <script>
-function hide_pardivs() {
-	document.getElementById("db").style.display = 'none';
-	document.getElementById("global1").style.display = 'none';
-	document.getElementById("global2").style.display = 'none';
-	document.getElementById("global3").style.display = 'none';
-	document.getElementById("transfer1").style.display = 'none';
-	document.getElementById("transfer2").style.display = 'none';
-	document.getElementById("transfer3").style.display = 'none';
-	document.getElementById("cron").style.display = 'none';
-	document.getElementById("configs").style.display = 'none';
-	for(i=0;i<8;i++) {
-		document.getElementById("command"+i).className  ='ConfigButton';
+	function hide_pardivs() {
+		document.getElementById("db").style.display = 'none';
+		document.getElementById("global1").style.display = 'none';
+		document.getElementById("global2").style.display = 'none';
+		document.getElementById("global3").style.display = 'none';
+		document.getElementById("transfer1").style.display = 'none';
+		document.getElementById("transfer2").style.display = 'none';
+		document.getElementById("transfer3").style.display = 'none';
+		document.getElementById("cron").style.display = 'none';
+		document.getElementById("configs").style.display = 'none';
+		for(i = 0; i < 8; i++) {
+			document.getElementById("command"+i).className  ='ConfigButton';
+		}
 	}
-}
-function SwitchVP(objid) {
-	if (!document.getElementById(objid)) objid='VP';
-	if(document.getElementById(objid).style.display=='none')
-		document.getElementById(objid).style.display='block';
-	else
-		document.getElementById(objid).style.display='none'
-}
 
-function show_pardivs(lab) {
-	hide_pardivs();
-	switch(lab) {
-		case "db":
-			document.getElementById("db").style.display = 'block';
-			document.getElementById("command1").className ='ConfigButtonSelected';
-			break;
-		case "global1":
-			document.getElementById("global1").style.display = 'block';
-			document.getElementById("command2").className ='ConfigButtonSelected';
-			break;
-		case "global2":
-			document.getElementById("global3").style.display = 'block';
-			document.getElementById("command3").className ='ConfigButtonSelected';
-			break;
-		case "global3":
-			document.getElementById("global2").style.display = 'block';
-			document.getElementById("command4").className ='ConfigButtonSelected';
-			break;
-		case "transfer1":
-			document.getElementById("transfer1").style.display = 'block';
-			document.getElementById("command5").className ='ConfigButtonSelected';
-			break;
-		case "transfer2":
-			document.getElementById("transfer2").style.display = 'block';
-			document.getElementById("command6").className ='ConfigButtonSelected';
-			break;
-		case "transfer3":
-			document.getElementById("transfer3").style.display = 'block';
-			document.getElementById("command11").className ='ConfigButtonSelected';
-			break;			
-			
-			
-		case "cron":
-			document.getElementById("cron").style.display = 'block';
-			document.getElementById("command7").className ='ConfigButtonSelected';
-			break;
-		case "configs":
-			document.getElementById("configs").style.display = 'block';
-			document.getElementById("command0").className ='ConfigButtonSelected';
-			break;
-		case "all":
-			document.getElementById("db").style.display = 'block';
-			document.getElementById("global1").style.display = 'block';
-			document.getElementById("global2").style.display = 'block';
-			document.getElementById("global3").style.display = 'block';
-			document.getElementById("transfer1").style.display = 'block';
-			document.getElementById("transfer2").style.display = 'block';
-			document.getElementById("transfer3").style.display = 'block';
-			document.getElementById("cron").style.display = 'block';
-			document.getElementById("configs").style.display = 'block';
-			document.getElementById("command8").className ='ConfigButtonSelected';
-			break;
-		default:
-			document.getElementById("db").style.display = 'block';
-			document.getElementById("command1").className ='ConfigButtonSelected';
-			break;
+	function SwitchVP(objid) {
+		if (!document.getElementById(objid)) objid = 'VP';
+		if(document.getElementById(objid).style.display == 'none')
+			document.getElementById(objid).style.display = 'block';
+		else
+			document.getElementById(objid).style.display = 'none'
 	}
-	document.getElementById("sel").value=lab;
-}
-function WriteMem()
-{
-	document.getElementById("mlimit").value=<?php
-	echo round($config['php_ram'] * 1024 * 1024 * 0.9,0);
-	?>;
-}
+
+	function show_pardivs(lab) {
+		hide_pardivs();
+		switch(lab) {
+				case "db":
+						document.getElementById("db").style.display = 'block';
+						document.getElementById("command1").className ='ConfigButtonSelected';
+						break;
+				case "global1":
+						document.getElementById("global1").style.display = 'block';
+						document.getElementById("command2").className ='ConfigButtonSelected';
+						break;
+				case "global2":
+						document.getElementById("global3").style.display = 'block';
+						document.getElementById("command3").className ='ConfigButtonSelected';
+						break;
+				case "global3":
+						document.getElementById("global2").style.display = 'block';
+						document.getElementById("command4").className ='ConfigButtonSelected';
+						break;
+				case "transfer1":
+						document.getElementById("transfer1").style.display = 'block';
+						document.getElementById("command5").className ='ConfigButtonSelected';
+						break;
+				case "transfer2":
+						document.getElementById("transfer2").style.display = 'block';
+						document.getElementById("command6").className ='ConfigButtonSelected';
+						break;
+				case "transfer3":
+						document.getElementById("transfer3").style.display = 'block';
+						document.getElementById("command11").className ='ConfigButtonSelected';
+						break;			
+			
+			
+				case "cron":
+						document.getElementById("cron").style.display = 'block';
+						document.getElementById("command7").className ='ConfigButtonSelected';
+						break;
+				case "configs":
+						document.getElementById("configs").style.display = 'block';
+						document.getElementById("command0").className ='ConfigButtonSelected';
+						break;
+				case "all":
+						document.getElementById("db").style.display = 'block';
+						document.getElementById("global1").style.display = 'block';
+						document.getElementById("global2").style.display = 'block';
+						document.getElementById("global3").style.display = 'block';
+						document.getElementById("transfer1").style.display = 'block';
+						document.getElementById("transfer2").style.display = 'block';
+						document.getElementById("transfer3").style.display = 'block';
+						document.getElementById("cron").style.display = 'block';
+						document.getElementById("configs").style.display = 'block';
+						document.getElementById("command8").className ='ConfigButtonSelected';
+						break;
+				default:
+						document.getElementById("db").style.display = 'block';
+						document.getElementById("command1").className ='ConfigButtonSelected';
+						break;
+			}
+			document.getElementById("sel").value=lab;
+	}
+
+	function WriteMem() {
+		document.getElementById("mlimit").value=<?php
+		echo round($config['php_ram'] * 1024 * 1024 * 0.9,0);
+		?>;
+	}
 </script>
 <?php
 if (!isset($config['email_maxsize1'])) $config['email_maxsize1'] = 0;
@@ -605,7 +607,7 @@ if (!isset($config['email_maxsize2'])) $config['email_maxsize2'] = 1;
 if (!isset($databases['multisetting'])) $databases['multisetting'] = '';
 $databases['multi'] = explode(';',$databases['multisetting']);
 
-//Ausgabe-Teile
+// Output parts
 $aus['formstart'] = headline($lang['L_CONFIG_HEADLINE'].': '.$config['config_file']);
 $aus['formstart'] .= '<form name="frm_config" method="POST" action="config_overview.php"><input type="hidden" name="sel" id="sel" value="db">'.$nl;
 $aus['formstart'] .= '<div id="configleft">';
@@ -627,7 +629,7 @@ $aus['formstart'] .= '<input class="Formbutton" type="Submit" name="load" value=
 //$aus['formstart'] .= '<input class="Formbutton" type="button" value="'.$lang['L_INSTALL'].'" onclick="parent.location.href=\'install.php\'">'.$nl;
 $aus['formstart'] .= '</div><div id="configright">'.$msg . $nl;
 
-// Konfigurationsdateien
+// Configuration files
 $aus['conf'] ='<div id="configs"><fieldset><legend>'.$lang['L_CONFIGFILES'].'</legend>'.$nl . $nl;
 
 $aus['conf'] .= '<table><tr class="dbrow">';
@@ -639,9 +641,9 @@ $aus['conf'] .= '</tr></table>';
 $aus['conf'] .= '<br><table class="bdr"><tr class="thead"><th>#</th><th>'.$lang['L_CONFIGFILE'].' / '.$lang['L_MYSQL_DATA'].'</th>';
 $aus['conf'] .= '<th>'.$lang['L_CONFIGURATIONS'].'</th><th>'.$lang['L_ACTION'].'</th></tr>';
 
-$i=0;
-$old_config= $config;
-$configs=get_config_filenames();
+$i 			= 0;
+$old_config = $config;
+$configs 	= get_config_filenames();
 
 if (sizeof($configs) > 0) {
 	foreach ($configs as $c) {
@@ -671,10 +673,10 @@ if (sizeof($configs) > 0) {
 		$aus['conf'] .= $icon['search'].'<strong>'.sizeof($databases['Name']).'</strong></a>';
 		$aus['conf'] .= '</td></tr>';
 
-		// Datenbankliste anzeigen
+		// Show database list
 		$aus['conf'] .= '<tr><td colspan="2">';
 		$aus['conf'] .= '<div id="show_db'.sprintf("%03d",$i).'" style="padding:0;margin:0;display:none;">';
-		$a=1;
+		$a = 1;
 		$aus['conf'] .= '<table  class="bdr">';
 		if (isset($databases['Name'])) {
 			foreach ($databases['Name'] as $d) {
