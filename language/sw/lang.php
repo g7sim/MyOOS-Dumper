@@ -13,7 +13,6 @@ $lang['L_TABLE']="Tabell";
 $lang['L_RECORDS']="Dataposter";
 $lang['L_COMPRESSED']="komprimerat (gz)";
 $lang['L_NOTCOMPRESSED']="normalt (okomprimerat)";
-$lang['L_GENERAL']="allmänt";
 $lang['L_COMMENT']="Kommentar";
 $lang['L_FILESIZE']="Filstorlek";
 $lang['L_ALL']="alla";
@@ -37,7 +36,7 @@ $lang['L_BACK']="tillbaka";
 $lang['L_DB_HOST']="Databas-hostnamn";
 $lang['L_DB_USER']="Databas-användare";
 $lang['L_DB_PASS']="Databas-lösenord";
-$lang['L_INFO_SCRIPTDIR']="Mapp för MySQLDumper";
+$lang['L_INFO_SCRIPTDIR']="Mapp för MyOOS [Dumper]";
 $lang['L_INFO_ACTDB']="Aktuell databas";
 $lang['L_WRONGCONNECTIONPARS']="Fel eller inga förbindelse-parametrar!";
 $lang['L_CONN_NOT_POSSIBLE']="Förbindelse kunde ej upprättas!";
@@ -56,7 +55,7 @@ $lang['L_CREATE']="skapa";
 $lang['L_VARIABELN']="Variabler";
 $lang['L_STATUSINFORMATIONEN']="Statusinformationer";
 $lang['L_VERSIONSINFORMATIONEN']="Versionsinformationer";
-$lang['L_MSD_INFO']="MySQLDumper informationer";
+$lang['L_MOD_INFO']="MyOOS [Dumper] informationer";
 $lang['L_BACKUPFILESANZAHL']="I backup-mappen finns";
 $lang['L_LASTBACKUP']="Senaste backup";
 $lang['L_NOTAVAIL']="<em>existerar ej</em>";
@@ -107,6 +106,3 @@ $lang['L_PAGE_REFRESHS']="sidvisningar";
 $lang['L_MINUTE']="minut";
 $lang['L_SETKEYSFOR']="Set new indexes for table";
 $lang['L_KEY_CONFIRMDELETE']="Really delete index?";
-
-
-?>

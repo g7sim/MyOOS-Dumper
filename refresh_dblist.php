@@ -1,64 +1,45 @@
 <?php
+/* ----------------------------------------------------------------------
+
+   MyOOS [Dumper]
+   http://www.oos-shop.de/
+
+   Copyright (c) 2021 by the MyOOS Development Team.
+   ----------------------------------------------------------------------
+   Based on:
+
+   MySqlDumper
+   http://www.mysqldumper.de
+
+   Copyright (C)2004-2011 Daniel Schlichtholz (admin@mysqldumper.de)
+   ----------------------------------------------------------------------
+   Released under the GNU General Public License
+   ---------------------------------------------------------------------- */
+
 /**
- * Loads all configuration files and refreshes the database list.
+ * configurations to update
  *
- * Add configuration file names to array $excludedConfigurationFiles to skip configurations.
+ * enter more than one configurationsfile like this
+ * $configurationfiles=array('myoosdumper','db2');
  */
-error_reporting(E_ALL & ~E_NOTICE);
-$verbose = true;
-/**
- * Build exclude array with configuration files that should be skipped
- */
-$excludedConfigurationFiles = array(
-    //'mysqldumper',
-    //add more excluded files by adding their name
+$configurationfiles=array(
+						'myoosdumper'
 );
 
-$verbose = true;
-if (PHP_SAPI === 'cli' || empty($_SERVER['REMOTE_ADDR'])) {
-    // called via cli - check verbose param
-    define('NEWLINE', "\n");
-    $options = getopt('v::', array('verbose::'));
-    $verbose = isset($options['verbose']) || isset($options['v']) ? true : false;
-} else {
-    define('NEWLINE', '<br />');
-}
 
-date_default_timezone_set('Europe/Berlin');
-define('APPLICATION_PATH', __DIR__);
-chdir(APPLICATION_PATH);
-include(APPLICATION_PATH . '/inc/functions.php');
-include(APPLICATION_PATH . '/inc/mysql.php');
-include('language/en/lang.php');
-// load default configuration
-include('work/config/mysqldumper.php');
-GetLanguageArray();
+define('OOS_VALID_MOD', true);
 
-$configFiles = get_config_filenames();
-foreach ($configFiles as $configFile) {
-    if (in_array($configFile, $excludedConfigurationFiles)) {
-        continue;
-    }
-    output('Refreshing database list for configuration file: ' . $configFile, $verbose);
-    $config['config_file'] = $configFile;
-    include($config['paths']['config'] . $configFile . '.php');
-    $out = '';
-    if (isset($config['dbconnection']) && is_resource($config['dbconnection'])) {
-        ((is_null($___mysqli_res = mysqli_close($config['dbconnection']))) ? false : $___mysqli_res);
-        $config['dbconnection'] = false;
-    }
-    SetDefault();
-    output($out, $verbose);
-}
+define('APPLICATION_PATH', dirname(__FILE__)=='/'?'':dirname(__FILE__));
+include_once APPLICATION_PATH . '/inc/functions.php';
 
-/**
- * @param string  $message
- * @param boolean $verbose
- */
-function output($message, $verbose)
+$config['language']='en';
+$config['theme']="mod";
+$config['files']['iconpath']='css/' . $config['theme'] . '/icons/';
+
+foreach ($configurationfiles as $conf)
 {
-    if ($verbose) {
-        $message = str_replace("\n", NEWLINE, $message);
-        echo $message . NEWLINE;
-    }
+	$config['config_file']=$conf;
+	include ( $config['paths']['config'] . $conf . '.php' );
+	GetLanguageArray();
+	SetDefault();
 }

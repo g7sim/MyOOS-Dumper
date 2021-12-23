@@ -1,19 +1,39 @@
 <?php
+/* ----------------------------------------------------------------------
+
+   MyOOS [Dumper]
+   http://www.oos-shop.de/
+
+   Copyright (c) 2021 by the MyOOS Development Team.
+   ----------------------------------------------------------------------
+   Based on:
+
+   MySqlDumper
+   http://www.mysqldumper.de
+
+   Copyright (C)2004-2011 Daniel Schlichtholz (admin@mysqldumper.de)
+   ----------------------------------------------------------------------
+   Released under the GNU General Public License
+   ---------------------------------------------------------------------- */
+
+define('OOS_VALID_MOD', true);
+
 if (!@ob_start("ob_gzhandler")) @ob_start();
+
 include_once ('./inc/header.php');
 include ('./inc/template.php');
 $lang_old=$config['language'];
 $config_refresh='';
 
 // define template
-$tpl=new MSDTemplate();
+$tpl=new MODTemplate();
 $tpl->set_filenames(array(
 	'header' => 'tpl/menu/header.tpl',
 	'footer' => 'tpl/menu/footer.tpl',
 	'content' => 'tpl/menu/content.tpl'));
 
 $tpl->assign_vars(array(
-	'MSD_VERSION' => MSD_VERSION,
+	'MOD_VERSION' => MOD_VERSION,
 	'CONFIG_HOMEPAGE' => $config['homepage'],
 	'CONFIG_THEME' => $config['theme']));
 
@@ -33,19 +53,19 @@ if (isset($_POST['selected_config'])||isset($_GET['config']))
 			$config['config_file']=$new_config;
 			$_SESSION['config_file']=$new_config; //$config['config_file'];
 			$config_refresh='
-			<script language="JavaScript" type="text/javascript">
-			if (parent.MySQL_Dumper_content.location.href.indexOf("config_overview.php")!=-1)
+			<script>
+			if (parent.MyOOS_Dumper_content.location.href.indexOf("config_overview.php")!=-1)
 			{
-				var selected_div=parent.MySQL_Dumper_content.document.getElementById("sel").value;
+				var selected_div=parent.MyOOS_Dumper_content.document.getElementById("sel").value;
 			}
 			else selected_div=\'\';
-			parent.MySQL_Dumper_content.location.href=\'config_overview.php?config='.urlencode($new_config).'&sel=\'+selected_div</script>';
+			parent.MyOOS_Dumper_content.location.href=\'config_overview.php?config='.urlencode($new_config).'&sel=\'+selected_div</script>';
 		}
 		if (isset($_GET['config'])) $config_refresh=''; //Neu-Aufruf bei Uebergabe aus Content-Bereich verhindern
 	}
 }
 
-echo MSDHeader(1);
+echo MODHeader(1);
 echo headline('',0);
 
 if ($config_refresh>'')

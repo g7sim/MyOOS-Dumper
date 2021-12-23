@@ -1,5 +1,5 @@
 <?php
-$lang['L_INSTALLFINISHED']="<br>Installation terminée  --> <a href=\"index.php\">start MySQLDumper</a><br>";
+$lang['L_INSTALLFINISHED']="<br>Installation terminée  --> <a href=\"index.php\">start MyOOS [Dumper]</a><br>";
 $lang['L_INSTALL_TOMENU']="Retour au menu principal";
 $lang['L_INSTALLMENU']="Menu principal";
 $lang['L_STEP']="Étape";
@@ -24,7 +24,6 @@ $lang['L_CONFBASIC']="Configuration de base";
 $lang['L_INSTALL_STEP2FINISHED']="Configuration de la base de données a été sauvegardée.";
 $lang['L_INSTALL_STEP2_1']="Continuer l'installation avec la configuration standart";
 $lang['L_LASTSTEP']="Terminer l'installation";
-$lang['L_FTPMODE']="Créer les répertoires par FTP (safe_mode)";
 $lang['L_IDOMANUAL']="Créer un répertoire manuellement";
 $lang['L_DOFROM']="terminer par";
 $lang['L_FTPMODE2']="Créer un répertoire par FTP:";
@@ -60,7 +59,7 @@ $lang['L_UI9']="Une erreur est apparue, suppression impossible</p>Erreur dans le
 $lang['L_IMPORT']="Importer la configuration";
 $lang['L_IMPORT3']="La configuration a été chargée...";
 $lang['L_IMPORT4']="La configuration a été sauvegardée.";
-$lang['L_IMPORT5']="Démarrer MySQLDumper";
+$lang['L_IMPORT5']="Démarrer MyOOS [Dumper]";
 $lang['L_IMPORT6']="Menu d'installation;";
 $lang['L_IMPORT7']="Télécharger vers le serveur la configuration";
 $lang['L_IMPORT8']="retourner vers le téléchargement";
@@ -78,12 +77,8 @@ $lang['L_FM_FILEUPLOAD']="Télécharger un fichier vers le serveur";
 $lang['L_PASS']="Mot de passe";
 $lang['L_NO_DB_FOUND_INFO']="La connexion avec la base de données a été établie avec succès.<br>
 Vos données utilisateur sont valides et ont été acceptées par le serveur MySQL.<br>
-Mais, MySQLDumper n'a pas été capable de trouver une base de données.<br>
+Mais, MyOOS [Dumper] n'a pas été capable de trouver une base de données.<br>
 La détection automatique via le script est dans quelques cas bloquée par certains serveurs.<br>
 Vous devez alors entrer manuellement le nom de votre base de données après la fin de l'installation.
 Cliquer sur \"configuration\" \"Affichage des paramêtres de connexion\" et entrer le nom de votre base de données.";
-$lang['L_SAFEMODEDESC']="La configuration de ce serveur étant avec l'option \"safe_mode=on\", les listes suivantes doivent être envoyées manuellement. Utilisez votre logiciel FTP pour effectuer cette opération):";
 $lang['L_ENTER_DB_INFO']="First click the button \"Connect to MySQL\". Only if no database could be detected you need to provide a database name here.";
-
-
-?>

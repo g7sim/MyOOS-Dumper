@@ -1,6 +1,6 @@
 <?php
 $lang['L_CONVERT_START']="Iniciar conversión";
-$lang['L_CONVERT_TITLE']="Convertir copia de seguridad al formato MSD";
+$lang['L_CONVERT_TITLE']="Convertir copia de seguridad al formato MOD";
 $lang['L_CONVERT_WRONG_PARAMETERS']="¡Parámetros incorrectos!  La conversión no es posible.";
 $lang['L_FM_UPLOADFILEREQUEST']="Por favor, elija un archivo.";
 $lang['L_FM_UPLOADNOTALLOWED1']="Esta clase de archivo no está permitida.";
@@ -64,16 +64,15 @@ $lang['L_CONVERT_FILENAME']="Nombre del archivo de destino (sin extensión)";
 $lang['L_CONVERTING']="La conversión";
 $lang['L_CONVERT_FILEREAD']="Leyendo el archivo '%s'";
 $lang['L_CONVERT_FINISHED']="Conversión finalizada: '%s' se ha guardado correctamente.";
-$lang['L_NO_MSD_BACKUPFILE']="Copias de seguridad de otros programas";
+$lang['L_NO_MOD_BACKUPFILE']="Copias de seguridad de otros programas";
 $lang['L_MAX_UPLOAD_SIZE']="Tamaño máximo del fichero";
 $lang['L_MAX_UPLOAD_SIZE_INFO']="Si el archivo de copia de seguridad es mayor que el límite fijado, entonces debe cargarlo a través de FTP en la carpeta \"work/backup\".
 Después ese archivo se mostrará aquí, y podrá ser elegido para restaurar.";
 $lang['L_ENCODING']="Codificación";
 $lang['L_FM_CHOOSE_ENCODING']="Seleccione la codificación de la copia de seguridad";
-$lang['L_CHOOSE_CHARSET']="MySQLDumper no pudo detectar la codificación de los archivos de la copia de seguridad de forma automática.<br>
+$lang['L_CHOOSE_CHARSET']="MyOOS [Dumper] no pudo detectar la codificación de los archivos de la copia de seguridad de forma automática.<br>
 Usted debe elegir el conjunto de caracteres con el que se guardó la copia de seguridad.<br>
 Si usted descubre algún problema con algunos caracteres después de la restauración, puede repetir la restauración de la copia de seguridad con otro conjunto de caracteres. <br>
 Buena suerte. ;)";
 $lang['L_DOWNLOAD_FILE']="Descargos ficheros";
-$lang['L_BACKUP_NOT_POSSIBLE'] = "¡Una copia de seguridad de la base de datos del sistema `%s` no es posible realizarla!";
-?>
+$lang['L_BACKUP_NOT_POSSIBLE'] = "A backup of the system database `%s` is not possible!";

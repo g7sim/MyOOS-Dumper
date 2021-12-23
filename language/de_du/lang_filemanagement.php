@@ -1,6 +1,6 @@
 <?php
 $lang['L_CONVERT_START']="Konvertierung starten";
-$lang['L_CONVERT_TITLE']="Konvertiere Dump ins MSD-Format";
+$lang['L_CONVERT_TITLE']="Konvertiere Dump ins MOD-Format";
 $lang['L_CONVERT_WRONG_PARAMETERS']="Falsche Parameter! Konvertierung ist nicht möglich.";
 $lang['L_FM_UPLOADFILEREQUEST']="Gib bitte eine Datei an.";
 $lang['L_FM_UPLOADNOTALLOWED1']="Dieser Dateityp ist nicht erlaubt.";
@@ -50,7 +50,7 @@ $lang['L_FM_DUMPSETTINGS']="Einstellungen für das Backup";
 $lang['L_FM_OLDBACKUP']="(unbekannt)";
 $lang['L_FM_RESTORE_HEADER']="Wiederherstellung der Datenbank \"<strong>%s</strong>\"";
 $lang['L_DELETE_FILE_ERROR']="Die Datei \"%s\" konnte nicht gelöscht werden!";
-$lang['L_FM_DUMP_HEADER']="Backup";
+$lang['L_FM_DUMP_HEADER']="Sicherung";
 $lang['L_DOCRONBUTTON']="Perl-Cronscript ausführen";
 $lang['L_DOPERLTEST']="Perl-Module testen";
 $lang['L_DOSIMPLETEST']="Perl testen";
@@ -64,7 +64,7 @@ $lang['L_CONVERT_FILENAME']="Name der Zieldatei (ohne Endung)";
 $lang['L_CONVERTING']="Konvertierung";
 $lang['L_CONVERT_FILEREAD']="Datei '%s' wird eingelesen";
 $lang['L_CONVERT_FINISHED']="Konvertierung abgeschlossen, '%s' wurde erzeugt.";
-$lang['L_NO_MSD_BACKUPFILE']="Dateien anderer Programme";
+$lang['L_NO_MOD_BACKUPFILE']="Dateien anderer Programme";
 $lang['L_MAX_UPLOAD_SIZE']="Maximale Dateigröße";
 $lang['L_MAX_UPLOAD_SIZE_INFO']="Wenn Deine Backup-Datei größer als das angegebene Limit ist, dann musst Du diese per FTP in den \"work/backup\"-Ordner hochladen.
 Danach wird diese Datei hier in der Verwaltung angezeigt und lässt sich für eine Wiederherstellung auswählen.";
@@ -72,9 +72,8 @@ $lang['L_ENCODING']="Kodierung";
 $lang['L_FM_CHOOSE_ENCODING']="Kodierung der Backupdatei wählen";
 $lang['L_CHOOSE_CHARSET']="Leider konnte nicht automatisch ermittelt werden mit welchem Zeichensatz diese Backupdatei seinerzeit angelegt wurde.
 <br>Du musst die Kodierung, in der Zeichenketten in dieser Datei vorliegen, manuell angeben.
-<br>Danach stellt MySQLDumper die Verbindungskennung zum MySQL-Server auf den ausgewählten Zeichensatz und beginnt mit der Wiederherstellung der Daten.
+<br>Danach stellt MyOOS [Dumper] die Verbindungskennung zum MySQL-Server auf den ausgewählten Zeichensatz und beginnt mit der Wiederherstellung der Daten.
 <br>Solltest Du nach der Wiederherstellung Probleme mit Sonderzeichen entdecken, so kannst Du versuchen, das Backup mit einer anderen Zeichensatzauswahl wiederherzustellen.
 <br>Viel Glück. ;)";
 $lang['L_DOWNLOAD_FILE']="Datei herunterladen";
 $lang['L_BACKUP_NOT_POSSIBLE'] = "Eine Sicherung der Systemdatenbank `%s` ist nicht möglich!";
-?>

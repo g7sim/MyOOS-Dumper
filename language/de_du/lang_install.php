@@ -1,5 +1,5 @@
 <?php
-$lang['L_INSTALLFINISHED']="<br>die Installation ist abgeschlossen   --> <a href=\"index.php\">starte MySQLDumper</a><br>";
+$lang['L_INSTALLFINISHED']="<br>die Installation ist abgeschlossen   --> <a href=\"index.php\">starte MyOOS [Dumper]</a><br>";
 $lang['L_INSTALL_TOMENU']="zum Hauptmenü";
 $lang['L_INSTALLMENU']="Hauptmenü";
 $lang['L_STEP']="Schritt";
@@ -24,7 +24,6 @@ $lang['L_CONFBASIC']="Grundeinstellungen";
 $lang['L_INSTALL_STEP2FINISHED']="Die Einstellungen wurden erfolgreich gesichert.";
 $lang['L_INSTALL_STEP2_1']="Installation mit Standardkonfiguration fortsetzen";
 $lang['L_LASTSTEP']="Abschluss der Installation";
-$lang['L_FTPMODE']="Verzeichnisse per FTP erzeugen (safe_mode)";
 $lang['L_IDOMANUAL']="Ich erstelle die Verzeichnisse manuell";
 $lang['L_DOFROM']="ausgehend von";
 $lang['L_FTPMODE2']="Erstelle die Verzeichnisse per FTP:";
@@ -34,6 +33,7 @@ $lang['L_CONNECT_TO']="verbinde zu";
 $lang['L_CHANGEDIR']="Wechsel ins Verzeichnis";
 $lang['L_CHANGEDIRERROR']="Wechsel ins Verzeichnis nicht möglich";
 $lang['L_FTP_OK']="FTP-Parameter sind ok";
+$lang['L_SFTP_OK']="FTP-Parameter sind ok";
 $lang['L_CREATEDIRS2']="Verzeichnisse erstellen";
 $lang['L_FTP_NOTCONNECTED']="FTP-Verbindung nicht hergestellt!";
 $lang['L_CONNWITH']="Verbindung mit";
@@ -60,7 +60,7 @@ $lang['L_UI9']="Ein Fehler trat auf, löschen war nicht möglich</p>Fehler bei V
 $lang['L_IMPORT']="Konfiguration importieren";
 $lang['L_IMPORT3']="Die Konfiguration wurde geladen...";
 $lang['L_IMPORT4']="Die Konfiguration wurde gesichert.";
-$lang['L_IMPORT5']="MySQLDumper starten";
+$lang['L_IMPORT5']="MyOOS [Dumper] starten";
 $lang['L_IMPORT6']="Installations-Menü";
 $lang['L_IMPORT7']="Konfiguration hochladen";
 $lang['L_IMPORT8']="zurück zum Upload";
@@ -78,12 +78,8 @@ $lang['L_FM_FILEUPLOAD']="Datei hochladen";
 $lang['L_PASS']="Passwort";
 $lang['L_NO_DB_FOUND_INFO']="Die Verbindung zur Datenbank konnte erfolgreich hergestellt werden.<br>
 Deine Zugangsdaten sind gültig und wurden vom MySQL-Server akzeptiert.<br>
-Leider konnte MySQLDumper keine Datenbank finden.<br>
+Leider konnte MyOOS [Dumper] keine Datenbank finden.<br>
 Die automatische Erkennung per Programm ist bei manchen Hostern gesperrt.<br>
 Du musst Deine Datenbank nach dem Abschluß der Installation unter dem Menüpunkt \"Konfiguration\" \"Verbindungsparameter einblenden\" angeben.<br>
 Bitte begebe Dich nach Abschluß der Installation umgehend dort hin und trage den Namen Deiner Datenbank dort ein.";
-$lang['L_SAFEMODEDESC']="Da PHP auf diesem Server mit der Option \"safe_mode=on\" ausgeführt wird, müssen folgende Verzeichnisse von Hand angelegt werden (dies kannst Du mit Deinem FTP-Programm erledigen):";
 $lang['L_ENTER_DB_INFO']="Klicke zuerst auf den Button \"zu MySQL verbinden\". Nur wenn daraufhin keine Datenbank erkannt werden konnte, ist hier eine Angabe notwendig.";
-
-
-?>

@@ -22,6 +22,12 @@ $lang['L_HELP_FTPPORT']="Θύρα του διακομιστή FTP, προεπι�
 $lang['L_HELP_FTPUSER']="Δώστε όνομα χρήστη για το FTP";
 $lang['L_HELP_FTPPASS']="Δώστε κωδικό για το FTP";
 $lang['L_HELP_FTPDIR']="Που βρίσκεται ο κατάλογος φόρτωσης? δώστε διαδρομή!";
+$lang['L_HELP_SFTPTRANSFER']="αν είναι ενεργό, το αρχείο θα αποστέλεται με SFTP.";
+$lang['L_HELP_SFTPSERVER']="Διεύθυνση του διακομιστή SFTP";
+$lang['L_HELP_SFTPPORT']="Θύρα του διακομιστή SFTP, προεπιλογή: 22";
+$lang['L_HELP_SFTPUSER']="Δώστε όνομα χρήστη για το SFTP";
+$lang['L_HELP_SFTPPASS']="Δώστε κωδικό για το SFTP";
+$lang['L_HELP_SFTPDIR']="Που βρίσκεται ο κατάλογος φόρτωσης? δώστε διαδρομή!";
 $lang['L_HELP_SPEED']="Ελάχιστη και μέγιστη ταχύτητα, προεπιλογή είναι 50 εως 5000";
 $lang['L_SPEED']="Ελεγχος ταχύτητας";
 $lang['L_HELP_CRONEXECPATH']="Η τοποθεσία των Perl scripts.
@@ -30,10 +36,4 @@ $lang['L_HELP_CRONEXECPATH']="Η τοποθεσία των Perl scripts.
 $lang['L_CRON_EXECPATH']="Διαδρομή των Perl scripts";
 $lang['L_HELP_CRONCOMPLETELOG']="Οταν ενεργοποιηθεί, η πλήρης έξοδος γράφεται στο complete_log-file.
 Είναι ανεξάρτητο από την προβολή κειμένου";
-$lang['L_HELP_FTP_MODE']="Οταν συμβούν προβλήματα κατά την μεταφορά μέσω FTP, δοκιμάστε τη χρήση passive mode.
-
-
-";
-
-
-?>
+$lang['L_HELP_FTP_MODE']="Οταν συμβούν προβλήματα κατά την μεταφορά μέσω FTP, δοκιμάστε τη χρήση passive mode.";

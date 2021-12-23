@@ -1,5 +1,25 @@
 <?php
+/* ----------------------------------------------------------------------
+
+   MyOOS [Dumper]
+   http://www.oos-shop.de/
+
+   Copyright (c) 2021 by the MyOOS Development Team.
+   ----------------------------------------------------------------------
+   Based on:
+
+   MySqlDumper
+   http://www.mysqldumper.de
+
+   Copyright (C)2004-2011 Daniel Schlichtholz (admin@mysqldumper.de)
+   ----------------------------------------------------------------------
+   Released under the GNU General Public License
+   ---------------------------------------------------------------------- */
+
+define('OOS_VALID_MOD', true);
+
 if (!@ob_start("ob_gzhandler")) @ob_start();
+
 include_once ('./inc/header.php');
 include_once ('./inc/runtime.php');
 include_once ('./language/'.$config['language'].'/lang_main.php');
@@ -21,19 +41,19 @@ if ($action=='edithtaccess') include ('./inc/home/protection_edit.php');
 if ($action=='deletehtaccess') include ('./inc/home/protection_delete.php');
 
 // Output headnavi
-$tpl=new MSDTemplate();
+$tpl=new MODTemplate();
 $tpl->set_filenames(array(
 	'show' => 'tpl/home/headnavi.tpl'));
 $tpl->assign_vars(array(
-	'HEADER' => MSDHeader(), 
-	'HEADLINE' => headline('Home')));
+	'HEADER' => MODHeader(),
+	'HEADLINE' => headline($lang['L_HOME'])));
 $tpl->pparse('show');
 
-MSD_mysql_connect();
+mod_mysqli_connect();
 if ($action=='status') include ('./inc/home/home.php');
 elseif ($action=='db') include ('./inc/home/databases.php');
 elseif ($action=='sys') include ('./inc/home/system.php');
 elseif ($action=='vars') include ('./inc/home/mysql_variables.php');
 
-echo MSDFooter();
+echo MODFooter();
 ob_end_flush();

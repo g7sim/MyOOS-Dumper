@@ -1,6 +1,6 @@
 <?php
 $lang['L_CONVERT_START']="Starta konvertering";
-$lang['L_CONVERT_TITLE']="Konvertera dump till MSD-formatet";
+$lang['L_CONVERT_TITLE']="Konvertera dump till MOD-formatet";
 $lang['L_CONVERT_WRONG_PARAMETERS']="Fel parametrar! Konverteringen kan ej genomföras.";
 $lang['L_FM_UPLOADFILEREQUEST']="Ange en fil.";
 $lang['L_FM_UPLOADNOTALLOWED1']="Denna filtyp är ej tillåten.";
@@ -64,12 +64,11 @@ $lang['L_CONVERT_FILENAME']="Målfilens namn (utan filändelse)";
 $lang['L_CONVERTING']="Konvertering";
 $lang['L_CONVERT_FILEREAD']="Filen '%s' läses in";
 $lang['L_CONVERT_FINISHED']="Konverteringen avslutad, '%s' har skapats.";
-$lang['L_NO_MSD_BACKUPFILE']="Filer skapade med andra program";
+$lang['L_NO_MOD_BACKUPFILE']="Filer skapade med andra program";
 $lang['L_MAX_UPLOAD_SIZE']="Maximal filstorlek";
 $lang['L_MAX_UPLOAD_SIZE_INFO']="Om din backup-fil är större än det angivna värdet så måste du ladda upp den till mappen \"work/backup\" via FTP. Därefter visas filen här i översikten och kan väljas för återställning.";
 $lang['L_ENCODING']="Kodering";
 $lang['L_FM_CHOOSE_ENCODING']="Välj backupfilens kodering";
-$lang['L_CHOOSE_CHARSET']="Tyvärr kunde ej fastställas automatiskt med vilken teckensats denna backupfil har skapats.<br>Du måste ange koderingen manuellt.<br>Därefter ställer MySQLDumper in förbindelseparametrarna till MySQL-servern till den valda teckensatsen och startar återställningen.<br>Om datan återges med fel specialtecken efter återställningen så bör du upprepa återställningen med en annan inställning för teckensatsen.<br>Lycka till.";
+$lang['L_CHOOSE_CHARSET']="Tyvärr kunde ej fastställas automatiskt med vilken teckensats denna backupfil har skapats.<br>Du måste ange koderingen manuellt.<br>Därefter ställer MyOOS [Dumper] in förbindelseparametrarna till MySQL-servern till den valda teckensatsen och startar återställningen.<br>Om datan återges med fel specialtecken efter återställningen så bör du upprepa återställningen med en annan inställning för teckensatsen.<br>Lycka till.";
 $lang['L_DOWNLOAD_FILE']="Ladda hem filen";
 $lang['L_BACKUP_NOT_POSSIBLE'] = "A backup of the system database `%s` is not possible!";
-?>

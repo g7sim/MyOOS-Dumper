@@ -1,5 +1,23 @@
 <?php
-if (!defined('MSD_VERSION')) die('No direct access.');
+/* ----------------------------------------------------------------------
+
+   MyOOS [Dumper]
+   http://www.oos-shop.de/
+
+   Copyright (c) 2021 by the MyOOS Development Team.
+   ----------------------------------------------------------------------
+   Based on:
+
+   MySqlDumper
+   http://www.mysqldumper.de
+
+   Copyright (C)2004-2011 Daniel Schlichtholz (admin@mysqldumper.de)
+   ----------------------------------------------------------------------
+   Released under the GNU General Public License
+   ---------------------------------------------------------------------- */
+
+if (!defined('MOD_VERSION')) die('No direct access.');
+
 function FilelisteCombo($fpath,$selected)
 {
 	$r='<select name="selectfile">';
@@ -256,10 +274,10 @@ function FileList($multi=0)
 		ksort($db_summary_size);
 
 		$i=0;
-		while (list ($key,$val)=each($db_summary_anzahl))
+		foreach($db_summary_anzahl as $key => $val)
 		{
 			$cl=($i++%2) ? "dbrow":"dbrow1";
-			$keyaus=($key=="~unknown") ? '<em>'.$lang['L_NO_MSD_BACKUPFILE'].'</em>':$key;
+			$keyaus=($key=="~unknown") ? '<em>'.$lang['L_NO_MOD_BACKUPFILE'].'</em>':$key;
 			$fl.='<tr class="'.$cl.'"><td colspan="5" align="left"><a href="'.$href.'&amp;dbactiv='.$key.'">'.$keyaus.'</a></td>';
 			$fl.='<td style="text-align:right">'.$val.'&nbsp;&nbsp;</td>';
 			$fl.='<td class="sm" nowrap="nowrap">'.((isset($db_summary_last[$key])) ? $db_summary_last[$key]:'').'</td>';
@@ -349,7 +367,7 @@ function Converter($filesource,$filedestination,$cp)
 	$n=0;
 	$eof=($cps==1) ? gzeof($f):feof($f);
 	$splitable=false; // can the file be splitted? Try to avoid splitting before a command is completed
-	WHILE (!$eof)
+	while (!$eof)
 	{
 		$eof=($cps==1) ? gzeof($f):feof($f);
 		$zeile=($cps==1) ? gzgets($f,5144000):fgets($f,5144000);
@@ -382,11 +400,11 @@ function Converter($filesource,$filedestination,$cp)
 				case 'create tab':
 					{
 						$mode='create';
-						WHILE (substr(rtrim($zeile),-1)!=';')
+						while (substr(rtrim($zeile),-1)!=';')
 						{
 							$zeile.=fgets($f,8192);
 						}
-						$zeile="\n\r".MySQL_Ticks($zeile)."\n\r";
+						$zeile="\n\r".MySQLi_Ticks($zeile)."\n\r";
 						$splitable=true;
 						break;
 					}
@@ -488,4 +506,3 @@ function get_pseudo_statusline($part,$filedestination)
 	return $ret;
 }
 
-?>

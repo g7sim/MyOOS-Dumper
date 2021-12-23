@@ -1,5 +1,6 @@
 <?php
 $lang['L_DUMP_HEADLINE']="Lav backup...";
+$lang['L_DUMP_INFO']="Please wait! The database tables are optimized before the backup.";
 $lang['L_GZIP_COMPRESSION']="GZip-komprimering";
 $lang['L_SAVING_TABLE']="Gemmer tabel ";
 $lang['L_OF']="af";
@@ -19,19 +20,19 @@ $lang['L_DUMP_NOTABLES']="Ingen tabeller fundet i database `<b>%s</b>` ";
 $lang['L_DUMP_ENDERGEBNIS']="Filen indeholder <b>%s</b> tabeller med <b>%s</b> poster.<br>";
 $lang['L_MAILERROR']="Afsendelse af email slog fejl!";
 $lang['L_EMAILBODY_ATTACH']="Den vedhæftede fil indeholder backup af din MySQL-Database.<br>Backup af Database `%s`
-<br><br>Følgende fil blev oprettet:<br><br>%s <br><br>Venlig hilsen<br><br>MySQLDumper<br>";
+<br><br>Følgende fil blev oprettet:<br><br>%s <br><br>Venlig hilsen<br><br>MyOOS [Dumper]<br>";
 $lang['L_EMAILBODY_MP_NOATTACH']="En Multipart Backup blev oprettet.<br>Backupfilerne er ikke vedhæftet denne email!<br>Backup af Database `%s`
 <br><br>Følgende filer blev oprettet:<br><br>%s
-<br><br>Venlig hilsen<br><br>MySQLDumper<br>";
+<br><br>Venlig hilsen<br><br>MyOOS [Dumper]<br>";
 $lang['L_EMAILBODY_MP_ATTACH']="En Multipart Backup er blevet oprettet.<br>Backupfilerne er vedhæftet separate emails.<br>Backup af Database `%s`
-<br><br>Følgende filer blev oprettet:<br><br>%s <br><br>Med venlig hilsen<br><br>MySQLDumper<br>";
-$lang['L_EMAILBODY_FOOTER']="<br><br>Venlig hilsen<br><br>MySQLDumper<br>";
+<br><br>Følgende filer blev oprettet:<br><br>%s <br><br>Med venlig hilsen<br><br>MyOOS [Dumper]<br>";
+$lang['L_EMAILBODY_FOOTER']="<br><br>Venlig hilsen<br><br>MyOOS [Dumper]<br>";
 $lang['L_EMAILBODY_TOOBIG']="Backupfilen oversteg maksimumstørrelsen på %s og blev ikke vedhæftet denne email.<br>Backup sf Database `%s`
 <br><br>Følgende fil blev oprettet:<br><br>%s
-<br><br>Venlig hilsen<br><br>MySQLDumper<br>";
+<br><br>Venlig hilsen<br><br>MyOOS [Dumper]<br>";
 $lang['L_EMAILBODY_NOATTACH']="Filer er ikke vedhæftet denne email!<br>Backup af Database `%s`
 <br><br>Følgende fil blev oprettet:<br><br>%s
-<br><br>Venlig hilsen<br><br>MySQLDumper<br>";
+<br><br>Venlig hilsen<br><br>MyOOS [Dumper]<br>";
 $lang['L_EMAIL_ONLY_ATTACHMENT']=" ... kun vedhæftet.";
 $lang['L_TABLESELECTION']="Tabelvælg";
 $lang['L_SELECTALL']="Vælg alle";
@@ -48,6 +49,8 @@ $lang['L_FTPCONNERROR3']="FTP-upload fejlede! ";
 $lang['L_FTPCONNECTED1']="Forbundet med ";
 $lang['L_FTPCONNECTED2']=" på ";
 $lang['L_FTPCONNECTED3']=" overførsel korrekt gennemført";
+$lang['L_FILESENDSFTP']="send fil via SFTP... vær venligst tålmodig. ";
+$lang['L_SFTPCONNERROR']="SFTP-forbindelse ikke etableret! Forbind med ";
 $lang['L_NR_TABLES_SELECTED']="- med %s valgte tabeller";
 $lang['L_NR_TABLES_OPTIMIZED']="<span class=\"small\">%s tabeller er blevet optimeret.</span>";
 $lang['L_DUMP_ERRORS']="<p class=\"error\">%s fejl optrådte: <a href=\"log.php?r=3\">se log</a></p>
@@ -56,5 +59,3 @@ $lang['L_DUMP_ERRORS']="<p class=\"error\">%s fejl optrådte: <a href=\"log.php?
 ";
 $lang['L_FATAL_ERROR_DUMP']="Fatal error: the CREATE-Statement of table '%s' in database '%s' couldn't be read!";
 
-
-?>

@@ -13,7 +13,6 @@ $lang['L_TABLE']="Tabla";
 $lang['L_RECORDS']="registros";
 $lang['L_COMPRESSED']="comprimido (gz)";
 $lang['L_NOTCOMPRESSED']="normal (sin comprimir)";
-$lang['L_GENERAL']="general";
 $lang['L_COMMENT']="comentario";
 $lang['L_FILESIZE']="Tamaño de archivo";
 $lang['L_ALL']="todos";
@@ -37,7 +36,7 @@ $lang['L_BACK']="atrás";
 $lang['L_DB_HOST']="Host";
 $lang['L_DB_USER']="Usuario";
 $lang['L_DB_PASS']="Password";
-$lang['L_INFO_SCRIPTDIR']="Directorio de MySQLDumper";
+$lang['L_INFO_SCRIPTDIR']="Directorio de MyOOS [Dumper]";
 $lang['L_INFO_ACTDB']="Base de datos actual";
 $lang['L_WRONGCONNECTIONPARS']="Conexión errónea o sin parámetros !";
 $lang['L_CONN_NOT_POSSIBLE']="Conexión imposible !";
@@ -56,7 +55,7 @@ $lang['L_CREATE']="crear";
 $lang['L_VARIABELN']="Variables";
 $lang['L_STATUSINFORMATIONEN']="Estado";
 $lang['L_VERSIONSINFORMATIONEN']="Versión";
-$lang['L_MSD_INFO']="Información sobre MySQL Dumper";
+$lang['L_MOD_INFO']="Información sobre MyOOS [Dumper]";
 $lang['L_BACKUPFILESANZAHL']="En el directorio de copias de seguridad se encuentran";
 $lang['L_LASTBACKUP']="Última copia de seguridad";
 $lang['L_NOTAVAIL']="<em>no disponible</em>";
@@ -107,6 +106,3 @@ $lang['L_PAGE_REFRESHS']="Page refreshs";
 $lang['L_MINUTE']="Minute";
 $lang['L_SETKEYSFOR']="Set new indexes for table";
 $lang['L_KEY_CONFIRMDELETE']="Really delete index?";
-
-
-?>

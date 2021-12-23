@@ -1,5 +1,5 @@
 <?php
-$lang['L_INSTALLFINISHED']="<br>d Installation isch abgschlosse --> <a href=\"index.php\">starte MySQLDumper</a><br>";
+$lang['L_INSTALLFINISHED']="<br>d Installation isch abgschlosse --> <a href=\"index.php\">starte MyOOS [Dumper]</a><br>";
 $lang['L_INSTALL_TOMENU']="zum Hauptmenü";
 $lang['L_INSTALLMENU']="Hauptmenü";
 $lang['L_STEP']="Schritt";
@@ -23,7 +23,6 @@ $lang['L_CONFBASIC']="Grundiischtellige";
 $lang['L_INSTALL_STEP2FINISHED']="D Iischtellige sind erfolgriich gsicheret worde";
 $lang['L_INSTALL_STEP2_1']="Installation mit de Standardkonfiguration wiitermache";
 $lang['L_LASTSTEP']="Abschluss vo de Installation";
-$lang['L_FTPMODE']="Verzeichniss per FTP erzüge (safe_mode)";
 $lang['L_IDOMANUAL']="Ich mache diä Verzeichniss vo Hand";
 $lang['L_DOFROM']="usgehend vo";
 $lang['L_FTPMODE2']="Mache diä Verzeichniss per FTP:";
@@ -33,6 +32,7 @@ $lang['L_CONNECT_TO']="verbinde zu";
 $lang['L_CHANGEDIR']="Wächsel is Verzeichnis";
 $lang['L_CHANGEDIRERROR']="Wächsel is Verzeichnis nöd mögli";
 $lang['L_FTP_OK']="FTP-Parameter sind ok";
+$lang['L_SFTP_OK']="FTP-Parameter sind ok";
 $lang['L_CREATEDIRS2']="Verzeichnis mache";
 $lang['L_FTP_NOTCONNECTED']="FTP-Verbindig nöd gmacht!";
 $lang['L_CONNWITH']="Verbindig mit";
@@ -59,7 +59,7 @@ $lang['L_UI9']="Es hät en Fähler gäh, Lösche isch nöd mögli gsi<p>Fähler 
 $lang['L_IMPORT']="Konfiguration importiere";
 $lang['L_IMPORT3']="D Konfiguration isch glade...";
 $lang['L_IMPORT4']="D Konfiguration isch gsicheret.";
-$lang['L_IMPORT5']="MySQLDumper starte";
+$lang['L_IMPORT5']="MyOOS [Dumper] starte";
 $lang['L_IMPORT6']="Installations-Menü";
 $lang['L_IMPORT7']="Konfiguration ufelade";
 $lang['L_IMPORT8']="zrugg zum Upload";
@@ -75,9 +75,5 @@ $lang['L_PORT']="Port";
 $lang['L_FOUND_DB']="gfundeni DB:";
 $lang['L_FM_FILEUPLOAD']="Datei ufelade";
 $lang['L_PASS']="Passwort";
-$lang['L_NO_DB_FOUND_INFO']="D Verbindig zur Datebank isch erfolgriich gsi.<br>Ihri Zuegangsdate sind gültig und sind vom MySQL-Server akzeptiert worde.<br>Leider hät de MySQLDumper kei Datebank gfunde.<br>Di automatischi Erkännig isch bi mänge Hoschter gschpeert.<br>Si müend Ihri Datebank nachem Abschluss vo de Installation under em Menüpunkt \"Konfiguration\" \"Verbindigsparameter iiblände\" agäh.<br>Gönd Si bitte sofort nach em Abschluss vo de Installation det hii und träged Si de Name vo Irer Datebank det ii.";
-$lang['L_SAFEMODEDESC']="Will PHP uf däm Server mit de Option \"safe_mode=on\" usgfuert wird, müend folgendi Verzeichnis vo Hand aagleit wärde (Si chönd das mit Irem FTP-Programm erlegige):";
+$lang['L_NO_DB_FOUND_INFO']="D Verbindig zur Datebank isch erfolgriich gsi.<br>Ihri Zuegangsdate sind gültig und sind vom MySQL-Server akzeptiert worde.<br>Leider hät de MyOOS [Dumper] kei Datebank gfunde.<br>Di automatischi Erkännig isch bi mänge Hoschter gschpeert.<br>Si müend Ihri Datebank nachem Abschluss vo de Installation under em Menüpunkt \"Konfiguration\" \"Verbindigsparameter iiblände\" agäh.<br>Gönd Si bitte sofort nach em Abschluss vo de Installation det hii und träged Si de Name vo Irer Datebank det ii.";
 $lang['L_ENTER_DB_INFO']="First click the button \"Connect to MySQL\". Only if no database could be detected you need to provide a database name here.";
-
-
-?>

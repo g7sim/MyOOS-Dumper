@@ -159,11 +159,9 @@ $lang['L_SEARCH_OPTIONS_OR']="يجب ان يحتوي العمود على احد�
 $lang['L_SEARCH_OPTIONS_CONCAT']="الصف يجب ان يحتوي على كل كلمات البحث ولكن يمكن ان يكونوا في اي عمود(يمكن ان يستغرق بعض الوقت)";
 $lang['L_SEARCH_OPTIONS_AND']="العمود يجب ان يحتوي على جميع كلمات البحث  (و-البحث)";
 $lang['L_SEARCH_IN_TABLE']="بحث في الجدول";
+$lang['L_ERROR_NO_FIELDS']="Search error: it could not be determined which fields the table \"%s\" has!";
 $lang['L_SQL_EDIT_TABLESTRUCTURE']="تحرير اعمدة الجدول";
-$lang['L_DEFAULT_CHARSET']="الاعدادات الاصلية
-
-
-";
+$lang['L_DEFAULT_CHARSET']="الاعدادات الاصلية";
 $lang['L_TITLE_KEY_PRIMARY']="المفتاح الاساسي";
 $lang['L_TITLE_KEY_UNIQUE']="مفتاح فريد";
 $lang['L_TITLE_INDEX']="الرئيسة";
@@ -171,10 +169,7 @@ $lang['L_TITLE_KEY_FULLTEXT']="مفتاح النص الكامل";
 $lang['L_TITLE_NOKEY']="لا مفتاح";
 $lang['L_TITLE_SEARCH']="بحث";
 $lang['L_TITLE_MYSQL_HELP']="MySQl وثائق";
-$lang['L_TITLE_UPLOAD']="ارسال ملف SQL
-
-
-";
+$lang['L_TITLE_UPLOAD']="ارسال ملف SQL";
 $lang['L_PRIMARYKEY_DELETED']="Primary key deleted";
 $lang['L_PRIMARYKEY_NOTFOUND']="Primary key not found";
 $lang['L_PRIMARYKEYS_CHANGED']="Primary keys changed";
@@ -193,5 +188,3 @@ $lang['L_KEY_DELETEERROR']="Error deleting index";
 $lang['L_KEY_ADDED']="Index added";
 $lang['L_KEY_ADDERROR']="Error adding index";
 
-
-?>

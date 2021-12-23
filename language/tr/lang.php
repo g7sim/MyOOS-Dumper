@@ -13,7 +13,6 @@ $lang['L_TABLE']="Tablo";
 $lang['L_RECORDS']="Kayıtlar";
 $lang['L_COMPRESSED']="Sıkıştırılmış (gz)";
 $lang['L_NOTCOMPRESSED']="normal (sıkıştırılmamış)";
-$lang['L_GENERAL']="Genel";
 $lang['L_COMMENT']="Yorum";
 $lang['L_FILESIZE']="Dosya boyutu";
 $lang['L_ALL']="hepsi";
@@ -37,7 +36,7 @@ $lang['L_BACK']="geri";
 $lang['L_DB_HOST']="Veritabanı sunucusunun adı";
 $lang['L_DB_USER']="Veritabanı kullanıcısı";
 $lang['L_DB_PASS']="Veritabanı şifresi";
-$lang['L_INFO_SCRIPTDIR']="MySQLDumper Veriyolu";
+$lang['L_INFO_SCRIPTDIR']="MyOOS [Dumper] Veriyolu";
 $lang['L_INFO_ACTDB']="Geçerli Veritabanı";
 $lang['L_WRONGCONNECTIONPARS']="Bağlantı parametreleri verilmemiş veya hatalı!";
 $lang['L_CONN_NOT_POSSIBLE']="Bağlantı kurulamıyor";
@@ -56,7 +55,7 @@ $lang['L_CREATE']="oluştur";
 $lang['L_VARIABELN']="Değişkenler";
 $lang['L_STATUSINFORMATIONEN']="Durum Bilgisi";
 $lang['L_VERSIONSINFORMATIONEN']="Sürüm Bilgileri";
-$lang['L_MSD_INFO']="MySQLDumper bilgileri";
+$lang['L_MOD_INFO']="MyOOS [Dumper] bilgileri";
 $lang['L_BACKUPFILESANZAHL']="Yedekleme klasöründe bulunan dosyalar:";
 $lang['L_LASTBACKUP']="Son yedekleme";
 $lang['L_NOTAVAIL']="<em>ulaşılamıyor</em>";
@@ -107,6 +106,3 @@ $lang['L_PAGE_REFRESHS']="Page refreshs";
 $lang['L_MINUTE']="Minute";
 $lang['L_SETKEYSFOR']="Set new indexes for table";
 $lang['L_KEY_CONFIRMDELETE']="Really delete index?";
-
-
-?>

@@ -13,7 +13,6 @@ $lang['L_TABLE']="Tabälle";
 $lang['L_RECORDS']="Datesätz";
 $lang['L_COMPRESSED']="komprimiert (gz)";
 $lang['L_NOTCOMPRESSED']="normal (nöd komprimiert)";
-$lang['L_GENERAL']="allgemein";
 $lang['L_COMMENT']="Kommentar";
 $lang['L_FILESIZE']="Dateigrössi";
 $lang['L_ALL']="alli";
@@ -37,7 +36,7 @@ $lang['L_BACK']="zrugg";
 $lang['L_DB_HOST']="Datebank- Hoschtname";
 $lang['L_DB_USER']="Datebank- Nutzer";
 $lang['L_DB_PASS']="Datebank- Passwort";
-$lang['L_INFO_SCRIPTDIR']="Verzeichnis vom MySQLDumper";
+$lang['L_INFO_SCRIPTDIR']="Verzeichnis vom MyOOS [Dumper]";
 $lang['L_INFO_ACTDB']="Aktuelli Datebank";
 $lang['L_WRONGCONNECTIONPARS']="Falschi oder kei Verbindigsparameter";
 $lang['L_CONN_NOT_POSSIBLE']="Verbindig nöd mögli!";
@@ -56,7 +55,7 @@ $lang['L_CREATE']="aalegge";
 $lang['L_VARIABELN']="Variable";
 $lang['L_STATUSINFORMATIONEN']="Statusinformatione";
 $lang['L_VERSIONSINFORMATIONEN']="Versionsinformatione";
-$lang['L_MSD_INFO']="MySQLDumper Informatione";
+$lang['L_MOD_INFO']="MyOOS [Dumper] Informatione";
 $lang['L_BACKUPFILESANZAHL']="Im Backupverzeichnis häts";
 $lang['L_LASTBACKUP']="sletschti Backup";
 $lang['L_NOTAVAIL']="<em>nöd verfüegbar</em>";
@@ -107,6 +106,3 @@ $lang['L_PAGE_REFRESHS']="Page refreshs";
 $lang['L_MINUTE']="Minute";
 $lang['L_SETKEYSFOR']="Set new indexes for table";
 $lang['L_KEY_CONFIRMDELETE']="Really delete index?";
-
-
-?>

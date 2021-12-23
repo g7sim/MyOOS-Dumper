@@ -1,6 +1,6 @@
 <?php
 $lang['L_CONVERT_START']="Εκκίνηση μετατροπής";
-$lang['L_CONVERT_TITLE']="Μετατροπή από Dump σε μορφή MSD";
+$lang['L_CONVERT_TITLE']="Μετατροπή από Dump σε μορφή MOD";
 $lang['L_CONVERT_WRONG_PARAMETERS']="Λάθος παράμετροι!  Δε μπορεί να γίνει μετατροπή.";
 $lang['L_FM_UPLOADFILEREQUEST']="παρακαλώ επιλέξτε ένα αρχείο.";
 $lang['L_FM_UPLOADNOTALLOWED1']="Ο τύπος αρχείου δεν υποστηρίζεται.";
@@ -64,16 +64,15 @@ $lang['L_CONVERT_FILENAME']="Ονομα αρχείου προορισμού (χ�
 $lang['L_CONVERTING']="Μετατροπή";
 $lang['L_CONVERT_FILEREAD']="Ανάγνωση αρχείου '%s'";
 $lang['L_CONVERT_FINISHED']="Η μετατροπή τελείωσε, '%s' εγγράφηκε επιτυχώς.";
-$lang['L_NO_MSD_BACKUPFILE']="Αντίγραφα Ασφαλείας άλλων scripts";
+$lang['L_NO_MOD_BACKUPFILE']="Αντίγραφα Ασφαλείας άλλων scripts";
 $lang['L_MAX_UPLOAD_SIZE']="Μέγιστο μέγεθος αρχείου";
 $lang['L_MAX_UPLOAD_SIZE_INFO']="Αν το Dumpfile είναι μεγαλύτερο από το παραπάνω επιτρεπτό όριο, φορτώστε το με FTP στον κατάλογο \"work/backup\".
 Μετά μπορείτε να το επιλέξετε για επαναφορά. ";
 $lang['L_ENCODING']="κωδικοποίηση";
 $lang['L_FM_CHOOSE_ENCODING']="Επιλογή κωδικοποίησης για το Αντίγραφο ασφαλείας";
-$lang['L_CHOOSE_CHARSET']="Το MySQLDumper δε μπόρεσε να αναγνωρίσει αυτόματα την κωδικοποίηση του αντιγράφου ασφαλείας.
+$lang['L_CHOOSE_CHARSET']="Το MyOOS [Dumper] δε μπόρεσε να αναγνωρίσει αυτόματα την κωδικοποίηση του αντιγράφου ασφαλείας.
 <br>Επιλέξτε το σετ χαρακτήρων με το οποίο αποθηκέυθηκε το αντίγραφο ασφαλείας.
 <br>Αν παρουσιαστούν προβλήματα με κάποιους χαρακτήρες μετά την επαναφορά, επαναλάβετε την επαναφορά κι επιλέξτε άλλο σετ χαρακτήρων.
 <br>Καλή επιτυχία. ;)";
 $lang['L_DOWNLOAD_FILE']="Μεταφόρτωση αρχείου";
-$lang['L_BACKUP_NOT_POSSIBLE'] = "Δεν είναι δυνατή η λήψη αντιγράφου ασφαλείας της βάσης δεδομένων `%s` του συστήματος!";
-?>
+$lang['L_BACKUP_NOT_POSSIBLE'] = "A backup of the system database `%s` is not possible!";

@@ -1,5 +1,23 @@
 <?php
-if (!defined('MSD_VERSION')) die('No direct access.');
+/* ----------------------------------------------------------------------
+
+   MyOOS [Dumper]
+   http://www.oos-shop.de/
+
+   Copyright (c) 2021 by the MyOOS Development Team.
+   ----------------------------------------------------------------------
+   Based on:
+
+   MySqlDumper
+   http://www.mysqldumper.de
+
+   Copyright (C)2004-2011 Daniel Schlichtholz (admin@mysqldumper.de)
+   ----------------------------------------------------------------------
+   Released under the GNU General Public License
+   ---------------------------------------------------------------------- */
+
+
+if (!defined('MOD_VERSION')) die('No direct access.');
 get_sql_encodings();
 
 //Datenbanken
@@ -16,7 +34,7 @@ if (isset($_POST['dbdosubmit']))
 	switch ($db_action)
 	{
 		case "drop":
-            if (MSD_DoSQL("DROP DATABASE `" . $databases['Name'][$db_index] . "`"))
+            if (MOD_DoSQL("DROP DATABASE `" . $databases['Name'][$db_index] . "`"))
             {
                 echo SQLOutput($out,'<p class="success">' . $lang['L_DB'] . ' `' . $databases['Name'][$db_index] . '` ' . $lang['L_SQL_DELETED'] . '</p>');
                 $changed=true;
@@ -57,7 +75,7 @@ if (isset($_POST['dbdosubmit']))
 	{
 		SetDefault();
 		include ( $config['files']['parameter'] );
-		echo '<script language="JavaScript" type="text/javascript">parent.MySQL_Dumper_menu.location.href="menu.php?action=dbrefresh";</script>';
+		echo '<script>parent.MyOOS_Dumper_menu.location.href="menu.php?action=dbrefresh";</script>';
 
 	}
 }
@@ -69,8 +87,8 @@ if (isset($_POST['dbwantaction']))
 		if (!empty($newname))
 		{
 			$sqlc="CREATE DATABASE `$newname`";
-			$col=( MSD_NEW_VERSION ) ? $_POST['db_collate'] : "";
-			if (isset($_POST['db_default_charset']) && intval(substr(MSD_NEW_VERSION,0,1)) > 3)
+			$col=( MOD_NEW_VERSION ) ? $_POST['db_collate'] : "";
+			if (isset($_POST['db_default_charset']) && intval(substr(MOD_NEW_VERSION,0,1)) > 3)
 			{
 				$db_default_charset_string=$config['mysql_possible_character_sets'][$_POST['db_default_charset']];
 				$db_default_charset=explode(' ',$db_default_charset_string);
@@ -79,12 +97,12 @@ if (isset($_POST['dbwantaction']))
 			$db_default_collation=@explode('|',$col);
 			if (isset($db_default_collation[1])) $sqlc.=' COLLATE `' . $db_default_collation[1] . '`';
 
-            if (MSD_query($sqlc))
+            if (mod_query($sqlc))
             {
                 echo $lang['L_DB'] . " `$newname` " . $lang['L_SQL_WASCREATED'] . ".<br>";
                 SetDefault();
                 include ( $config['files']['parameter'] );
-                echo '<script language="JavaScript" type="text/javascript">parent.MySQL_Dumper_menu.location.href="menu.php?action=dbrefresh";</script>';
+                echo '<script>parent.MyOOS_Dumper_menu.location.href="menu.php?action=dbrefresh";</script>';
             }
 		}
 	}
@@ -173,8 +191,8 @@ for ($i=0; $i < count($databases['Name']); $i++)
 	echo '<option value="">-- ' . $lang['L_SQL_CHOOSEACTION'] . ' --</option>';
 	echo '<option value="drop">' . $lang['L_SQL_DELETEDB'] . '</option>';
 	echo '<option value="empty">' . $lang['L_SQL_EMPTYDB'] . '</option>';
-	if (MSD_NEW_VERSION) echo '<option value="rename">' . $lang['L_SQL_RENAMEDB'] . '</option>';
-	if (MSD_NEW_VERSION) echo '<option value="copy">' . $lang['L_SQL_COPYDATADB'] . '</option>';
+	if (MOD_NEW_VERSION) echo '<option value="rename">' . $lang['L_SQL_RENAMEDB'] . '</option>';
+	if (MOD_NEW_VERSION) echo '<option value="copy">' . $lang['L_SQL_COPYDATADB'] . '</option>';
 	echo '<option value="structure">' . $lang['L_SQL_COPYSDB'] . '</option>';
 
 	echo '</select>';

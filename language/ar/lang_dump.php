@@ -1,5 +1,6 @@
 <?php
 $lang['L_DUMP_HEADLINE']="انشاء نسخة احتياطية ...";
+$lang['L_DUMP_INFO']="Please wait! The database tables are optimized before the backup.";
 $lang['L_GZIP_COMPRESSION']="GZip ضغط ";
 $lang['L_SAVING_TABLE']="حفظ الجدول ";
 $lang['L_OF']="مغلق";
@@ -19,19 +20,19 @@ $lang['L_DUMP_NOTABLES']="لم يتم العثور على جداول في قاع
 $lang['L_DUMP_ENDERGEBNIS']="محتويات الملف <b>%s</b> مع الجداول <b>%s</b> السجلات.<br>";
 $lang['L_MAILERROR']="فشل ارسال البريد الالكتروني!";
 $lang['L_EMAILBODY_ATTACH']="المرفق يحتوي على ملف النسخ الاحتياطي لقاعدة البيانات MySQL.<br>نسخ احتياطي لقاعدة البيانات `%s`
-<br><br>تم انشاء الملف التالي:<br><br>%s <br><br>حظا موفقا  <br><br>MySQLDumper<br>";
+<br><br>تم انشاء الملف التالي:<br><br>%s <br><br>حظا موفقا  <br><br>MyOOS [Dumper]<br>";
 $lang['L_EMAILBODY_MP_NOATTACH']="تم انشاء النسخ الاحتياطي المتعدد.<br>ملفات النسخ الاحتياطي لا يمكن ارسالها البريد الالكتروني!<br>النسخ الاحتياطي لقاعدة البيانات `%s`
 <br><br>الملفات التالية تم انشئت:<br><br>%s
-<br><br>حظا موفقا<br><br>MySQLDumper<br>";
+<br><br>حظا موفقا<br><br>MyOOS [Dumper]<br>";
 $lang['L_EMAILBODY_MP_ATTACH']="تم انشاء النسخ الاحتياطي المتعدد.<br>فواصل بين ملفات النسخ الاحتياطي عند ارسالها بالبريد الالكتروني.<br>النسخ الاحتياطي لقاعدة البيانات `%s`
-<br><br>الملفات التالية انشئت:<br><br>%s <br><br>حظا موفقا<br><br>MySQLDumper<br>";
-$lang['L_EMAILBODY_FOOTER']="`<br><br>حظا موفقا<br><br>MySQLDumper<br>";
+<br><br>الملفات التالية انشئت:<br><br>%s <br><br>حظا موفقا<br><br>MyOOS [Dumper]<br>";
+$lang['L_EMAILBODY_FOOTER']="`<br><br>حظا موفقا<br><br>MyOOS [Dumper]<br>";
 $lang['L_EMAILBODY_TOOBIG']="الحجم الاقصى للملف تجاوز الحد المسموح به %s لا يمكن ارسال المرفقات الى البريد الالكتروني  .<br>النسخ الاحتياطي لقاعدة البيانات  `%s`
 <br><br>الملفات التالية انشئت:<br><br>%s
-<br><br>حظا موفقا<br><br>MySQLDumper<br>";
+<br><br>حظا موفقا<br><br>MyOOS [Dumper]<br>";
 $lang['L_EMAILBODY_NOATTACH']="الملفات لايمكن ارسالها بالبريد الالكتروني!<br>النسخ الاحتياطي لقاعدة البيانات `%s`
 <br><br>الملفات التالية انشئت:<br><br>%s
-<br><br>حظا موفقا<br><br>MySQLDumper<br>";
+<br><br>حظا موفقا<br><br>MyOOS [Dumper]<br>";
 $lang['L_EMAIL_ONLY_ATTACHMENT']=" ... المرفقات فقط.";
 $lang['L_TABLESELECTION']="تحديد جدول";
 $lang['L_SELECTALL']="تحديد الكل";
@@ -48,6 +49,8 @@ $lang['L_FTPCONNERROR3']="FTP الارسال فشل! ";
 $lang['L_FTPCONNECTED1']="الربط مع ";
 $lang['L_FTPCONNECTED2']=" مفتوح ";
 $lang['L_FTPCONNECTED3']=" تمت عملية النقل بنجاح";
+$lang['L_FILESENDSFTP']="ارسال الملف عن طريق  via FTP... رجاء كن صبورا. ";
+$lang['L_SFTPCONNERROR']=" لم يتم تأسيسه FTP اتصال مع ! الاتصال مع ";
 $lang['L_NR_TABLES_SELECTED']="- مع %s اختر الجداول";
 $lang['L_NR_TABLES_OPTIMIZED']="<span class=\"small\">%s تم اصلاح وتحسين الجداول.</span>";
 $lang['L_DUMP_ERRORS']="<p class=\"error\">%s حدثت اخطاء: <a href=\"log.php?r=3\">عرض</a></p>
@@ -56,6 +59,3 @@ $lang['L_DUMP_ERRORS']="<p class=\"error\">%s حدثت اخطاء: <a href=\"log
 ";
 $lang['L_FATAL_ERROR_DUMP']="خطأ فادح: انشاء - بيانات من الجدول '%s' في قاعدة البيانات '%s' لا يمكن القراءة!<br>
 قم بفحص المشاكل في هذا الجدول.";
-
-
-?>

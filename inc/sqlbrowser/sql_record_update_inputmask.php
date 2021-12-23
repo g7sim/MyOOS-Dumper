@@ -1,6 +1,24 @@
 <?php
+/* ----------------------------------------------------------------------
+
+   MyOOS [Dumper]
+   http://www.oos-shop.de/
+
+   Copyright (c) 2021 by the MyOOS Development Team.
+   ----------------------------------------------------------------------
+   Based on:
+
+   MySqlDumper
+   http://www.mysqldumper.de
+
+   Copyright (C)2004-2011 Daniel Schlichtholz (admin@mysqldumper.de)
+   ----------------------------------------------------------------------
+   Released under the GNU General Public License
+   ---------------------------------------------------------------------- */
+
+
 // Edit record -> built Edit-Form
-$tpl=new MSDTemplate();
+$tpl=new MODTemplate();
 $tpl->set_filenames(array(
 	'show' => './tpl/sqlbrowser/sql_record_update_inputmask.tpl'));
 
@@ -8,8 +26,8 @@ $target=($mode=="searchedit") ? '?mode=searchedit' : '?mode=update'; // jump bac
 $fields=getExtendedFieldInfo($db,$tablename);
 
 $sqledit="SELECT * FROM `$tablename` WHERE ".$recordkey;
-$res=MSD_query($sqledit);
-$record=mysqli_fetch_array($res, MYSQLI_ASSOC); // get the record
+$res=mod_query($sqledit);
+$record=mysqli_fetch_array($res,MYSQLI_ASSOC); // get the record
 $num=sizeof($record); // get the nr of fields of the record
 
 
@@ -20,31 +38,31 @@ foreach ($record as $field=>$fieldvalue)
 {
 	$fieldnames.=$field.'|';
 	$tpl->assign_block_vars('ROW',array(
-		'CLASS' => ($x%2) ? 1 : 2, 
-		'FIELD_NAME' => $field, 
-		'FIELD_VALUE' => my_quotes($fieldvalue), 
+		'CLASS' => ($x%2) ? 1 : 2,
+		'FIELD_NAME' => $field,
+		'FIELD_VALUE' => my_quotes($fieldvalue),
 		'FIELD_ID' => correct_post_index($field)));
-	
+
 	if ('YES'==$fields[$field]['null'])
 	{
 		//field is nullable - precheck checkbox if value is null
 		$tpl->assign_block_vars('ROW.IS_NULLABLE',array(
 			'NULL_CHECKED' => is_null($fieldvalue) ? ' checked="checked"' : ''));
 	}
-	
+
 	$type=strtoupper($fields[$field]['type']);
 	if (in_array($type,array(
-		'BLOB', 
+		'BLOB',
 		'TEXT'))) $tpl->assign_block_vars('ROW.IS_TEXTAREA',array());
 	else
 		$tpl->assign_block_vars('ROW.IS_TEXTINPUT',array());
 	$x++;
 }
 $tpl->assign_vars(array(
-	'HIDDEN_FIELDS' => FormHiddenParams(), 
-	'FIELDNAMES' => substr($fieldnames,0,strlen($fieldnames)-1), 
-	'SQL_STATEMENT' => my_quotes($sql['sql_statement']), 
-	'RECORDKEY' => my_quotes($recordkey), 
+	'HIDDEN_FIELDS' => FormHiddenParams(),
+	'FIELDNAMES' => substr($fieldnames,0,strlen($fieldnames)-1),
+	'SQL_STATEMENT' => my_quotes($sql['sql_statement']),
+	'RECORDKEY' => my_quotes($recordkey),
 	'TARGET' => $target));
 
 $tpl->pparse('show');

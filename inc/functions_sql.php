@@ -1,5 +1,23 @@
 <?php
-if (!defined('MSD_VERSION')) die('No direct access.');
+/* ----------------------------------------------------------------------
+
+   MyOOS [Dumper]
+   http://www.oos-shop.de/
+
+   Copyright (c) 2017 by the MyOOS Development Team.
+   ----------------------------------------------------------------------
+   Based on:
+
+   MySqlDumper
+   http://www.mysqldumper.de
+
+   Copyright (C)2004-2011 Daniel Schlichtholz (admin@mysqldumper.de)
+   ----------------------------------------------------------------------
+   Released under the GNU General Public License
+   ---------------------------------------------------------------------- */
+
+
+if (!defined('MOD_VERSION')) die('No direct access.');
 
 //SQL-Library laden
 include ( './inc/sqllib.php' );
@@ -18,8 +36,8 @@ function ReadSQL()
 		fclose($fp);
 		@chmod($sf,0777);
 	}
-	if ((!is_array($SQL_ARRAY) || count($SQL_ARRAY) == 0) && filesize($sf) > 0)
-	{
+	
+	if ( (is_array($SQL_ARRAY) && count($SQL_ARRAY) == 0) && filesize($sf) > 0) {
 		$SQL_ARRAY=file($sf);
 	}
 }
@@ -35,7 +53,7 @@ function WriteSQL()
 		if (substr($str,-1) != "\n" && $i != ( count($SQL_ARRAY) - 1 )) $str.="\n";
 
 	}
-	if ($config['magic_quotes_gpc']) $str=stripslashes($str);
+
 	$fp=fopen($sf,"wb");
 	fwrite($fp,$str);
 	fclose($fp);
@@ -97,13 +115,14 @@ function Table_ComboBox()
 function TableComboBox($default='')
 {
 	global $db,$config,$lang,$nl;
-	$tabellen=mysqli_query($config['dbconnection'], "SHOW TABLES FROM `$db`");
-	$num_tables=mysqli_num_rows($tabellen);
-	$s='<option value="" ' . ( ( $default == '' ) ? 'selected' : '' ) . '>                 </option>' . $nl;
-	for ($i=0; $i < $num_tables; $i++)
+
+	$sql="SHOW TABLES FROM $db";
+	$tabellen=mod_query($sql);
+	$s='<option value="" ' . ( ( $default == '' ) ? ' selected="selected"' : '' ) . '>                 </option>' . $nl;
+	while ($row = mysqli_fetch_row($tabellen))
 	{
-		$t=((mysqli_data_seek($tabellen, $i) && (($___mysqli_tmp = mysqli_fetch_row($tabellen)) !== NULL)) ? array_shift($___mysqli_tmp) : false);
-		$s.='<option value="`' . $t . '`"' . ( ( $default == '`' . $t . '`' ) ? 'selected' : '' ) . '>`' . $t . '`</option>' . $nl;
+		$t= $row[0];
+		$s.='<option value="`' . $t . '`"' . ( ( $default == '`' . $t . '`' ) ? ' selected="selected"' : '' ) . '>`' . $t . '`</option>' . $nl;
 	}
 	return $s;
 }
@@ -111,12 +130,13 @@ function TableComboBox($default='')
 function DB_Exists($db)
 {
 	global $config;
-	if (!isset($config['dbconnection'])) MSD_mysql_connect();
+	if (!isset($config['dbconnection'])) mod_mysqli_connect();
 	$erg=false;
-	$dbs=(($___mysqli_tmp = mysqli_query($config['dbconnection'], "SHOW DATABASES")) ? $___mysqli_tmp : false);
-	while ($row=mysqli_fetch_object($dbs))
+
+	$dbs=mod_query("SHOW DATABASES");
+	while ($row=mysqli_fetch_assoc($dbs))
 	{
-		if (strtolower($row->Database) == strtolower($db))
+		if (strtolower($row['Database']) == strtolower($db))
 		{
 			$erg=true;
 			break;
@@ -128,13 +148,13 @@ function DB_Exists($db)
 function Table_Exists($db, $table)
 {
 	global $config;
-	if (!isset($config['dbconnection'])) MSD_mysql_connect();
+	if (!isset($config['dbconnection'])) mod_mysqli_connect();
 	$sqlt="SHOW TABLES FROM `$db`";
-	$res=MSD_query($sqlt);
+	$res=mod_query($sqlt);
 	if ($res)
 	{
 		$tables=array();
-		WHILE ($row=mysqli_fetch_row($res))
+		while ($row=mysqli_fetch_row($res))
 		{
 			$tables[]=$row[0];
 		}
@@ -146,7 +166,7 @@ function Table_Exists($db, $table)
 function DB_Empty($dbn)
 {
 	$r="DROP DATABASE `$dbn`;\nCREATE DATABASE `$dbn`;";
-	return MSD_DoSQL($r);
+	return MOD_DoSQL($r);
 
 }
 
@@ -196,24 +216,25 @@ function splitSQLStatements2Array($sql)
 function DB_Copy($source, $destination, $drop_source=0, $insert_data=1)
 {
 	global $config;
-	if (!isset($config['dbconnection'])) MSD_mysql_connect();
+	if (!isset($config['dbconnection'])) mod_mysqli_connect();
 	$SQL_Array=$t="";
     if (!DB_Exists($destination))
     {
-        $res = MSD_DoSQL("CREATE DATABASE `$destination`;");
+        $res = MOD_DoSQL("CREATE DATABASE `$destination`;");
         if (!$res)
         {
             return false;
         }
     }
 	$SQL_Array.="USE `$destination` ;\n";
-	$tabellen=mysqli_query($config['dbconnection'], "SHOW TABLES FROM `$source`");
-	$num_tables=mysqli_num_rows($tabellen);
-	for ($i=0; $i < $num_tables; $i++)
+	$sql="SHOW TABLES FROM $source";
+	$tabellen=mod_query($sql);
+	while ($row = mysqli_fetch_row($tabellen))
 	{
-		$table=((mysqli_data_seek($tabellen, $i) && (($___mysqli_tmp = mysqli_fetch_row($tabellen)) !== NULL)) ? array_shift($___mysqli_tmp) : false);
+
+		$table=strtolower($row[0]);
 		$sqlt="SHOW CREATE TABLE `$source`.`$table`";
-		$res=MSD_query($sqlt);
+		$res=mod_query($sqlt);
 		if ($res)
         {
             $row=mysqli_fetch_row($res);
@@ -226,19 +247,19 @@ function DB_Copy($source, $destination, $drop_source=0, $insert_data=1)
             return false;
         }
 	}
-    mysqli_select_db($GLOBALS["___mysqli_ston"], $destination);
-    $res=MSD_DoSQL($SQL_Array);
-    if ($drop_source == 1 && $res) MSD_query("DROP DATABASE `$source`;");
+    mysqli_select_db($config['dbconnection'], $destination);
+    $res=MOD_DoSQL($SQL_Array);
+    if ($drop_source == 1 && $res) mod_query("DROP DATABASE `$source`;");
     return $res;
 }
 
 function Table_Copy($source, $destination, $insert_data, $destinationdb="")
 {
 	global $config;
-	if (!isset($config['dbconnection'])) MSD_mysql_connect();
+	if (!isset($config['dbconnection'])) mod_mysqli_connect();
 	$SQL_Array=$t="";
 	$sqlc="SHOW CREATE TABLE $source";
-	$res=MSD_query($sqlc);
+	$res=mod_query($sqlc);
 	$row=mysqli_fetch_row($res);
 	$c=$row[1];
 	$a1=strpos($c,"`");
@@ -247,11 +268,11 @@ function Table_Copy($source, $destination, $insert_data, $destinationdb="")
 	if (substr($c,-1) == ";") $c=substr($c,0,strlen($c) - 1);
 	$SQL_Array.=( $insert_data == 1 ) ? "$c SELECT * FROM $source ;\n" : "$c ;\n";
 	//echo "<h5>$SQL_Array</h5>";
-	MSD_DoSQL($SQL_Array);
+	MOD_DoSQL($SQL_Array);
 
 }
 
-function MSD_DoSQL($sqlcommands, $limit="")
+function MOD_DoSQL($sqlcommands, $limit="")
 {
 	global $config,$out,$numrowsabs,$numrows,$num_befehle,$time_used,$sql;
 
@@ -259,7 +280,7 @@ function MSD_DoSQL($sqlcommands, $limit="")
 	if (!isset($sql['parser']['sql_errors'])) $sql['parser']['sql_errors']=0;
 
 	$sql['parser']['time_used']=getmicrotime();
-	if (!isset($config['dbconnection'])) MSD_mysql_connect();
+	if (!isset($config['dbconnection'])) mod_mysqli_connect();
 	$out=$sqlcommand='';
 	$allSQL=splitSQLStatements2Array($sqlcommands); #explode(';',preg_replace('/\r\n|\n/', '', $sqlcommands));
 	$sql_queries=count($allSQL);
@@ -270,7 +291,7 @@ function MSD_DoSQL($sqlcommands, $limit="")
 		SQLParser($allSQL[0]);
 		$sql['parser']['sql_commands']++;
 		$out.=Stringformat(( $sql['parser']['sql_commands'] ),4) . ': ' . $allSQL[0] . "\n";
-		$result=MSD_query($allSQL[0]);
+		$result=mod_query($allSQL[0]);
 	}
 	else
 	{
@@ -288,7 +309,7 @@ function MSD_DoSQL($sqlcommands, $limit="")
 					//sql complete
 					$sql['parser']['sql_commands']++;
 					$out.=Stringformat(( $sql['parser']['sql_commands'] ),4) . ': ' . $sqlcommand . "\n";
-					$result=$result && MSD_query($sqlcommand);
+					$result=$result && mod_query($sqlcommand);
 					$sqlcommand="";
 				}
 			}
@@ -482,8 +503,8 @@ function SQLOutput($sqlcommand, $meldung='')
 function GetCreateTable($db, $tabelle)
 {
 	global $config;
-	if (!isset($config['dbconnection'])) MSD_mysql_connect();
-	$res=mysqli_query($GLOBALS["___mysqli_ston"], "SHOW CREATE TABLE `$db`.`$tabelle`");
+	if (!isset($config['dbconnection'])) mod_mysqli_connect();
+	$res=mysqli_query($config['dbconnection'], "SHOW CREATE TABLE `$db`.`$tabelle`");
 	if ($res)
 	{
 		$row=mysqli_fetch_array($res);
@@ -492,7 +513,7 @@ function GetCreateTable($db, $tabelle)
 		else return false;
 	}
 	else
-		return ((is_object($GLOBALS["___mysqli_ston"])) ? mysqli_error($GLOBALS["___mysqli_ston"]) : (($___mysqli_res = mysqli_connect_error()) ? $___mysqli_res : false));
+		return mysqli_error($config['dbconnection']);
 
 }
 
@@ -533,7 +554,7 @@ function correct_post_index($index)
 function ComboCommandDump($when, $index, $disabled = '')
 {
 	global $SQL_ARRAY,$nl,$databases,$lang;
-	if (!is_array($SQL_ARRAY) || count($SQL_ARRAY) == 0)
+	if ( (is_array($SQL_ARRAY) && count($SQL_ARRAY) == 0) || !is_array($SQL_ARRAY) )
 	{
 		$r='<a href="sql.php?context=1" class="uls">' . $lang['L_SQL_BEFEHLE'] . '</a>';
 		if ($when == 0) $r.='<input type="hidden" name="command_before_' . $index . '" value="">';
@@ -555,7 +576,7 @@ function ComboCommandDump($when, $index, $disabled = '')
 		}
 
 		$r.='<option value="" ' . ( ( $csql == '' ) ? ' selected="selected"' : '' ) . '>&nbsp;</option>' . "\n";
-		if (count($SQL_ARRAY) > 0)
+		if (is_array($SQL_ARRAY) && count($SQL_ARRAY) > 0)
 		{
 			for ($i=0; $i < count($SQL_ARRAY); $i++)
 			{
@@ -571,28 +592,28 @@ function ComboCommandDump($when, $index, $disabled = '')
 function EngineCombo($default="")
 {
 	global $config;
-	if (!$config['dbconnection']) MSD_mysql_connect();
+	if (!$config['dbconnection']) mod_mysqli_connect();
 
-	$r='<option value="" ' . ( ( $default == "" ) ? "selected" : "" ) . '></option>';
-	if (!MSD_NEW_VERSION)
+	$r='<option value="" ' . ( ( $default == "" ) ? ' selected="selected"' : "" ) . '></option>';
+	if (!MOD_NEW_VERSION)
 	{
 		//BDB | HEAP | ISAM | InnoDB | MERGE | MRG_MYISAM | MYISAM
-		$r.='<option value="BDB" ' . ( ( "BDB" == $default ) ? "selected" : "" ) . '>BDB</option>';
-		$r.='<option value="HEAP" ' . ( ( "HEAP" == $default ) ? "selected" : "" ) . '>HEAP</option>';
-		$r.='<option value="ISAM" ' . ( ( "ISAM" == $default ) ? "selected" : "" ) . '>ISAM</option>';
-		$r.='<option value="InnoDB" ' . ( ( "InnoDB" == $default ) ? "selected" : "" ) . '>InnoDB</option>';
-		$r.='<option value="MERGE" ' . ( ( "MERGE" == $default ) ? "selected" : "" ) . '>MERGE</option>';
-		$r.='<option value="MRG_MYISAM" ' . ( ( "MRG_MYISAM" == $default ) ? "selected" : "" ) . '>MRG_MYISAM</option>';
-		$r.='<option value="MYISAM" ' . ( ( "MyISAM" == $default ) ? "selected" : "" ) . '>MyISAM</option>';
+		$r.='<option value="BDB" ' . ( ( "BDB" == $default ) ? ' selected="selected"' : "" ) . '>BDB</option>';
+		$r.='<option value="HEAP" ' . ( ( "HEAP" == $default ) ? ' selected="selected"' : "" ) . '>HEAP</option>';
+		$r.='<option value="ISAM" ' . ( ( "ISAM" == $default ) ? ' selected="selected"' : "" ) . '>ISAM</option>';
+		$r.='<option value="InnoDB" ' . ( ( "InnoDB" == $default ) ? ' selected="selected"' : "" ) . '>InnoDB</option>';
+		$r.='<option value="MERGE" ' . ( ( "MERGE" == $default ) ? ' selected="selected"' : "" ) . '>MERGE</option>';
+		$r.='<option value="MRG_MYISAM" ' . ( ( "MRG_MYISAM" == $default ) ? ' selected="selected"' : "" ) . '>MRG_MYISAM</option>';
+		$r.='<option value="MYISAM" ' . ( ( "MyISAM" == $default ) ? ' selected="selected"' : "" ) . '>MyISAM</option>';
 	}
 	else
 	{
-		$res=mysqli_query($GLOBALS["___mysqli_ston"], "SHOW ENGINES");
+		$res=mysqli_query($config['dbconnection'], "SHOW ENGINES");
 		$num=mysqli_num_rows($res);
 		for ($i=0; $i < $num; $i++)
 		{
 			$row=mysqli_fetch_array($res);
-			$r.='<option value="' . $row['Engine'] . '" ' . ( ( $row['Engine'] == $default ) ? "selected" : "" ) . '>' . $row['Engine'] . '</option>';
+			$r.='<option value="' . $row['Engine'] . '" ' . ( ( $row['Engine'] == $default ) ? ' selected="selected"' : "" ) . '>' . $row['Engine'] . '</option>';
 		}
 	}
 	return $r;
@@ -601,16 +622,16 @@ function EngineCombo($default="")
 function CharsetCombo($default="")
 {
 	global $config;
-	if (!MSD_NEW_VERSION)
+	if (!MOD_NEW_VERSION)
 	{
 		return "";
 	}
 	else
 	{
-		if (!isset($config['dbconnection'])) MSD_mysql_connect();
-		$res=mysqli_query($GLOBALS["___mysqli_ston"], "SHOW Charset");
+		if (!isset($config['dbconnection'])) mod_mysqli_connect();
+		$res=mysqli_query($config['dbconnection'], "SHOW Charset");
 		$num=mysqli_num_rows($res);
-		$r='<option value="" ' . ( ( $default == "" ) ? "selected" : "" ) . '></option>';
+		$r='<option value="" ' . ( ( $default == "" ) ? ' selected="selected"' : "" ) . '></option>';
 		$charsets=array();
 		for ($i=0; $i < $num; $i++)
 		{
@@ -622,7 +643,7 @@ function CharsetCombo($default="")
 			$charsets=mu_sort($charsets,'Charset');
 			foreach ($charsets as $row)
 			{
-				$r.='<option value="' . $row['Charset'] . '" ' . ( ( $row['Charset'] == $default ) ? "selected" : "" ) . '>' . $row['Charset'] . '</option>';
+				$r.='<option value="' . $row['Charset'] . '" ' . ( ( $row['Charset'] == $default ) ? ' selected="selected"' : "" ) . '>' . $row['Charset'] . '</option>';
 			}
 		}
 		return $r;
@@ -632,9 +653,9 @@ function CharsetCombo($default="")
 function GetCollationArray()
 {
 	global $config;
-	if (!isset($config['dbconnection'])) MSD_mysql_connect();
+	if (!isset($config['dbconnection'])) mod_mysqli_connect();
 
-	$res=mysqli_query($GLOBALS["___mysqli_ston"], "SHOW Collation");
+	$res=mysqli_query($config['dbconnection'], "SHOW Collation");
 	$num=@mysqli_num_rows($res);
 	$r=Array();
 	if (is_array($r))
@@ -655,7 +676,7 @@ function GetCollationArray()
 
 function CollationCombo($default="", $withcharset=0)
 {
-	if (!MSD_NEW_VERSION)
+	if (!MOD_NEW_VERSION)
 	{
 		return "";
 	}
@@ -806,7 +827,7 @@ function GetOptionsCombo($arr, $default)
 	$r='';
 	foreach ($arr as $s)
 	{
-		$r.='<option value="' . $s . '" ' . ( ( strtoupper($default) == strtoupper($s) ) ? "selected" : "" ) . '>' . $s . '</option>' . "\n";
+		$r.='<option value="' . $s . '" ' . ( ( strtoupper($default) == strtoupper($s) ) ? ' selected="selected"' : "" ) . '>' . $s . '</option>' . "\n";
 	}
 	return $r;
 }
@@ -829,8 +850,8 @@ function make_options($arr, $selected)
  * Reads field information for each field of a MySQL table
  * and fills an array with the keys detected
  *
- * @param $db Database
- * @param $tabelle Table
+ * @param $db 
+ * @param $tabelle 
  * @return array
  */
 function getFieldinfos($db, $tabelle)
@@ -839,7 +860,7 @@ function getFieldinfos($db, $tabelle)
 	$fields_infos=Array();
 	$t=GetCreateTable($db,$tabelle);
 	$sqlf="SHOW FULL FIELDS FROM `$db`.`$tabelle`;";
-	$res=MSD_query($sqlf);
+	$res=mod_query($sqlf);
 	$anz_fields=mysqli_num_rows($res);
 
 	$fields_infos['_primarykeys_']=array();
@@ -867,7 +888,7 @@ function getFieldinfos($db, $tabelle)
 		$fields_infos[$i]['type']='';
 		$fields_infos[$i]['privileges']='';
 
-		$row=mysqli_fetch_array($res, MYSQLI_ASSOC);
+		$row=mysqli_fetch_array($res,MYSQLI_ASSOC);
 		//v($row);
 		if (isset($row['Collation'])) $fields_infos[$i]['collate']=$row['Collation'];
 		if (isset($row['COLLATE'])) $fields_infos[$i]['collate']=$row['COLLATE']; // MySQL <4.1
@@ -897,8 +918,8 @@ function getFieldinfos($db, $tabelle)
 
 	// now get key definitions of the table and add info to fields
 	$sql='SHOW KEYS FROM `' . $db . '`.`' . $tabelle . '`';
-	$res=MSD_query($sql);
-	WHILE ($row=mysqli_fetch_array($res, MYSQLI_ASSOC))
+	$res=mod_query($sql);
+	while ($row=mysqli_fetch_array($res,MYSQLI_ASSOC))
 	{
 		//v($row);
 		$key_name=isset($row['Key_name']) ? $row['Key_name'] : '';
@@ -936,8 +957,8 @@ function getFieldinfos($db, $tabelle)
  *  ['primary_key']=keys
  * )
  *
- * @param $db Database
- * @param $table Table
+ * @param $db 
+ * @param $table 
  * @return array Field infos
  */
 function getExtendedFieldInfo($db, $table)
@@ -946,13 +967,13 @@ function getExtendedFieldInfo($db, $table)
 	$fields_infos=Array();
 	$t=GetCreateTable($db,$table);
 	$sqlf="SHOW FULL FIELDS FROM `$db`.`$table`;";
-	$res=MSD_query($sqlf);
+	$res=mod_query($sqlf);
 	$num_fields=mysqli_num_rows($res);
 
 	$f=array(); //will hold all info
 	for ($x=0; $x < $num_fields; $x++)
 	{
-		$row=mysqli_fetch_array($res, MYSQLI_ASSOC);
+		$row=mysqli_fetch_array($res,MYSQLI_ASSOC);
 		//v($row);
 		$i=$row['Field']; // define name of field as index of array
 		//define field defaults - this way the index of the array is defined anyway
@@ -996,8 +1017,8 @@ function getExtendedFieldInfo($db, $table)
 
 	// now get key definitions of the table and add info to field-array
 	$sql='SHOW KEYS FROM `' . $db . '`.`' . $table . '`';
-	$res=MSD_query($sql);
-	WHILE ($row=mysqli_fetch_array($res, MYSQLI_ASSOC))
+	$res=mod_query($sql);
+	while ($row=mysqli_fetch_array($res,MYSQLI_ASSOC))
 	{
 		//echo "<br>Keys of $table: ";v($row);
 		$key_name=isset($row['Key_name']) ? $row['Key_name'] : '';
@@ -1055,14 +1076,18 @@ function ChangeKeys($ok, $nk, $fld, $size, $restriction='')
 function build_where_from_record($data)
 {
 	if (!is_array($data)) return false;
-	$ret='';
+	$ret = '';
 	foreach ($data as $key=>$val)
 	{
-		$val=str_replace('<span class="treffer">','',$val);
-		$val=str_replace('</span>','',$val);
-		$ret.='`' . $key . '`="' . addslashes($val) . '" AND ';
+		$val = str_replace('<span class="treffer">','',$val);
+		$val = str_replace('</span>','',$val);
+		$nLen = strlen($val);
+		if (!empty($val) && ($nLen < 200)){		
+			$ret .='`' . $key . '`="' . addslashes($val) . '" AND ';
+		}
 	}
-	$ret=substr($ret,0,-5);
+	$ret = substr($ret,0,-5);
+
 	return $ret;
 }
 
@@ -1076,21 +1101,21 @@ function getPrimaryKeys($db, $table)
 {
 	$keys=Array();
 	$sqlk="SHOW KEYS FROM `" . $db . "`.`" . $table . "`;";
-	$res=MSD_query($sqlk);
+	$res=mod_query($sqlk);
 	while ($row=mysqli_fetch_array($res))
 	{
 		//wenn Primaerschluessel
 		if ($row['Key_name'] == "PRIMARY") $keys['name'][]=$row['Column_name'];
-		if ($row['Sub_part'] != null) 
+		if ($row['Sub_part'] != null)
 		{
 			$keys['size'][]=$row['Sub_part'];
-		}	
+		}
 		else
 		{
 			$keys['size'][]='';
 		}
 	}
-	
+
 	return $keys;
 }
 
@@ -1104,7 +1129,7 @@ function getAllFields($db, $table)
 {
 	$fields=Array();
 	$sqlk="DESCRIBE `" . $db . "`.`" . $table . "`;";
-	$res=MSD_query($sqlk);
+	$res=mod_query($sqlk);
 	while ($row=mysqli_fetch_array($res))
 	{
 		$fields[]=$row['Field'];
@@ -1146,7 +1171,7 @@ function setNewPrimaryKeys($db, $table, $newKeys, $indexSizes)
 		$sqlSetNewPrimaryKeys.=")";
 	}
 	$sqlSetNewPrimaryKeys.=";";
-	$res=MSD_query($sqlSetNewPrimaryKeys);
+	$res=mod_query($sqlSetNewPrimaryKeys);
 	return $res;
 }
 
@@ -1168,14 +1193,14 @@ function setNewKeys($db, $table, $newKeys, $indexType, $indexName, $indexSizes)
 		}
 	}
 	$sqlSetNewKeys.=");";
-	$res=MSD_query($sqlSetNewKeys);
+	$res=mod_query($sqlSetNewKeys);
 	return $res;
 }
 
 function killKey($db, $table, $indexName)
 {
 	$sqlKillKey = "ALTER TABLE `".$db."`.`".$table."` DROP INDEX `".$indexName."`";
-	$res=MSD_query($sqlKillKey);
+	$res=mod_query($sqlKillKey);
 	return $res;
 }
 
@@ -1210,4 +1235,4 @@ function build_recordkey($data)
 	else return urlencode(serialize($data));
 }
 
-?>
+

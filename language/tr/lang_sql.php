@@ -2,7 +2,7 @@
 $lang['L_COMMAND']="Komut";
 $lang['L_IMPORT_NOTABLE']="Yüklenecek tablo seçilmemiş!";
 $lang['L_PASSWORD_STRENGTH']="Password strength";
-$lang['L_SQL_WARNING']="SQL emirleriinin işlenmesi kayıtlarınıza zarar verebilir! Mysqldumper işlemden hiç bir yükümlülük kabul etmez.";
+$lang['L_SQL_WARNING']="SQL emirleriinin işlenmesi kayıtlarınıza zarar verebilir! MyOOSDumper işlemden hiç bir yükümlülük kabul etmez.";
 $lang['L_SQL_EXEC']="SQL komudu çalıştır";
 $lang['L_SQL_DATAVIEW']="Veri görüntüsü";
 $lang['L_SQL_TABLEVIEW']="Tablo görüntüsü";
@@ -159,6 +159,7 @@ $lang['L_SEARCH_OPTIONS_OR']="Sütunda en azından bir aranılan kelime bulunmal
 $lang['L_SEARCH_OPTIONS_CONCAT']="Metin'de bütün aranılan kelimeler bir satırda bulunmalıdır, fakat aranılan kelimeler değişik sütunlarda bulunabilir. (Vakit alıcı)";
 $lang['L_SEARCH_OPTIONS_AND']="Sütunun içinde aranan kelimelerin hepsi bulunmalı (VE)";
 $lang['L_SEARCH_IN_TABLE']="Tablonun içinde ara";
+$lang['L_ERROR_NO_FIELDS']="Search error: it could not be determined which fields the table \"%s\" has!";
 $lang['L_SQL_EDIT_TABLESTRUCTURE']="Tablo yapısını düzenle";
 $lang['L_DEFAULT_CHARSET']="standart karakter seti";
 $lang['L_TITLE_KEY_PRIMARY']="İndeks";
@@ -187,5 +188,3 @@ $lang['L_KEY_DELETEERROR']="Error deleting index";
 $lang['L_KEY_ADDED']="Index added";
 $lang['L_KEY_ADDERROR']="Error adding index";
 
-
-?>

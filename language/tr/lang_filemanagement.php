@@ -1,6 +1,6 @@
 <?php
 $lang['L_CONVERT_START']="Çeviriyi başlat";
-$lang['L_CONVERT_TITLE']="MSD-Formatına çevir";
+$lang['L_CONVERT_TITLE']="MOD-Formatına çevir";
 $lang['L_CONVERT_WRONG_PARAMETERS']="Yanlış Parametre! Çeviri mümkün değil.";
 $lang['L_FM_UPLOADFILEREQUEST']="Dosya adını giriniz.";
 $lang['L_FM_UPLOADNOTALLOWED1']="Bu dosya tipi geçerli değil.";
@@ -64,13 +64,12 @@ $lang['L_CONVERT_FILENAME']="Yeni dosya adı (uzantısız)";
 $lang['L_CONVERTING']="Dönüştürüm";
 $lang['L_CONVERT_FILEREAD']="Dosya '%s' okunuyor";
 $lang['L_CONVERT_FINISHED']="Dönüştürme tamamlandı, '%s' oluşturuldu.";
-$lang['L_NO_MSD_BACKUPFILE']="Başka yazılımların dosyaları:";
+$lang['L_NO_MOD_BACKUPFILE']="Başka yazılımların dosyaları:";
 $lang['L_MAX_UPLOAD_SIZE']="Maksimum dosya boyutu";
 $lang['L_MAX_UPLOAD_SIZE_INFO']="Eğer Yedek dosyanız izin verilen boyuttan büyük ise, o zaman FTP ile \"work/backup\"-Klasörüne yüklemeniz lazım.
 Daha sonra bu dosya Yönetim bölümünde gözüküp geri yükleme işlemi için kullanılabilir duruma gelicektir.";
 $lang['L_ENCODING']="kodlama";
 $lang['L_FM_CHOOSE_ENCODING']="alınacak yedeğin karakter setini seçin";
-$lang['L_CHOOSE_CHARSET']="Maalesef veritabanı yedeğinin hangi karakter seti ile kodlandığını otomatik olarak bulunmadı<br>Hangi karakter setini kullandıysanız onu seçip elle vermeniz gerekiyor.Daha sonra MYSQLDumper veritabanı serveri ile irtibata gecip yedeği yüklemeye başlıyacaktır.<br>Eğer yedek yüklendikten sonra karakter sorunu devam ediyorsa başka bir karakter seti seçip tekrar denemeniz gerekiyor.<br> Bol şans ;)";
+$lang['L_CHOOSE_CHARSET']="Maalesef veritabanı yedeğinin hangi karakter seti ile kodlandığını otomatik olarak bulunmadı<br>Hangi karakter setini kullandıysanız onu seçip elle vermeniz gerekiyor.Daha sonra MyOOSDumper veritabanı serveri ile irtibata gecip yedeği yüklemeye başlıyacaktır.<br>Eğer yedek yüklendikten sonra karakter sorunu devam ediyorsa başka bir karakter seti seçip tekrar denemeniz gerekiyor.<br> Bol şans ;)";
 $lang['L_DOWNLOAD_FILE']="Dosya indir";
 $lang['L_BACKUP_NOT_POSSIBLE'] = "A backup of the system database `%s` is not possible!";
-?>

@@ -1,5 +1,22 @@
 <?php
-if (!defined('MSD_VERSION')) die('No direct access.');
+/* ----------------------------------------------------------------------
+
+   MyOOS [Dumper]
+   http://www.oos-shop.de/
+
+   Copyright (c) 2021 by the MyOOS Development Team.
+   ----------------------------------------------------------------------
+   Based on:
+
+   MySqlDumper
+   http://www.mysqldumper.de
+
+   Copyright (C)2004-2011 Daniel Schlichtholz (admin@mysqldumper.de)
+   ----------------------------------------------------------------------
+   Released under the GNU General Public License
+   ---------------------------------------------------------------------- */
+
+if (!defined('MOD_VERSION')) die('No direct access.');
 //SQL-Library
 include ( './language/' . $config['language'] . '/lang_sql.php' );
 /*
@@ -10,7 +27,7 @@ $sqllib[$i]['sql']="";
 $i++;
 */
 $i=0;
-$sqllib=ARRAY();
+$sqllib= array ();
 
 $sqllib[$i]['name']=$lang['L_SQLLIB_GENERALFUNCTIONS'];
 $sqllib[$i]['sql']="trenn";
@@ -50,4 +67,3 @@ $sqllib[$i]['name']=$lang['L_SQLLIB_ACTIVATEBOARD'] . ' [vBulletin]';
 $sqllib[$i]['sql']="UPDATE forum SET options = options + 1 WHERE NOT (options & 1)";
 $i++;
 
-?>

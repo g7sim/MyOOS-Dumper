@@ -1,5 +1,5 @@
 <?php
-$lang['L_INSTALLFINISHED']="<br>تم اكتمال التركيب  --> <a href=\"index.php\">ابدأ MySQLDumper</a><br>";
+$lang['L_INSTALLFINISHED']="<br>تم اكتمال التركيب  --> <a href=\"index.php\">ابدأ MyOOS [Dumper]</a><br>";
 $lang['L_INSTALL_TOMENU']="عوده الى القائمة الرئيسة";
 $lang['L_INSTALLMENU']="القائمة الرئيسة";
 $lang['L_STEP']="خطوة ";
@@ -34,6 +34,7 @@ $lang['L_CONNECT_TO']="ربط الى";
 $lang['L_CHANGEDIR']="تغيير مياشر";
 $lang['L_CHANGEDIRERROR']=" لا يمكن التغيير مباشرة ";
 $lang['L_FTP_OK']="FTPيفضل برتكول ";
+$lang['L_SFTP_OK']="FTPيفضل برتكول ";
 $lang['L_CREATEDIRS2']="انشاء الادلة";
 $lang['L_FTP_NOTCONNECTED']="FTP لم يتم انشاء برتكول نقل الملفات!";
 $lang['L_CONNWITH']="اتصال مع";
@@ -60,7 +61,7 @@ $lang['L_UI9']="حدث خطأ ، لم يكن من الممكن الحذف</p>خ�
 $lang['L_IMPORT']="استيراد الوظائف";
 $lang['L_IMPORT3']="تحميل القوائم ...";
 $lang['L_IMPORT4']="تم حفظ القوائم.";
-$lang['L_IMPORT5']="ابدأ MySQLDumper";
+$lang['L_IMPORT5']="ابدأ MyOOS [Dumper]";
 $lang['L_IMPORT6']="تركيب القائمة";
 $lang['L_IMPORT7']="ارسال القوائم";
 $lang['L_IMPORT8']="عودة الى الرفع";
@@ -89,6 +90,3 @@ $lang['L_SAFEMODEDESC']="السبب PHP يعمل في الوضع الآمن فأ
 
 ";
 $lang['L_ENTER_DB_INFO']="First click the button \"Connect to MySQL\". Only if no database could be detected you need to provide a database name here.";
-
-
-?>
