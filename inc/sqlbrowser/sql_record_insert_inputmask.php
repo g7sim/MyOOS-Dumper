@@ -27,11 +27,11 @@ if ($res)
 {
 	$num=mysqli_num_rows($res);
 
-	$feldnamen="";
+	$feldnamen= '';
 	for ($x=0; $x<$num; $x++)
 	{
 		$row=mysqli_fetch_object($res);
-		$feldnamen.=$row->Field.'|';
+		$feldnamen.= $row->Field.'|';
 		$tpl->assign_block_vars('ROW',array(
 			'CLASS' => ($x%2) ? 1 : 2,
 			'FIELD_NAME' => $row->Field,
