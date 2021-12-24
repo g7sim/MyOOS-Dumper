@@ -1,29 +1,29 @@
 <?php
 if (!defined('MOD_VERSION')) die('No direct access.');
+
 //alle Tabellen der aktuellen Datenbank ermitteln und Zugriffs-Array aufbauen
 $sql='SHOW TABLES FROM `'.$db.'`';
-$tables= array ();
-$link=mod_mysqli_connect();
-$res=mysqli_query($link, $sql);
-if (!$res===false)
-{
-	while ($row=mysqli_fetch_array($res,MYSQLI_NUM))
+$tables = [];
+$link = mod_mysqli_connect();
+$res = mysqli_query($link, $sql);
+if (!$res === false) {
+	while ($row = mysqli_fetch_array($res,MYSQLI_NUM))
 	{
 		$tables[] = $row[0];
 	}
-}
-else
+} else {
 	die("No Tables in Database!");
+}
 
 // Suchkriterien aus Session holen oder aus POST-Umgebung
 // so bleiben die Suchkriterien auch erhalten wenn man zwischendurch woanders klickt
 if (isset($_POST['suchbegriffe'])) $_SESSION['mysql_search']['suchbegriffe'] = $_POST['suchbegriffe'];
-if (!isset($_SESSION['mysql_search']['suchbegriffe'])) $_SESSION['mysql_search']['suchbegriffe'] ='';
+if (!isset($_SESSION['mysql_search']['suchbegriffe'])) $_SESSION['mysql_search']['suchbegriffe']  = '';
 $suchbegriffe= $_SESSION['mysql_search']['suchbegriffe'];
 
 if (isset($_POST['suchart'])) $_SESSION['mysql_search']['suchart'] = $_POST['suchart'];
-if (!isset($_SESSION['mysql_search']['suchart'])||strlen($_SESSION['mysql_search']['suchart'])<2) $_SESSION['mysql_search']['suchart'] ='AND';
-$suchart= $_SESSION['mysql_search']['suchart'];
+if (!isset($_SESSION['mysql_search']['suchart'])|| strlen($_SESSION['mysql_search']['suchart']) < 2) $_SESSION['mysql_search']['suchart'] = 'AND';
+$suchart = $_SESSION['mysql_search']['suchart'];
 
 if (isset($_POST['table_selected'])) $_SESSION['mysql_search']['table_selected'] = $_POST['table_selected'];
 if (!isset($_SESSION['mysql_search']['table_selected'])) $_SESSION['mysql_search']['table_selected'] =0;
@@ -31,119 +31,101 @@ $table_selected= $_SESSION['mysql_search']['table_selected'];
 // Falls zwischendurch Tabellen geloescht wurden und der Index nicht mehr existiert, zuruecksetzen
 if ($table_selected>count($tables)-1) $table_selected=0;
 
-$offset=(isset($_POST['offset'])) ? intval($_POST['offset']) : 0;
+$offset = (isset($_POST['offset'])) ? intval($_POST['offset']) : 0;
 
 $tablename = isset($_GET['tablename']) ? urldecode($_GET['tablename']) : '';
 
 // Delete
-if (isset($_GET['mode'])&&$_GET['mode'] =="kill"&&$rk>'')
-{
+if (isset($_GET['mode']) && $_GET['mode'] =="kill" && $rk > '') {
 	//echo "<br> RK ist: ".$rk."<br><br>";
-	$sqlk="DELETE FROM `$tablename` WHERE ".$rk." LIMIT 1";
+	$sqlk = "DELETE FROM `$tablename` WHERE ".$rk." LIMIT 1";
 	//echo $sqlk;
-	$res=mod_query($sqlk);
+	$res = mod_query($sqlk);
 	//	echo "<br>".$res;
-	$aus.='<p class="success">'.$lang['L_SQL_RECORDDELETED'].'</p>';
+	$aus .= '<p class="success">'.$lang['L_SQL_RECORDDELETED'].'</p>';
 }
 
-function mysqli_search($db, $tabelle, $suchbegriffe, $suchart, $offset=0, $anzahl_ergebnisse=20, $auszuschliessende_tabellen='')
-{
+function mysqli_search($db, $tabelle, $suchbegriffe, $suchart, $offset = 0, $anzahl_ergebnisse = 20, $auszuschliessende_tabellen = '') {
 	global $tables, $config, $lang;
 
 	$ret = false;
-	$link=mod_mysqli_connect();
-	if (sizeof($tables)>0)
-	{
-		$suchbegriffe=trim(str_replace('*','', $suchbegriffe));
-		$suchworte=explode(' ', $suchbegriffe);
-		if (($suchbegriffe>'')&&(is_array($suchworte)))
-		{
+	$link = mod_mysqli_connect();
+	if (sizeof($tables) > 0) 	{
+		$suchbegriffe = trim(str_replace('*', '', $suchbegriffe));
+		$suchworte = explode(' ', $suchbegriffe);
+		if (($suchbegriffe>'')&&(is_array($suchworte))) {
 			// Leere Einträge (durch doppelte Leerzeichen) entfernen
-			$anzahl_suchworte=sizeof($suchworte);
-			for ($i = 0; $i<$anzahl_suchworte; $i++)
-			{
+			$anzahl_suchworte = sizeof($suchworte);
+			for ($i = 0; $i<$anzahl_suchworte; $i++) {
 				if (trim($suchworte[$i])=='') unset($suchworte[$i]);
 			}
 
-			$bedingung= [];
-			$where='';
-			$felder= [];
+			$bedingung	= [];
+			$where		= '';
+			$felder		= [];
       
 			// Felder ermitteln
-			$sql='SHOW COLUMNS FROM `'.$db.'`.`'.$tables[$tabelle].'`';
-			$res=mysqli_query($link, $sql);
-			if (!$res===false)
-			{
+			$sql = 'SHOW COLUMNS FROM `'.$db.'`.`'.$tables[$tabelle].'`';
+			$res = mysqli_query($link, $sql);
+			if (!$res === false) {
 				// Felder der Tabelle ermitteln
-				while ($row=mysqli_fetch_object($res))
-				{
+				while ($row = mysqli_fetch_object($res)) {
 					$felder[] = $row->Field;
 				}
 			}
 
-			$feldbedingung='';
-			if ($suchart=='CONCAT')
-			{
+			$feldbedingung = '';
+			if ($suchart == 'CONCAT') {
 
-				if (count($felder) > 0)
-				{
+				if (count($felder) > 0) {
 					//Concat-String bildem
-					$concat=implode('`),LOWER(`', $felder);
-					$concat='CONCAT_WS(\'\',LOWER(`'.$concat.'`))';
-					$where='';
-					foreach ($suchworte as $suchbegriff)
-					{
+					$concat = implode('`),LOWER(`', $felder);
+					$concat = 'CONCAT_WS(\'\',LOWER(`'.$concat.'`))';
+					$where = '';
+					foreach ($suchworte as $suchbegriff) {
 						$where.= $concat.' LIKE \'%'.strtolower($suchbegriff).'%\' AND ';
 					}
-					$where=substr($where,0,-4); // letztes AND entfernen
-					$sql='SELECT * FROM `'.$db.'`.`'.$tables[$tabelle].'` WHERE '.$where.' LIMIT '.$offset.','.$anzahl_ergebnisse;
-				}
-				else
-				{
-					$_SESSION['mysql_search']['suchbegriffe'] ='';
+					$where = substr($where,0,-4); // letztes AND entfernen
+					$sql = 'SELECT * FROM `'.$db.'`.`'.$tables[$tabelle].'` WHERE '.$where.' LIMIT '.$offset.','.$anzahl_ergebnisse;
+				} else {
+					$_SESSION['mysql_search']['suchbegriffe']  = '';
 					die(sprintf($lang['L_ERROR_NO_FIELDS'], $tabelle));
 				}
-			}
-			else
-			{
+			} else {
 				$pattern='`{FELD}` LIKE \'%{SUCHBEGRIFF}%\'';
 
-				if (count($felder) > 0)
-				{
-					foreach ($felder as $feld)
-					{
+				if (count($felder) > 0) {
+					foreach ($felder as $feld) {
 						unset($feldbedingung);
-						foreach ($suchworte as $suchbegriff)
-						{
-							$suchen= array (
+						foreach ($suchworte as $suchbegriff) {
+							$suchen=  [
 
 								'{FELD}',
-								'{SUCHBEGRIFF}');
-							$ersetzen= array (
+								'{SUCHBEGRIFF}'
+							];
+							$ersetzen=  [
 
 								$feld,
-								$suchbegriff);
-							$feldbedingung[] =str_replace($suchen, $ersetzen, $pattern);
+								$suchbegriff
+							];
+							$feldbedingung[] = str_replace($suchen, $ersetzen, $pattern);
 						}
-						$bedingung[] ='('.implode(' '.$suchart.' ', $feldbedingung).') ';
+						$bedingung[] = '('.implode(' '.$suchart.' ', $feldbedingung).') ';
 					}
-				}
-				else
-				{
-					$_SESSION['mysql_search']['suchbegriffe'] ='';
+				} else {
+					$_SESSION['mysql_search']['suchbegriffe']  = '';
 					die(sprintf($lang['L_ERROR_NO_FIELDS'], $tabelle));
 				}
 				$where=implode(' OR ', $bedingung);
 				$sql='SELECT * FROM `'.$db.'`.`'.$tables[$tabelle].'` WHERE ('.$where.') LIMIT '.$offset.','.$anzahl_ergebnisse;
 			}
-		}
-		else
+		} else {
 			$sql='SELECT * FROM `'.$db.'`.`'.$tables[$tabelle].'` LIMIT '.$offset.','.$anzahl_ergebnisse;
-
+		}
 		$res = mysqli_query($link, $sql);
-		if (!$res===false)
+		if (!$res === false)
 		{
-			while ($row=mysqli_fetch_array($res,MYSQLI_ASSOC))
+			while ($row = mysqli_fetch_array($res,MYSQLI_ASSOC))
 			{
 				//Treffer markieren
 				foreach ($row as $key=>$val)
@@ -256,8 +238,8 @@ function ersetze_suchtreffer($text)
 $suchbegriffe=trim($suchbegriffe); // Leerzeichen vorne und hinten wegschneiden
 if (isset($_POST['reset']))
 {
-	$suchbegriffe='';
-	$_SESSION['mysql_search']['suchbegriffe'] ='';
+	$suchbegriffe = '';
+	$_SESSION['mysql_search']['suchbegriffe']  = '';
 	$suchart='AND';
 	$_SESSION['mysql_search']['suchart'] ='AND';
 	$table_selected=0;
@@ -268,10 +250,10 @@ $showtables=0; // Anzeige der Tabellendaten im restlichen SQL-Browser ausschalte
 
 // Fix bis zur kompletten Umstellung auf Templates
 echo $aus;
-$aus='';
+$aus = '';
 
 $anzahl_tabellen=sizeof($tables);
-$table_options='';
+$table_options = '';
 if ($anzahl_tabellen>0)
 {
 	for ($i = 0; $i<$anzahl_tabellen; $i++)
@@ -354,7 +336,7 @@ if (is_array($treffer)&&isset($treffer[0]))
 		if (is_array($table_keys)&&sizeof($table_keys)>0)
 		{
 			// a primary key exitst
-			$keystring='';
+			$keystring = '';
 			foreach ($table_keys as $k)
 			{
 				// remove hit marker from value
@@ -394,7 +376,7 @@ if (is_array($treffer)&&isset($treffer[0]))
 }
 else
 {
-	if (!isset($tables[$table_selected])) $tables[$table_selected] ='';
+	if (!isset($tables[$table_selected])) $tables[$table_selected]  = '';
 	if ($suchbegriffe=='') $tpl->assign_block_vars('NO_ENTRIES',array(
 
 		'LANG_NO_ENTRIES' => sprintf($lang['L_NO_ENTRIES'], $tables[$table_selected])));

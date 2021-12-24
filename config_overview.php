@@ -694,7 +694,7 @@ if (sizeof($configs) > 0) {
 		$aus['conf'] .= '<td><table>';
 
 		// Build string from multidump DBs
-		$toolboxstring='';
+		$toolboxstring = '';
 		$databases['multi'] = [];
 		if (isset($databases['multisetting'])) $databases['multi'] =explode(";", $databases['multisetting']);
 		$multi_praefixe = [];
@@ -991,7 +991,7 @@ $aus['global2'] .= '<td><input type="text" class="text" size="3" name="max_backu
 $aus['global2'] .= '</td></tr></table></fieldset>'.print_save_button().'</div>';
 
 //Email-->
-if (!isset($config['email_recipient_cc'])) $config['email_recipient_cc'] =''; // backwards compatibility if field is undefined
+if (!isset($config['email_recipient_cc'])) $config['email_recipient_cc']  = ''; // backwards compatibility if field is undefined
 $aus['transfer1'] ='<div id="transfer1"><fieldset><legend>'.$lang['L_EMAIL_NOTIFICATION'].'</legend><table>';
 $aus['transfer1'] .= '<tr><td>'.$lang['L_SEND_MAIL_FORM'].':&nbsp;</td>';
 $aus['transfer1'] .= '<td><input type="checkbox" class="checkbox" value="1" name="send_mail" '.((isset($config['send_mail']) && ( $config['send_mail'] == 1 )) ? " checked" : '').'>';

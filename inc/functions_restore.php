@@ -25,7 +25,7 @@ function get_sqlbefehl()
 	//Init
 	$restore['fileEOF'] =false;
 	$restore['EOB'] =false;
-	$complete_sql='';
+	$complete_sql = '';
 	$sqlparser_status=0;
 	if (!isset($restore['eintraege_ready'])) $restore['eintraege_ready'] =0;
 
@@ -88,16 +88,16 @@ function get_sqlbefehl()
 			{
 				$restore['EOB'] = true;
 				$restore['fileEOF'] = true;
-				$zeile='';
-				$zeile2='';
+				$zeile = '';
+				$zeile2 = '';
 				$sqlparser_status=100;
 			}
 
 			// Kommentar?
 			elseif ($sub2=='--'|| $sub1=='#')
 			{
-				$zeile='';
-				$zeile2='';
+				$zeile = '';
+				$zeile2 = '';
 				$sqlparser_status=0;
 			}
 
@@ -197,7 +197,7 @@ function get_sqlbefehl()
 							$restore['table_ready']++;
 						}
 						// Zeile verwerfen, da CREATE jetzt bereits ausgefuehrt wurde und naechsten Befehl suchen
-						$complete_sql='';
+						$complete_sql = '';
 						$sqlparser_status=0;
 					}
 				}
@@ -242,7 +242,7 @@ function get_sqlbefehl()
 								$t=strrpos($zeile,'*/');
 								if (!$t===false)
 								{
-									$complete_sql='';
+									$complete_sql = '';
 									$sqlparser_status=0;
 								}
 							}
@@ -257,7 +257,7 @@ function get_sqlbefehl()
 										{
 											$restore['anzahl_zeilen'] = $config['minspeed'];
 										}
-										$complete_sql='';
+										$complete_sql = '';
 										$sqlparser_status=0;
 									}
 								}
@@ -268,7 +268,7 @@ function get_sqlbefehl()
 	// wenn bestimmte Tabellen wiederhergestellt werden sollen -> pruefen
 	if (is_array($restore['tables_to_restore'])&&!(in_array($restore['actual_table'], $restore['tables_to_restore'])))
 	{
-		$complete_sql='';
+		$complete_sql = '';
 	}
 	return trim($complete_sql);
 }
@@ -295,13 +295,13 @@ function submit_create_action($sql)
 	}
 
 	$res = mysqli_query($config['dbconnection'], $sql);
-	if ($res===false)
+	if ($res === false)
 	{
 		// erster Versuch fehlgeschlagen -> zweiter Versuch - vielleicht versteht der Server die Inline-Kommentare nicht?
 		$sql=del_inline_comments($sql);
 		$res = mysqli_query($config['dbconnection'],  downgrade($sql));
 	}
-	if ($res===false)
+	if ($res === false)
 	{
 		// wenn wir hier angekommen sind hat nichts geklappt -> Fehler ausgeben und abbrechen
 		SQLError($sql,mysqli_error($config['dbconnection']));
@@ -314,13 +314,13 @@ function get_insert_syntax($table)
 {
 	global $config;
 
-	$insert='';
+	$insert = '';
 	$sql='SHOW COLUMNS FROM `'.$table.'`';
-	$res=mysqli_query($config['dbconnection'], $sql);
+	$res = mysqli_query($config['dbconnection'], $sql);
 	if ($res)
 	{
 		$insert='INSERT INTO `'.$table.'` (';
-		while ($row=mysqli_fetch_object($res))
+		while ($row = mysqli_fetch_object($res))
 		{
 			$insert.='`'.$row->Field.'`,';
 		}
@@ -347,7 +347,7 @@ function del_inline_comments($sql)
 	}
 	//$sql=trim(str_replace('<br>',"\n", $sql));
 	//Wenn nach dem Entfernen nur noch ein ; übrigbleibt -> entfernen
-	if ($sql==';') $sql='';
+	if ($sql==';') $sql = '';
 	return $sql;
 }
 

@@ -249,7 +249,7 @@ switch ($phase)
 			{
 				echo '<tr class="thead"><th colspan="2">'.$lang['L_DBCONNECTION'].'</th></tr>';
 				echo '<tr><td colspan="2">';
-				$connection=mod_mysqli_connect();
+				$connection = mod_mysqli_connect();
 
 				if ($connection === false)
 				{
@@ -374,7 +374,7 @@ switch ($phase)
 							"work/log/",
 							"work/backup/"
 		);
-		$msg='';
+		$msg = '';
 		foreach ($check_dirs as $d)
 		{
 			$success=SetFileRechte($d,1,0777);

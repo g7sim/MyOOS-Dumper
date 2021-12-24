@@ -306,8 +306,8 @@ function GetMySQLVersion()
 	global $config;
 	if (!isset($config['dbconnection'])) mod_mysqli_connect();
 
-	$res=mod_query("SELECT VERSION()");
-	$row=mysqli_fetch_array($res);
+	$res = mod_query("SELECT VERSION()");
+	$row = mysqli_fetch_array($res);
 	$version= $row[0];
 	if (!defined('MOD_MYSQL_VERSION')) define('MOD_MYSQL_VERSION', $version);
 	$versions=explode('.', $version);
@@ -325,7 +325,7 @@ function mod_query($query, $error_output = true)
 	// print_mem();
 	if (!isset($config['dbconnection'])) mod_mysqli_connect();
 	// echo "<br>Query: ".htmlspecialchars($query).'<br>';
-	$res=mysqli_query($config['dbconnection'], $query);
+	$res = mysqli_query($config['dbconnection'], $query);
 	// print_mem();
 	if (false === $res && $error_output) SQLError($query,mysqli_error($config['dbconnection']));
 	return $res;
@@ -363,7 +363,7 @@ function Highlight_SQL($sql)
 {
 	global $sql_keywords;
 
-	$end='';
+	$end = '';
 	$tickstart = false;
 	if (function_exists("token_get_all")) $a=@token_get_all("<?php $sql?>");
 	else return $sql;
@@ -408,14 +408,14 @@ function Highlight_SQL($sql)
 
 function Fieldlist($db, $tbl)
 {
-	$fl='';
-	$res=mod_query("SHOW FIELDS FROM `$db`.`$tbl`;");
+	$fl = '';
+	$res = mod_query("SHOW FIELDS FROM `$db`.`$tbl`;");
 	if ($res)
 	{
 		$fl='(';
 		for ($i = 0; $i < mysqli_num_rows($res); $i++)
 		{
-			$row=mysqli_fetch_row($res);
+			$row = mysqli_fetch_row($res);
 			$fl.='`'.$row[0].'`,';
 		}
 		$fl=substr($fl,0,strlen($fl) - 1).')';
@@ -437,7 +437,7 @@ function getDBInfos()
 		{
 			for ($i = 0; $i < $num_tables; $i++)
 			{
-				$row=mysqli_fetch_array($tabellen);
+				$row = mysqli_fetch_array($tabellen);
 				if (isset($row['Type'])) $row['Engine'] = $row['Type'];
 				if (isset($row['Comment']) && substr(strtoupper($row['Comment']),0,4) == 'VIEW') $dump['table_types'][] ='VIEW';
 				else $dump['table_types'][] =strtoupper($row['Engine']);

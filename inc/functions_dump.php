@@ -92,7 +92,7 @@ function GetStatusLine($kind="php")
 	$r=0;
 	$t_zeile="$mysql_commentstring\n$mysql_commentstring TABLE-INFO\r\n";
 	mod_mysqli_connect();
-	$res=mysqli_query($config['dbconnection'], "SHOW TABLE STATUS FROM `".$databases['Name'][$dump['dbindex']]."`");
+	$res = mysqli_query($config['dbconnection'], "SHOW TABLE STATUS FROM `".$databases['Name'][$dump['dbindex']]."`");
 	$numrows=intval(@mysqli_num_rows($res));
 	for($i=0;$i<$numrows;$i++)
 	{
@@ -167,7 +167,7 @@ function get_content($db, $table)
 {
 	global $config, $nl, $dump, $buffer;
 
-	$content='';
+	$content = '';
 	$complete=Fieldlist($db, $table).' ';
 
 	if (!isset($config['dbconnection'])) mod_mysqli_connect();
@@ -200,7 +200,7 @@ function get_content($db, $table)
 		$ax=0;
 		for($x=0;$x<$ergebnisse;$x++)
 		{
-			$row=mysqli_fetch_row($result);
+			$row = mysqli_fetch_row($result);
 			$ax++;
 
 			$insert='INSERT INTO `'.$table.'` '.$complete.'VALUES (';
@@ -275,7 +275,7 @@ function WriteToDumpFile()
 			fclose($fp);
 		}
 	}
-	$dump['data'] ='';
+	$dump['data']  = '';
 	if (!isset($dump['fileoperations'])) $dump['fileoperations'] =0;
 	$dump['fileoperations']++;
 

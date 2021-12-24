@@ -87,9 +87,9 @@ echo headline($lcap);
 if (!is_writable($config['paths']['log'])) die('<p class="error">ERROR !<br>Logdir is not writable</p>');
 
 //lesen
-$errorbutton='';
-$perlbutton='';
-$perlbutton2='';
+$errorbutton = '';
+$perlbutton = '';
+$perlbutton2 = '';
 
 if (file_exists($loginfo['errorlog'])) $errorbutton='<td><input class="Formbutton" type="button" onclick="location.href=\'log.php?r=3\'" value="Error-Log"></td>';
 if (file_exists($loginfo['perllog'])) $perlbutton='<td><input type="button" onclick="location.href=\'log.php?r=1\'" class="Formbutton" value="Perl-Log"></td>';
@@ -113,7 +113,7 @@ echo ( $loginfo['perllogcomplete_size'] > 0 ) ? '<a href="'.$loginfo['perllogcom
 echo '<strong>total</strong></td><td valign="top" align="right">'.byte_output($loginfo['log_size']).'<br>'.byte_output($loginfo['errorlog_size']).'<br>'.byte_output($loginfo['perllog_size']).'<br>'.byte_output($loginfo['perllogcomplete_size']).'<br><strong>'.byte_output($loginfo['log_totalsize']).'</strong></td>';
 echo '</tr><tr><td colspan="3" align="center"><a class="small" href="log.php?r='.$r.'&amp;revers=0">'.$lang['L_NOREVERSE'].'</a>&nbsp;&nbsp;&nbsp;<a class="small" href="log.php?r='.$r.'&amp;revers=1">'.$lang['L_REVERSE'].'</a></td></tr></table></td></tr></table></div>';
 
-$out='';
+$out = '';
 if ($r != 2) $out.='<pre>';
 
 if (file_exists($lfile))

@@ -26,14 +26,14 @@ $target=($mode=="searchedit") ? '?mode=searchedit' : '?mode=update'; // jump bac
 $fields=getExtendedFieldInfo($db, $tablename);
 
 $sqledit="SELECT * FROM `$tablename` WHERE ".$recordkey;
-$res=mod_query($sqledit);
+$res = mod_query($sqledit);
 $record=mysqli_fetch_array($res,MYSQLI_ASSOC); // get the record
 $num=sizeof($record); // get the nr of fields of the record
 
 
 // iterate fields
 $x=0;
-$fieldnames='';
+$fieldnames = '';
 foreach ($record as $field=>$fieldvalue)
 {
 	$fieldnames.= $field.'|';

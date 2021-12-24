@@ -22,7 +22,7 @@ $msg= '';
 $res = mysqli_query($config['dbconnection'], "SHOW VARIABLES LIKE 'datadir'");
 if ($res)
 {
-	$row=mysqli_fetch_array($res);
+	$row = mysqli_fetch_array($res);
 	$data_dir= $row[1];
 }
 switch ($sysaction)
@@ -87,7 +87,7 @@ switch ($sysaction)
 				$msg.='&gt; there are '.$numrows.' logfiles<br>';
 				for ($i = 0; $i<$numrows; $i++)
 				{
-					$row=mysqli_fetch_row($res);
+					$row = mysqli_fetch_row($res);
 					$msg.='&gt; '.$row[0].'&nbsp;&nbsp;&nbsp;'.(($data_dir) ? byte_output(@filesize($data_dir.$row[0])) : '').'<br>';
 				}
 			}

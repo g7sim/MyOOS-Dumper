@@ -23,7 +23,7 @@ if (!@ob_start("ob_gzhandler")) @ob_start();
 include_once ('./inc/header.php');
 include ('./inc/template.php');
 $lang_old= $config['language'];
-$config_refresh='';
+$config_refresh = '';
 
 // define template
 $tpl=new MODTemplate();
@@ -61,7 +61,7 @@ if (isset($_POST['selected_config'])||isset($_GET['config']))
 			else selected_div=\'\';
 			parent.MyOOS_Dumper_content.location.href=\'config_overview.php?config='.urlencode($new_config).'&sel=\'+selected_div</script>';
 		}
-		if (isset($_GET['config'])) $config_refresh=''; //Neu-Aufruf bei Uebergabe aus Content-Bereich verhindern
+		if (isset($_GET['config'])) $config_refresh = ''; //Neu-Aufruf bei Uebergabe aus Content-Bereich verhindern
 	}
 }
 

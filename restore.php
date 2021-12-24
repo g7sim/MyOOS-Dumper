@@ -67,7 +67,7 @@ if (isset($_GET['filename']))
 	if (isset($_GET['dump_encoding'])) $restore['dump_encoding'] = $_GET['dump_encoding'];
 	$restore['compressed'] =(substr(strtolower($restore['filename']),-2)=='gz') ? 1 : 0;
 	// wurden nur bestimmte Tabellen ausgwaehlt?
-	if (!isset($databases['db_actual_tableselected'])) $databases['db_actual_tableselected'] ='';
+	if (!isset($databases['db_actual_tableselected'])) $databases['db_actual_tableselected']  = '';
 	if ($databases['db_actual_tableselected']!='')
 	{
 		$restore['tables_to_restore'] =explode('|', $databases['db_actual_tableselected']);
@@ -93,7 +93,7 @@ include ('./language/'.$config['language'].'/lang_restore.php');
 $config['files']['iconpath'] ='./css/'.$config['theme'].'/icons/';
 $aus= [];
 $pageheader=MODheader().headline($lang['L_RESTORE']);
-$aus1= $page_parameter='';
+$aus1= $page_parameter = '';
 $RestoreFertig= $eingetragen= $dauer= $filegroesse=0;
 mod_mysqli_connect($restore['dump_encoding'],true, $restore['actual_table']);
 @mysqli_select_db($config['dbconnection'], $databases['db_actual']) or die($lang['L_DB_SELECT_ERROR'].$databases['db_actual'].$lang['L_DB_SELECT_ERROR2']);
@@ -150,8 +150,8 @@ if ($restore['filehandle'])
 			if ($sql_command>'')
 			{
 				//WriteLog(htmlspecialchars($sql_command));
-				$res=mysqli_query($config['dbconnection'], $sql_command);
-				if (!$res===false)
+				$res = mysqli_query($config['dbconnection'], $sql_command);
+				if (!$res === false)
 				{
 					$anzsql=mysqli_affected_rows($config['dbconnection']);
 					// Anzahl der eingetragenen Datensaetze ermitteln (Indexaktionen nicht zaehlen)

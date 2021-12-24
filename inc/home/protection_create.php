@@ -22,7 +22,7 @@ include ('./language/'.$config['language'].'/lang_sql.php');
 include ('./inc/home/apr1_md5/apr1_md5.php');
 use WhiteHat101\Crypt\APR1_MD5;
 
-$dba= $hta_dir= $Overwrite= $msg='';
+$dba= $hta_dir= $Overwrite= $msg = '';
 $error= [];
 $is_htaccess=(file_exists('./.htaccess'));
 if ($is_htaccess)

@@ -22,7 +22,7 @@ if (!@ob_start("ob_gzhandler")) @ob_start();
 
 session_name('MyOOSDumperID');
 session_start();
-$aus2= $page_parameter= $a= $out='';
+$aus2= $page_parameter= $a= $out = '';
 include_once ('./inc/functions_dump.php');
 
 // beim Erstaufruf Konfigurationsdatei auslesen und in Session speichern
@@ -145,7 +145,7 @@ if ((isset($config['optimize_tables_beforedump']) && ($config['optimize_tables_b
 {
 	$out.=sprintf($lang['L_NR_TABLES_OPTIMIZED'], $num_tables).'<br>';
 }
-$dump['data'] ='';
+$dump['data']  = '';
 $dump['dbindex'] =(isset($_POST['dbindex'])) ? $_POST['dbindex']:$flipped[$databases['multi'][0]];
 
 //Ausgaben-Header bauen
@@ -231,7 +231,7 @@ else
 					$dump['restzeilen'] = $config['minspeed'];
 				}
 
-				$create_statement='';
+				$create_statement = '';
 				$create_statement=get_def($adbname, $table);
 
 				if (!($create_statement===false))
@@ -274,7 +274,7 @@ else
 	 */
 	if (isset($config['multi_dump']) && ($config['multi_dump'] ==1))
 	{
-		$mudbs='';
+		$mudbs = '';
 		$count_dbs=count($databases['multi']);
 		for($i=0;$i<$count_dbs;$i++)
 		{
@@ -432,8 +432,8 @@ else
 		{
 			$aus[] =sprintf($lang['L_MULTIDUMP'],count($databases['multi'])).': ';
 			$aus[] ='<strong>'.implode(', ', $databases['multi']).'</strong>';
-			$aus2='';
-			$out='';
+			$aus2 = '';
+			$out = '';
 		}
 		else
 		{
@@ -474,7 +474,7 @@ else
 	$dump= [];
 	$_SESSION['dump'] = $dump;
 	$pagefooter=MODFooter('',1);
-	$selbstaufruf='';
+	$selbstaufruf = '';
 }
 $complete_page= $pageheader.implode("\n", $aus)."\n".$selbstaufruf."\n".$pagefooter;
 echo $complete_page;

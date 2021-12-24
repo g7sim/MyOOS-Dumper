@@ -53,7 +53,7 @@ $config['files']['perllogcomplete'] = $config['paths']['log'].'myoosdumper_perl.
 $config['files']['parameter'] = $config['paths']['config'] . $config['config_file'].'.php';
 
 // inti MySQL-Setting-Vars
-$config['mysql_standard_character_set'] ='';
+$config['mysql_standard_character_set']  = '';
 $config['mysql_possible_character_sets'] = [];
 
 //Ini-Parameter

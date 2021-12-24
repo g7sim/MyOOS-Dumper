@@ -39,12 +39,12 @@ if ($tblr == 'Backup')
 	$button_name='dump_tbl';
 	//Info aus der Datenbank lesen
 	mod_mysqli_connect();
-	$res=mysqli_query($config['dbconnection'], 'SHOW TABLE STATUS FROM `'.$databases['db_actual'].'`');
+	$res = mysqli_query($config['dbconnection'], 'SHOW TABLE STATUS FROM `'.$databases['db_actual'].'`');
 	$numrows=mysqli_num_rows($res);
-	$tbl_zeile='';
+	$tbl_zeile = '';
 	for ($i = 0; $i < $numrows; $i++)
 	{
-		$row=mysqli_fetch_array($res,MYSQLI_ASSOC);
+		$row = mysqli_fetch_array($res,MYSQLI_ASSOC);
 		//v($row);
 		// Get nr of records -> need to do it this way because of incorrect returns when using InnoDBs
 		$sql_2="SELECT count(*) as `count_records` FROM `" . $databases['db_actual'] . "`.`" . $row['Name'] . "`";
@@ -107,7 +107,7 @@ else
 
 	$anzahl_tabellen= $sline['tables'];
 	$anzahl_eintraege= $sline['records'];
-	$tbl_zeile='';
+	$tbl_zeile = '';
 	$part=( $sline['part'] == '' ) ? 0 : substr($sline['part'],3);
 	if ($anzahl_eintraege == -1)
 	{
@@ -158,7 +158,7 @@ else
 	else fclose($fp);
 }
 
-if (!isset($dk)) $dk='';
+if (!isset($dk)) $dk = '';
 
 $confirm_restore= $lang['L_FM_ALERTRESTORE1'].' `'.$databases['db_actual'].'`  '.$lang['L_FM_ALERTRESTORE2'].' '.$filename.' '.$lang['L_FM_ALERTRESTORE3'];
 

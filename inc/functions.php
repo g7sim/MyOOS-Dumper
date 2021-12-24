@@ -166,8 +166,8 @@ function SetDefault($load_default = false) {
 
 	$create_statement='CREATE TABLE `myoosdumper_test_abcxyvfgh` (`test` varchar(200) default NULL, `id` bigint(20) unsigned NOT NULL auto_increment,'.'PRIMARY KEY  (`id`)) TYPE=MyISAM;';
 
-	$res=mysqli_query($config['dbconnection'], "SHOW DATABASES");
-	while ($row=mysqli_fetch_row($res)) {
+	$res = mysqli_query($config['dbconnection'], "SHOW DATABASES");
+	while ($row = mysqli_fetch_row($res)) {
 	    $found_dbs[] = $row[0];
 	}
 	$found_dbs = array_merge($oldDbArray, $found_dbs);
@@ -713,7 +713,7 @@ function SearchDatabases($printout, $db='')
 	// Datenbanken automatisch erkennen
 	$show_dbs=mysqli_query($config['dbconnection'],"SHOW DATABASES");
 	if (!$show_dbs === false) {
-		while ($row=mysqli_fetch_row($show_dbs)) {
+		while ($row = mysqli_fetch_row($show_dbs)) {
 			if (trim($row[0]) > '') $db_list[] = $row[0];
 		}
 	}
@@ -725,9 +725,9 @@ function SearchDatabases($printout, $db='')
 			// Test-Select um zu sehen, ob Berechtigungen existieren
 			if (!@mysqli_query($config['dbconnection'], "SHOW TABLES FROM `" . $db_list[$i] . "`") === false) {
 				$databases['Name'][$i] = $db_list[$i];
-				$databases['praefix'][$i] ='';
-				$databases['command_before_dump'][$i] ='';
-				$databases['command_after_dump'][$i] ='';
+				$databases['praefix'][$i]  = '';
+				$databases['command_before_dump'][$i]  = '';
+				$databases['command_after_dump'][$i]  = '';
 				if ($printout == 1) echo $lang['L_FOUND_DB'].' `'.$db_list[$i].'`<br />';
 			} else {
     			if ($printout == 1) echo '<span class="error">'.sprintf($lang['L_DB_MANUAL_ERROR'], $db_list[$i]).'</span><br />';

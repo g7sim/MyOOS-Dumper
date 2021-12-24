@@ -125,7 +125,7 @@ else
 			$res=@mod_query($sql_temp,false);		
 			if ($res)
 			{
-				if ($row=mysqli_fetch_object($res))
+				if ($row = mysqli_fetch_object($res))
 				{
 					$numrowsabs= $row->anzahl;
 				}
@@ -142,7 +142,7 @@ else
 $sqltmp= $sql['sql_statement'] . $sql['order_statement'] . ( strpos(strtolower($sql['sql_statement'] . $sql['order_statement']),' limit ') ? '' : $limit );
 
 
-if (!$skip_mysql_execution) $res=mod_query($sqltmp);
+if (!$skip_mysql_execution) $res = mod_query($sqltmp);
 $numrows = mysqli_num_rows($res);
 
 
@@ -179,7 +179,7 @@ if ($numrowsabs > 0 && $Anzahl_SQLs <= 1)
 	{
 		//Infos und Header holen
 		//1.Datensatz fuer Feldinfos
-		$row=mysqli_fetch_row($res);
+		$row = mysqli_fetch_row($res);
 		//Kompaktmodus-Switcher
 		$t='<td colspan="'.( count($row) + 1 ).'" align="left"><a href="sql.php?db='.$db.'&amp;tablename='.$tablename.'&amp;dbid='.$dbid.'&amp;order='.urlencode($order).'&amp;orderdir='.$orderdir.'&amp;limitstart='.$limitstart.'&amp;sql_statement='.urlencode($sql['sql_statement']).'&amp;tdc='.( ( $tdcompact == 0 ) ? '1' : '0' ).'">'.( ( $tdcompact == 1 ) ? $lang['L_SQL_VIEW_STANDARD'] : $lang['L_SQL_VIEW_COMPACT'] ).'</a>';
 		$t.='&nbsp;&nbsp;&nbsp;'.$lang['L_SQL_QUERYENTRY'].' '.count($row).' '.$lang['L_SQL_COLUMNS'];
@@ -298,7 +298,7 @@ if ($numrowsabs > 0 && $Anzahl_SQLs <= 1)
 			// get primary key link for editing
 			if ($key > -1)
 			{
-				$primary_key='';
+				$primary_key = '';
 				$keys=explode('|', $key);
 				foreach ($sortkey as $rowkey=>$rowval)
 				{
@@ -380,7 +380,7 @@ if ($numrowsabs > 0 && $Anzahl_SQLs <= 1)
 					else
 					{
 						if (isset($temp[$i][$rowkey])) $data=( $fdesc[$rowkey]['type'] == 'string' || $fdesc[$rowkey]['type'] == 'blob' ) ? convert_to_utf8($temp[$i][$rowkey]) : $temp[$i][$rowkey];
-						else $data='';
+						else $data = '';
 						if (in_array($rowkey, $byte_output)) $data=byte_output($data);
 
 					}

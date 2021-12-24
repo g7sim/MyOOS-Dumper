@@ -100,7 +100,7 @@ function FillMultiDBArrays()
 		$databases['multi_praefix'] = [];
 		if (!isset($databases['db_selected_index'])) $databases['db_selected_index'] =0;
 		if (!isset($databases['db_actual'])&&isset($databases['Name'])) $databases['db_actual'] = $databases['Name'][$databases['db_selected_index']];
-		if (!isset($databases['multisetting'])) $databases['multisetting'] ='';
+		if (!isset($databases['multisetting'])) $databases['multisetting']  = '';
 
 		//		if($config['multi_dump'] ==1)
 		//		{
@@ -360,7 +360,7 @@ function ErrorLog($dest, $db, $sql, $error, $art=1)
 function DirectoryWarnings($path="")
 {
 	global $config, $lang;
-	$warn='';
+	$warn = '';
 	if (!is_writable($config['paths']['work'])) $warn.=sprintf($lang['L_WRONG_RIGHTS'], $config['paths']['work'],'0777');
 	if (!is_writable($config['paths']['config'])) $warn.=sprintf($lang['L_WRONG_RIGHTS'], $config['paths']['config'],'0777');
 	if (!is_writable($config['paths']['backup'])) $warn.=sprintf($lang['L_WRONG_RIGHTS'], $config['paths']['backup'],'0777');
@@ -436,7 +436,7 @@ function SelectDB($index)
 		$databases['db_actual'] = $databases['Name'][$index];
 		if (isset($databases['praefix'][$index])) $databases['praefix'][$databases['db_selected_index']] = $databases['praefix'][$index];
 		else
-			$databases['praefix'][$databases['db_selected_index']] ='';
+			$databases['praefix'][$databases['db_selected_index']]  = '';
 		if (isset($databases['db_selected_index'])) $databases['db_selected_index'] = $index;
 		else
 			$databases['db_selected_index'] =0;
@@ -444,9 +444,9 @@ function SelectDB($index)
 	else
 	{
 		// keine DB vorhanden
-		$databases['praefix'][$databases['db_selected_index']] ='';
+		$databases['praefix'][$databases['db_selected_index']]  = '';
 		$databases['db_selected_index'] =0;
-		$databases['db_actual'] ='';
+		$databases['db_actual']  = '';
 	}
 }
 
@@ -455,8 +455,8 @@ function EmptyDB($dbn)
 	global $config;
 	$t_sql= [];
 	@mysqli_query($config['dbconnection'], 'SET FOREIGN_KEY_CHECKS=0');
-	$res=mysqli_query($config['dbconnection'], 'SHOW TABLE STATUS FROM `'.$dbn.'`') or die('EmptyDB: '.mysqli_error($config['dbconnection']));
-	while ($row=mysqli_fetch_array($res,MYSQLI_ASSOC))
+	$res = mysqli_query($config['dbconnection'], 'SHOW TABLE STATUS FROM `'.$dbn.'`') or die('EmptyDB: '.mysqli_error($config['dbconnection']));
+	while ($row = mysqli_fetch_array($res,MYSQLI_ASSOC))
 	{
 		if (substr(strtoupper($row['Comment']),0,4)=='VIEW')
 		{
@@ -471,7 +471,7 @@ function EmptyDB($dbn)
 	{
 		for ($i = 0; $i<count($t_sql); $i++)
 		{
-			$res=mysqli_query($config['dbconnection'], $t_sql[$i]) or die('EmptyDB-Error: '.mysqli_error($config['dbconnection']));
+			$res = mysqli_query($config['dbconnection'], $t_sql[$i]) or die('EmptyDB-Error: '.mysqli_error($config['dbconnection']));
 		}
 	}
 	@mysqli_query($config['dbconnection'], 'SET FOREIGN_KEY_CHECKS=1');
@@ -480,7 +480,7 @@ function EmptyDB($dbn)
 function AutoDelete()
 {
 	global $del_files, $config, $lang, $out;
-	$out='';
+	$out = '';
 	if (isset($config['max_backup_files']) && ($config['max_backup_files']>0))
 	{
 		//Files einlesen
@@ -521,7 +521,7 @@ function AutoDelete()
 				}
 			}
 		}
-		$out=''; // stores output messages
+		$out = ''; // stores output messages
 		// Backups pro DB und Timestamp ermitteln
 		foreach ($files as $db=>$val)
 		{
@@ -598,13 +598,13 @@ function ReadStatusline($line)
 		$statusline['records'] =-1;
 		$statusline['part'] ='MP_0';
 		$statusline['dbname'] ='unknown';
-		$statusline['script'] ='';
-		$statusline['scriptversion'] ='';
-		$statusline['comment'] ='';
+		$statusline['script']  = '';
+		$statusline['scriptversion']  = '';
+		$statusline['comment']  = '';
 		$statusline['mysqlversion'] ='unknown';
 		$statusline['flags'] ='2222222';
-		$statusline['sqlbefore'] ='';
-		$statusline['sqlafter'] ='';
+		$statusline['sqlbefore']  = '';
+		$statusline['sqlafter']  = '';
 		$statusline['charset'] ='?';
 	}
 	else
@@ -618,7 +618,7 @@ function ReadStatusline($line)
 			array_pop($s);
 			for ($i= $c-1; $i<12; $i++)
 			{
-				$s[] ='';
+				$s[]  = '';
 			}
 		}
 		$statusline['tables'] = $s[1];
@@ -681,7 +681,7 @@ function TesteFTP($i)
 {
 	global $lang, $config;
 	if (!isset($config['ftp_timeout'][$i])) $config['ftp_timeout'][$i] =30;
-	$s='';
+	$s = '';
 	if ($config['ftp_port'][$i] ==''||$config['ftp_port'][$i] ==0) $config['ftp_port'][$i] =21;
 	$pass=-1;
 	if (!extension_loaded("ftp"))
@@ -756,7 +756,7 @@ function TesteSFTP($i)
 	if ($config['sftp_secret_passphrase_for_private_key'][$i] ==''||$config['sftp_secret_passphrase_for_private_key'][$i] ==0) $config['sftp_secret_passphrase_for_private_key'][$i] =null;
 	if ($config['sftp_fingerprint'][$i] ==''||$config['sftp_fingerprint'][$i] ==0) $config['sftp_fingerprint'][$i] =null;
 
-	$s='';
+	$s = '';
 	$pass=-1;
 
 	if (!extension_loaded("ftp"))
@@ -1081,7 +1081,7 @@ function MODHeader($kind=0)
 
 function MODFooter($rfoot='', $enddiv=1)
 {
-	$f='';
+	$f = '';
 	if ($enddiv==1) $f.='</div>';
 
 	$f.= $rfoot.'</body></html>';
@@ -1095,7 +1095,7 @@ function save_bracket($str)
 	$str=trim($str);
 	if (substr($str,-1)==')') $str=')';
 	else
-		$str='';
+		$str = '';
 	return $str;
 }
 
@@ -1154,7 +1154,7 @@ function DownGrade($s, $show = true)
 			{
 				if (strtolower($tmp2[$j])=="character")
 				{
-					$tmp2[$j] ='';
+					$tmp2[$j]  = '';
 					$tmp2[$j+1] =save_bracket($tmp2[$j+1]);
 					$tmp2[$j+2] =save_bracket($tmp2[$j+2]);
 				}
@@ -1368,17 +1368,17 @@ function get_sql_encodings()
 	unset($config['mysql_possible_character_sets']);
 	if (!isset($config['dbconnection'])) mod_mysqli_connect();
 	$erg=false;
-	$config['mysql_standard_character_set'] ='';
+	$config['mysql_standard_character_set']  = '';
 	$config['mysql_possible_character_sets'] = [];
 
 	// MySQL-Version >= 4.1
 	$config['mysql_can_change_encoding'] = true;
 	$sqlt='SHOW CHARACTER SET';
-	$res=mod_query($sqlt) or die(SQLError($sqlt,mysqli_error($config['dbconnection'])));
+	$res = mod_query($sqlt) or die(SQLError($sqlt,mysqli_error($config['dbconnection'])));
 
 	if ($res)
 	{
-		while ($row=mysqli_fetch_row($res))
+		while ($row = mysqli_fetch_row($res))
 		{
 			$config['mysql_possible_character_sets'][] = $row[0].' - '.$row[1];
 		}
@@ -1386,11 +1386,11 @@ function get_sql_encodings()
 	}
 
 	$sqlt='SHOW VARIABLES LIKE \'character_set_connection\'';
-	$res=mod_query($sqlt) or die(SQLError($sqlt,mysqli_error($config['dbconnection'])));
+	$res = mod_query($sqlt) or die(SQLError($sqlt,mysqli_error($config['dbconnection'])));
 
 	if ($res)
 	{
-		while ($row=mysqli_fetch_row($res))
+		while ($row = mysqli_fetch_row($res))
 		{
 			$config['mysql_standard_character_set'] = $row[1];
 		}
@@ -1459,7 +1459,7 @@ function fetchFileFromURL($url, $file, $local_file, $local_path='./data/')
 function fetchFileDataFromURL($url)
 {
 	$url_parsed=parse_url($url);
-	$in='';
+	$in = '';
 
 	$host= $url_parsed['host'];
 	$port = isset($url_parsed['port']) ? intval($url_parsed['port']) : 80;

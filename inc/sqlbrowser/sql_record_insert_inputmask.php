@@ -22,7 +22,7 @@ $tpl->set_filenames(array(
 	'show' => './tpl/sqlbrowser/sql_record_insert_inputmask.tpl'));
 
 $sqledit="SHOW FIELDS FROM `$tablename`";
-$res=mod_query($sqledit);
+$res = mod_query($sqledit);
 if ($res)
 {
 	$num=mysqli_num_rows($res);
@@ -30,7 +30,7 @@ if ($res)
 	$feldnamen= '';
 	for ($x=0; $x<$num; $x++)
 	{
-		$row=mysqli_fetch_object($res);
+		$row = mysqli_fetch_object($res);
 		$feldnamen.= $row->Field.'|';
 		$tpl->assign_block_vars('ROW',array(
 			'CLASS' => ($x%2) ? 1 : 2,

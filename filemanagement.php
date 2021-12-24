@@ -27,7 +27,7 @@ include_once ('./language/'.$config['language'].'/lang_config_overview.php');
 include_once ('./language/'.$config['language'].'/lang_main.php');
 include_once ('./inc/functions_files.php');
 include_once ('./inc/functions_sql.php');
-$msg='';
+$msg = '';
 $dump= [];
 if (isset($config['auto_delete']) && ($config['auto_delete'] == 1)) $msg = AutoDelete();
 get_sql_encodings(); // get possible sql charsets and also get default charset
@@ -76,7 +76,7 @@ if ($action=='dl')
 if (!@ob_start("ob_gzhandler")) @ob_start();
 echo MODHeader();
 
-$toolboxstring='';
+$toolboxstring = '';
 $fpath= $config['paths']['backup'];
 $dbactiv=(isset($_GET['dbactiv'])) ? $_GET['dbactiv'] : $databases['db_actual'];
 $databases['multi'] = [];
@@ -308,7 +308,7 @@ if (isset($_POST['upload']))
 
 //Seitenteile vordefinieren
 $href='filemanagement.php?action='.$action.'&amp;kind='.$kind;
-$tbl_abfrage='';
+$tbl_abfrage = '';
 if (isset($config['multi_dump']) && ($config['multi_dump'] == 0)) $tbl_abfrage='<tr><td>'.$lang['L_FM_SELECTTABLES'].'</td><td><input type="checkbox" class="checkbox" name="tblfrage" value="1"></td></tr>';
 $dk=(isset($_POST['dumpKommentar'])) ? htmlentities($_POST['dumpKommentar']) : '';
 $tbl_abfrage.='<tr><td>'.$lang['L_FM_COMMENT'].':</td><td><input type="text" class="text" style="width:260px;" name="dumpKommentar" value="'.$dk.'"></td></tr>';

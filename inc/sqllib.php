@@ -27,7 +27,7 @@ $sqllib[$i]['sql'] = '';
 $i++;
 */
 $i=0;
-$sqllib= array ();
+$sqllib = [];
 
 $sqllib[$i]['name'] = $lang['L_SQLLIB_GENERALFUNCTIONS'];
 $sqllib[$i]['sql'] ="trenn";

@@ -297,7 +297,7 @@ if (isset($_POST['newfield_posted']))
 }
 mysqli_select_db($config['dbconnection'], $databases['Name'][$dbid]);
 $sqlt="SHOW TABLE STATUS FROM `".$databases['Name'][$dbid]."` ;";
-$res=mod_query($sqlt);
+$res = mod_query($sqlt);
 $anz_tabellen=mysqli_num_rows($res);
 $p="sql.php?db=".$databases['Name'][$dbid]."&amp;dbid= $dbid&amp;tablename= $table_edit_name&amp;context=2";
 
@@ -316,7 +316,7 @@ else
 	echo '<td colspan="2"><select name="tableselect" onchange="this.form.submit()"><option value="1" SELECTED></option>';
 	for ($i = 0; $i<$anz_tabellen; $i++)
 	{
-		$row=mysqli_fetch_array($res);
+		$row = mysqli_fetch_array($res);
 		echo '<option value="'.$row['Name'].'">'.$row['Name'].'</option>';
 	}
 	echo '</select>&nbsp;&nbsp;</td>';
@@ -326,7 +326,7 @@ echo '</table></form><p>&nbsp;</p>';
 if ($table_edit_name!="")
 {
 	$sqlf="SHOW FULL FIELDS FROM `".$databases['Name'][$dbid]."`.`$table_edit_name` ;";
-	$res=mod_query($sqlf);
+	$res = mod_query($sqlf);
 	$anz_fields=mysqli_num_rows($res);
 	$fields_infos=getFieldinfos($databases['Name'][$dbid], $table_edit_name);
 
@@ -357,8 +357,8 @@ if ($table_edit_name!="")
 	$field_fehler=0;
 	echo '<h6>'.$lang['L_FIELDS_OF_TABLE'].' `'.$table_edit_name.'`</h6>';
 
-	$d_collate='';
-	$d_comment='';
+	$d_collate = '';
+	$d_comment = '';
 
 	if (isset($_GET['newfield'])||isset($_GET['editfield'])||$field_fehler>0||isset($_POST['newfield_posted']))
 	{
@@ -369,7 +369,7 @@ if ($table_edit_name!="")
 		$d_null=(isset($_GET['editfield'])) ? $fields_infos[$id]['null'] : '';
 		$d_attribute=(isset($_GET['editfield'])) ? $fields_infos[$id]['attributes'] : '';
 
-		$d_default='';
+		$d_default = '';
 		if (isset($id)&&isset($fields_infos[$id])&&isset($fields_infos[$id]['default']))
 		{
 			if ($fields_infos[$id]['default'] =='NULL') $d_default='NULL';
@@ -478,7 +478,7 @@ if ($table_edit_name!="")
 	       <th>'.$lang['L_COMMENT'].'</th>
 	   </tr>';
 	$sqlk="SHOW KEYS FROM `".$databases['Name'][$dbid]."`.`$table_edit_name`;";
-	$res=mod_query($sqlk);
+	$res = mod_query($sqlk);
 	$num=mysqli_num_rows($res);
 	if ($num==0)
 	{
@@ -488,7 +488,7 @@ if ($table_edit_name!="")
 	{
 		for ($i = 0; $i<$num; $i++)
 		{
-			$row=mysqli_fetch_array($res,MYSQLI_ASSOC);
+			$row = mysqli_fetch_array($res,MYSQLI_ASSOC);
 			if (!isset($row['Comment'])) {
 			    $row['Comment'] = '';
 			}
@@ -551,7 +551,7 @@ if ($table_edit_name!="")
 		echo '<table class="bdr">';
 		//body
 		$sqlFelder="DESCRIBE `".$databases['Name'][$dbid]."`.`".$_GET['tablename']."`;";
-		$res=mod_query($sqlFelder);
+		$res = mod_query($sqlFelder);
 		$num=mysqli_num_rows($res);
 		if ($num==0)
 		{
@@ -571,7 +571,7 @@ if ($table_edit_name!="")
             echo '<table class="bdr">';
     		echo '<tr class="thead"><th>#</th><th>'.$lang['L_PRIMARYKEY_FIELD'].'</th><th>'.$lang['L_INFO_SIZE'].'</th>';
 
-			while ($row=mysqli_fetch_array($res, MYSQLI_ASSOC))
+			while ($row = mysqli_fetch_array($res, MYSQLI_ASSOC))
 			{
 				$feldArray[$row['Field']] = $row['Type'];
 			}

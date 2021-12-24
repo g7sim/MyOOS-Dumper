@@ -92,7 +92,7 @@ if ($import == 1)
 	$impaus= $aus;
 
 	$impaus.='<form action="sql.php?db='.$db.'&amp;dbid='.$dbid.'&amp;context=4&amp;import=1" method="post" enctype="multipart/form-data">'.$nl;
-	$impaus.='';
+	$impaus. = '';
 	$impaus.='<a href="sql.php?db='.$db.'&amp;dbid='.$dbid.'&amp;context=4">'.$lang['L_EXPORT'].'</a>';
 	$impaus.='<h6>'.sprintf($lang['L_SQL_IMPORT'], $databases['Name'][$dbid]).'</h6>';
 	$impaus.='<table class="bordersmall"><tr class="thead"><th>'.$nl;
@@ -223,14 +223,14 @@ else
 
 	//Tabellenliste
 	$sqlt="SHOW TABLE STATUS FROM `$db`";
-	$res=mod_query($sqlt);
+	$res = mod_query($sqlt);
 	if ($res)
 	{
 		$sql['export']['tablecount'] =mysqli_num_rows($res);
 		$sql['export']['recordcount'] =0;
 		for ($i = 0; $i < $sql['export']['tablecount']; $i++)
 		{
-			$row=mysqli_fetch_array($res);
+			$row = mysqli_fetch_array($res);
 			$tblstr.='<option value="'.$row['Name'].'" '.( ( isset($sql['export']['tables']) && in_array($row['Name'], $sql['export']['tables']) ) ? ' selected="selected"' : '').'>'.$row['Name'].' ('.$row['Rows'].')</option>'."\n";
 			$sql['export']['recordcount']+= $row['Rows'];
 		}
@@ -244,7 +244,7 @@ else
 	$exaus.='<table class="bdr"><tr class="thead"><th>'.$lang['L_TABLES'].'</th>'.$nl;
 	$exaus.='<th>'.$lang['L_EXPORTOPTIONS'].'</th>';
 	$exaus.='<th>'.$lang['L_EXPORT'].'</th></tr><tr>';
-	$exaus.='';
+	$exaus. = '';
 
 	$exaus.='<td><span class="ssmall"><strong>'.$sql['export']['tablecount'].'</strong> '.$lang['L_TABLES'].', <strong>'.$sql['export']['recordcount'].'</strong> '.$lang['L_RECORDS'].'</span>';
 	$exaus.='&nbsp;&nbsp;&nbsp;<a class="ssmall" href="#" onclick="SelectTableList(true);">'.$lang['L_ALL'].'</a>&nbsp;&nbsp;<a class="ssmall" href="#" onclick="SelectTableList(false);">'.$lang['L_NONE'].'</a>'.$nl;

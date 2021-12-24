@@ -98,7 +98,7 @@ function FileList($multi=0)
 			$file_datum=date("d\.m\.Y H:i",filemtime($fpath.$files[$i]['name']));
 
 			//statuszeile auslesen
-			$sline='';
+			$sline = '';
 
 			if (substr($files[$i]['name'],-3)=='.gz')
 			{
@@ -361,7 +361,7 @@ function Converter($filesource, $filedestination, $cp)
 
 	$zeile=get_pseudo_statusline($part, $filedestination)."\r\n";
 	($cp==1) ? gzwrite($z, $zeile):fwrite($z, $zeile);
-	$zeile='';
+	$zeile = '';
 
 	$insert= $mode= '';
 	$n=0;
@@ -431,7 +431,7 @@ function Converter($filesource, $filedestination, $cp)
 					$z=gzopen($config['paths']['backup'].$filedestination.'_part_'.$part.'.sql.gz',"w");
 					$zeile=get_pseudo_statusline($part, $filedestination)."\r\n";
 					gzwrite($z, $zeile);
-					$zeile='';
+					$zeile = '';
 				}
 				else
 				{
@@ -441,7 +441,7 @@ function Converter($filesource, $filedestination, $cp)
 					$z=fopen($config['paths']['backup'].$filedestination.'_part_'.$part.'.sql',"w");
 					$zeile=get_pseudo_statusline($part, $filedestination)."\r\n";
 					gzwrite($z, $zeile);
-					$zeile='';
+					$zeile = '';
 				}
 			}
 			else // first close last file, then begin new one and write new beginning command

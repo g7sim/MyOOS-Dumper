@@ -42,7 +42,7 @@ switch ($var)
 			echo '<table class="bdr"><tr class="thead"><th><strong>Name</strong></th><th><strong>'.$lang['L_INHALT'].'</strong></th></tr>';
 			for ($i = 0; $i<$numrows; $i++)
 			{
-				$row=mysqli_fetch_array($res);
+				$row = mysqli_fetch_array($res);
 				$cl=($i%2) ? "dbrow" : "dbrow1";
 				echo '<tr class="'.$cl.'"><td align="left">'.$row[0].'</td><td  align="left">'.$row[1].'</td></tr>';
 			}
@@ -62,7 +62,7 @@ switch ($var)
 			for ($i = 0; $i<$numrows; $i++)
 			{
 				$cl=($i%2) ? "dbrow" : "dbrow1";
-				$row=mysqli_fetch_array($res);
+				$row = mysqli_fetch_array($res);
 				echo '<tr class="'.$cl.'"><td align="left" valign="top">'.$row[0].'</td><td align="left" valign="top">'.$row[1].'</td></tr>';
 			}
 		}
@@ -106,7 +106,7 @@ switch ($var)
 			for ($i = 0; $i<$numrows; $i++)
 			{
 				$cl=($i%2) ? "dbrow" : "dbrow1";
-				$row=mysqli_fetch_array($res);
+				$row = mysqli_fetch_array($res);
 				echo '<tr><td>'.$row[0].'</td><td>'.$row[1].'</td>
 					<td>'.$row[2].'</td><td>'.$row[3].'</td><td>'.$row[4].'</td><td>'.$row[5].'</td>
 					<td>'.$row[6].'</td><td>'.$row[7].'</td>
