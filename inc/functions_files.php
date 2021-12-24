@@ -236,7 +236,7 @@ function FileList($multi = 0)
 
                 $fl .= '<td class="sm" nowrap="nowrap">'.$db_backups[$i]['date'].'</td>';
                 $fl .= '<td style="text-align:center">';
-                $fl .= (0 == $db_backups[$i]['multipart']) ? $lang['L_NO'] : '<a style="font-size:11px;" href="filemanagement.php?action=files&amp;kind=0&amp;dbactiv='.$dbactiv.'&amp;expand='.$i.'">'.$db_backups[$i]['multipart'].' Files</a>'; 
+                $fl .= (0 == $db_backups[$i]['multipart']) ? $lang['L_NO'] : '<a style="font-size:11px;" href="filemanagement.php?action=files&amp;kind=0&amp;dbactiv='.$dbactiv.'&amp;expand='.$i.'">'.$db_backups[$i]['multipart'].' Files</a>';
                 $fl .= '</td><td  style="text-align:right;padding-right:12px;" nowrap="nowrap">';
                 $fl .= (-1 != $db_backups[$i]['eintraege']) ? $db_backups[$i]['tabellen'].' / '.number_format($db_backups[$i]['eintraege'], 0, ',', '.') : $lang['L_FM_OLDBACKUP'];
                 $fl .= '</td>';
