@@ -121,5 +121,5 @@ $lang['L_TOOLS4']['el'] ='Μεταφόρτωση αποθηκευμένης ρύ
 // *****************************************************************************
 // Language defaults to english.
 
-if (!in_array($config['language'],$lang['languages'])) $config['language'] ='en';
+if (!in_array($config['language'], $lang['languages'])) $config['language'] ='en';
 include_once('./language/'.$config['language'].'/lang.php');

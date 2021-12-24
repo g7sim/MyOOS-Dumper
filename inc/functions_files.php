@@ -18,7 +18,7 @@
 
 if (!defined('MOD_VERSION')) die('No direct access.');
 
-function FilelisteCombo($fpath,$selected)
+function FilelisteCombo($fpath, $selected)
 {
 	$r='<select name="selectfile">';
 	$r.='<option value="" '.(($selected=="") ? "SELECTED":"").'></option>';
@@ -39,9 +39,9 @@ function FilelisteCombo($fpath,$selected)
 
 function sortierdatum($datum)
 {
-	$p=explode(' ',$datum);
+	$p=explode(' ', $datum);
 	$uhrzeit= $p[1];
-	$p2=explode('.',$p[0]);
+	$p2=explode('.', $p[0]);
 	$day= $p2[0];
 	$month= $p2[1];
 	$year= $p2[2];
@@ -50,7 +50,7 @@ function sortierdatum($datum)
 
 function FileList($multi=0)
 {
-	global $config,$fpath,$lang,$databases,$href,$dbactiv,$action,$expand;
+	global $config, $fpath, $lang, $databases, $href, $dbactiv, $action, $expand;
 
 	$files= [];
 	//Backup-Dateien
@@ -253,7 +253,7 @@ function FileList($multi=0)
 				if ($expand== $i)
 				{
 					$fl.='<tr '.(($dbactiv== $databases['db_actual']) ? 'class="dbrowsel"':'class="'.$cl.'"').'>';
-					$fl.='<td class="sm" valign="top">All Parts:</td><td  class="sm" colspan="11" align="left">'.PartListe($db_backups[$i]['name'],$db_backups[$i]['multipart']).'</td>';
+					$fl.='<td class="sm" valign="top">All Parts:</td><td  class="sm" colspan="11" align="left">'.PartListe($db_backups[$i]['name'], $db_backups[$i]['multipart']).'</td>';
 				}
 				$rowclass++;
 			}
@@ -329,9 +329,9 @@ function read_statusline_from_file($filename)
 	return $statusline;
 }
 
-function PartListe($f,$nr)
+function PartListe($f, $nr)
 {
-	global $config,$lang,$fpath;
+	global $config, $lang, $fpath;
 	$dateistamm=substr($f,0,strrpos($f,"part_"))."part_";
 	$dateiendung=(substr(strtolower($f),-2)=="gz") ? ".sql.gz":".sql";
 	$s= '';
@@ -345,22 +345,22 @@ function PartListe($f,$nr)
 	return $s;
 }
 
-function Converter($filesource,$filedestination,$cp)
+function Converter($filesource, $filedestination, $cp)
 {
-	global $config,$lang;
+	global $config, $lang;
 
 	$filesize=0;
 	$max_filesize=1024*1024*10; //10 MB splitsize
 	$part=1;
 	$cps=(substr(strtolower($filesource),-2)=="gz") ? 1:0;
 	$filedestination.='_'.date("Y_m_d_H_i",time());
-	echo "<h5>".sprintf($lang['L_CONVERT_FILEREAD'],$filesource).".....</h5><span style=\"font-size:10px;\">";
+	echo "<h5>".sprintf($lang['L_CONVERT_FILEREAD'], $filesource).".....</h5><span style=\"font-size:10px;\">";
 	if (file_exists($config['paths']['backup'].$filedestination)) unlink($config['paths']['backup'].$filedestination);
 	$f=($cps==1) ? gzopen($config['paths']['backup'].$filesource,"r"):fopen($config['paths']['backup'].$filesource,"r");
 	$z=($cp==1) ? gzopen($config['paths']['backup'].$filedestination.'_part_1.sql.gz',"w"):fopen($config['paths']['backup'].$filedestination.'_part_1.sql',"w");
 
-	$zeile=get_pseudo_statusline($part,$filedestination)."\r\n";
-	($cp==1) ? gzwrite($z,$zeile):fwrite($z,$zeile);
+	$zeile=get_pseudo_statusline($part, $filedestination)."\r\n";
+	($cp==1) ? gzwrite($z, $zeile):fwrite($z, $zeile);
 	$zeile='';
 
 	$insert= $mode= '';
@@ -405,7 +405,7 @@ function Converter($filesource,$filedestination,$cp)
 							$zeile.=fgets($f,8192);
 						}
 						$zeile="\n\r".MySQLi_Ticks($zeile)."\n\r";
-						$splitable=true;
+						$splitable = true;
 						break;
 					}
 			}
@@ -413,34 +413,34 @@ function Converter($filesource,$filedestination,$cp)
 
 		if ($mode=='insert')
 		{
-			if (substr(rtrim($zeile),strlen($zeile)-3,2)==');') $splitable=true;
+			if (substr(rtrim($zeile),strlen($zeile)-3,2)==');') $splitable = true;
 
 			// Komma loeschen
-			$zeile=str_replace('),(',");\n\r".$insert.' (',$zeile);
+			$zeile=str_replace('),(',");\n\r".$insert.' (', $zeile);
 		}
 
-		if ($splitable==true&&$filesize>$max_filesize) // start new file?
+		if ($splitable= = true&&$filesize>$max_filesize) // start new file?
 		{
 			$part++;
 			if ($mode=='insert') // Insert -> first complete Insert-Statement, then begin new file
 			{
 				if ($cp==1)
 				{
-					gzwrite($z,$zeile);
+					gzwrite($z, $zeile);
 					gzclose($z);
 					$z=gzopen($config['paths']['backup'].$filedestination.'_part_'.$part.'.sql.gz',"w");
-					$zeile=get_pseudo_statusline($part,$filedestination)."\r\n";
-					gzwrite($z,$zeile);
+					$zeile=get_pseudo_statusline($part, $filedestination)."\r\n";
+					gzwrite($z, $zeile);
 					$zeile='';
 				}
 				else
 				{
-					fwrite($z,$zeile);
+					fwrite($z, $zeile);
 					echo "<br>Neue Datei.Zeile: <br>".htmlspecialchars(substr($zeile,0,20))."..".htmlspecialchars(substr($zeile,strlen($zeile)-41,40))."<br>";
 					fclose($z);
 					$z=fopen($config['paths']['backup'].$filedestination.'_part_'.$part.'.sql',"w");
-					$zeile=get_pseudo_statusline($part,$filedestination)."\r\n";
-					gzwrite($z,$zeile);
+					$zeile=get_pseudo_statusline($part, $filedestination)."\r\n";
+					gzwrite($z, $zeile);
 					$zeile='';
 				}
 			}
@@ -450,15 +450,15 @@ function Converter($filesource,$filedestination,$cp)
 				{
 					gzclose($z);
 					$z=gzopen($config['paths']['backup'].$filedestination.'_part_'.$part.'.sql.gz',"w");
-					$zeile=get_pseudo_statusline($part,$filedestination)."\r\n".$zeile;
-					gzwrite($z,$zeile);
+					$zeile=get_pseudo_statusline($part, $filedestination)."\r\n".$zeile;
+					gzwrite($z, $zeile);
 				}
 				else
 				{
 					fclose($z);
 					$z=fopen($config['paths']['backup'].$filedestination.'_part_'.$part.'.sql',"w");
-					$zeile=get_pseudo_statusline($part,$filedestination)."\r\n".$zeile;
-					fwrite($z,$zeile);
+					$zeile=get_pseudo_statusline($part, $filedestination)."\r\n".$zeile;
+					fwrite($z, $zeile);
 				}
 			}
 			$filesize=0;
@@ -473,9 +473,9 @@ function Converter($filesource,$filedestination,$cp)
 				echo '<br>';
 			}
 			echo '.';
-			if ($cps==1) gzwrite($z,$zeile);
+			if ($cps==1) gzwrite($z, $zeile);
 			else
-				fwrite($z,$zeile);
+				fwrite($z, $zeile);
 			flush();
 		}
 		$n++;
@@ -484,22 +484,22 @@ function Converter($filesource,$filedestination,$cp)
 	$zeile="\n-- EOB";
 	if ($cps==1)
 	{
-		gzwrite($z,$zeile);
+		gzwrite($z, $zeile);
 		gzclose($z);
 	}
 	else
 	{
-		fwrite($z,$zeile);
+		fwrite($z, $zeile);
 		fclose($z);
 	}
 
 	if ($cps==1) gzclose($f);
 	else
 		fclose($f);
-	echo '</span><h5>'.sprintf($lang['L_CONVERT_FINISHED'],$filedestination).'</h5>';
+	echo '</span><h5>'.sprintf($lang['L_CONVERT_FINISHED'], $filedestination).'</h5>';
 }
 
-function get_pseudo_statusline($part,$filedestination)
+function get_pseudo_statusline($part, $filedestination)
 {
 	echo '<br>Continue with part: '.$part.'<br>';
 	$ret='-- Status:-1:-1:MP_'.($part).':'.$filedestination.":php:converter2:converted:unknown:1:::latin1:EXTINFO\r\n"."-- TABLE-INFO\r\n"."-- TABLE|unknown|0|0|2009-01-24 20:39:39\r\n"."-- EOF TABLE-INFO\r\n";

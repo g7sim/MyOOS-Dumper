@@ -71,7 +71,7 @@ echo headline('',0);
 if ($config_refresh>'')
 {
 	$tpl->assign_block_vars('CONFIG_REFRESH_TRUE',array());
-	$tpl->assign_var('CONFIG_REFRESH',$config_refresh);
+	$tpl->assign_var('CONFIG_REFRESH', $config_refresh);
 }
 
 // changed language

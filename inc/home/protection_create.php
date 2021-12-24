@@ -96,7 +96,7 @@ if (isset($_POST['username']))
 		// save .htpasswd
 		if ($file_htpasswd=@fopen('.htpasswd','w'))
 		{
-			$saved=fputs($file_htpasswd,$htpasswd);
+			$saved=fputs($file_htpasswd, $htpasswd);
 			fclose($file_htpasswd);
 		}
 		else
@@ -108,7 +108,7 @@ if (isset($_POST['username']))
 			$file_htaccess=@fopen('.htaccess','w');
 			if ($file_htaccess)
 			{
-				$saved=fputs($file_htaccess,$htaccess);
+				$saved=fputs($file_htaccess, $htaccess);
 				fclose($file_htaccess);
 			}
 			else
@@ -153,7 +153,7 @@ if (sizeof($error)>0||!isset($_POST['username']))
 	));
 }
 
-if (sizeof($error)>0) $msg='<span class="error">'.implode('<br>',$error).'</span>';
+if (sizeof($error)>0) $msg='<span class="error">'.implode('<br>', $error).'</span>';
 if ($msg>'') $tpl->assign_block_vars('MSG',array(
 	'TEXT' => $msg));
 

@@ -26,7 +26,7 @@ $buffer=10*1024;
 
 function new_file($last_groesse=0)
 {
-	global $dump,$databases,$config,$out,$lang,$nl,$mysql_commentstring;
+	global $dump, $databases, $config, $out, $lang, $nl, $mysql_commentstring;
 
 	// Dateiname aus Datum und Uhrzeit bilden
 	if ($dump['part']-$dump['part_offset'] ==1) $dump['filename_stamp'] =date("Y_m_d_H_i",time());
@@ -85,9 +85,9 @@ function GetStatusLine($kind="php")
 		(complete inserts)(extended inserts)(ignore inserts)(delayed inserts)(downgrade)(lock tables)(optimize tables)
 	*/
 
-	global $databases,$config,$lang,$dump,$mysql_commentstring;
+	global $databases, $config, $lang, $dump, $mysql_commentstring;
 
-	$t_array=explode("|",$databases['db_actual_tableselected']);
+	$t_array=explode("|", $databases['db_actual_tableselected']);
 	$t=0;
 	$r=0;
 	$t_zeile="$mysql_commentstring\n$mysql_commentstring TABLE-INFO\r\n";
@@ -103,8 +103,8 @@ function GetStatusLine($kind="php")
 		if ($res2===false)
 		{
 			// error reading table definition
-			$read_create_error=sprintf($lang['L_FATAL_ERROR_DUMP'],$databases['Name'][$dump['dbindex']],$erg['Name']).': '.mysqli_error($config['dbconnection']);
-			Errorlog("DUMP",$databases['Name'][$dump['dbindex']],'',$read_create_error,0);
+			$read_create_error=sprintf($lang['L_FATAL_ERROR_DUMP'], $databases['Name'][$dump['dbindex']], $erg['Name']).': '.mysqli_error($config['dbconnection']);
+			Errorlog("DUMP", $databases['Name'][$dump['dbindex']],'', $read_create_error,0);
 			WriteLog($read_create_error);
 			if ($config['stop_with_error']>0)
 			{
@@ -118,7 +118,7 @@ function GetStatusLine($kind="php")
 			$row2=mysqli_fetch_array($res2);
 			$erg['Rows'] = $row2['count_records'];
 
-			if (($databases['db_actual_tableselected'] ==''||($databases['db_actual_tableselected']!=''&&(in_array($erg[0],$t_array))))&&(substr($erg[0],0,strlen($databases['praefix'][$dump['dbindex']]))== $databases['praefix'][$dump['dbindex']]))
+			if (($databases['db_actual_tableselected'] ==''||($databases['db_actual_tableselected']!=''&&(in_array($erg[0], $t_array))))&&(substr($erg[0],0,strlen($databases['praefix'][$dump['dbindex']]))== $databases['praefix'][$dump['dbindex']]))
 			{
 				$t++;
 				$r+= $erg['Rows'];
@@ -137,12 +137,12 @@ function GetStatusLine($kind="php")
 }
 
 // Liest die Eigenschaften der Tabelle aus der DB und baut die CREATE-Anweisung zusammen
-function get_def($db,$table,$withdata=1)
+function get_def($db, $table, $withdata=1)
 {
-	global $config,$nl,$mysql_commentstring,$dump;
+	global $config, $nl, $mysql_commentstring, $dump;
 
 	$def="\n\n$mysql_commentstring\n$mysql_commentstring Create Table `$table`\n$mysql_commentstring\n\n";
-	if ($dump['table_types'][getDBIndex($db,$table)] =='VIEW')
+	if ($dump['table_types'][getDBIndex($db, $table)] =='VIEW')
 	{
 		$def.="DROP VIEW IF EXISTS `$table`;\n";
 		$withdata=0;
@@ -163,12 +163,12 @@ function get_def($db,$table,$withdata=1)
 }
 
 // Liest die Daten aus der DB aus und baut die INSERT-Anweisung zusammen
-function get_content($db,$table)
+function get_content($db, $table)
 {
-	global $config,$nl,$dump,$buffer;
+	global $config, $nl, $dump, $buffer;
 
 	$content='';
-	$complete=Fieldlist($db,$table).' ';
+	$complete=Fieldlist($db, $table).' ';
 
 	if (!isset($config['dbconnection'])) mod_mysqli_connect();
 
@@ -233,7 +233,7 @@ function get_content($db,$table)
 				WriteToDumpFile();
 			}
 		}
-		if ($table_ready==1&&$dump['table_types'][getDBIndex($db,$table)]!='VIEW') $dump['data'] .="/*!40000 ALTER TABLE `$table` ENABLE KEYS */;\n";
+		if ($table_ready==1&&$dump['table_types'][getDBIndex($db, $table)]!='VIEW') $dump['data'] .="/*!40000 ALTER TABLE `$table` ENABLE KEYS */;\n";
 	}
 	else
 	{
@@ -252,7 +252,7 @@ function get_content($db,$table)
 
 function WriteToDumpFile()
 {
-	global $config,$dump,$buffer;
+	global $config, $dump, $buffer;
 	$dump['filesize'] =0;
 
 	$df= $config['paths']['backup'].$dump['backupdatei'];
@@ -262,7 +262,7 @@ function WriteToDumpFile()
 		if ($dump['data']!='')
 		{
 			$fp=gzopen($df,'ab');
-			gzwrite($fp,$dump['data']);
+			gzwrite($fp, $dump['data']);
 			gzclose($fp);
 		}
 	}
@@ -271,7 +271,7 @@ function WriteToDumpFile()
 		if ($dump['data']!='')
 		{
 			$fp=fopen($df,'ab');
-			fwrite($fp,$dump['data']);
+			fwrite($fp, $dump['data']);
 			fclose($fp);
 		}
 	}
@@ -290,7 +290,7 @@ function WriteToDumpFile()
 
 function ExecuteCommand($when)
 {
-	global $config,$databases,$dump,$out,$lang;
+	global $config, $databases, $dump, $out, $lang;
 	$lf='<br>';
 	if (!isset($dump['dbindex'])) return;
 	if ($when=='b')
@@ -314,7 +314,7 @@ function ExecuteCommand($when)
 			@mysqli_select_db($databases['Name'][$dump['dbindex']]);
 			if (strpos($cd,';'))
 			{
-				$cad=explode(';',$cd);
+				$cad=explode(';', $cd);
 			}
 			else
 				$cad[0] = $cd;
@@ -328,7 +328,7 @@ function ExecuteCommand($when)
 					if ($result===false)
 					{
 						WriteLog("Error executing Query '$cad[$i]'! MySQL returns: ".trim(mysqli_error($config['dbconnection'])));
-						ErrorLog("Error executing Query '$cad[$i]'!",$databases['Name'][$dump['dbindex']],$cad[$i],mysqli_error($config['dbconnection']),0);
+						ErrorLog("Error executing Query '$cad[$i]'!", $databases['Name'][$dump['dbindex']], $cad[$i],mysqli_error($config['dbconnection']),0);
 						$dump['errors']++;
 						$out.='<span class="error">Error executing Query '.$cad[$i].'</span>'.$lf;
 					}
@@ -343,7 +343,7 @@ function ExecuteCommand($when)
 		elseif (substr(strtolower($cd),0,7)=="system:")
 		{
 			$command=substr($cd,7);
-			$result=@system($command,$returnval);
+			$result=@system($command, $returnval);
 			if (!$result)
 			{
 				WriteLog("Error while executing System Command '$command'");
@@ -362,26 +362,26 @@ function ExecuteCommand($when)
 
 function DoEmail()
 {
-	global $config,$dump,$databases,$email,$lang,$out,$REMOTE_ADDR;
+	global $config, $dump, $databases, $email, $lang, $out, $REMOTE_ADDR;
 
 	$header= '';
 	if ($config['cron_use_sendmail'] ==1)
 	{
 		//sendmail
-		if (ini_get("sendmail_path")!= $config['cron_sendmail']) @ini_set("SMTP",$config['cron_sendmail']);
-		if (ini_get("sendmail_from")!= $config['email_sender']) @ini_set("SMTP",$config['email_sender']);
+		if (ini_get("sendmail_path")!= $config['cron_sendmail']) @ini_set("SMTP", $config['cron_sendmail']);
+		if (ini_get("sendmail_from")!= $config['email_sender']) @ini_set("SMTP", $config['email_sender']);
 	}
 	else
 	{
 		//SMTP
 	}
-	if (ini_get("SMTP")!= $config['cron_smtp']) @ini_set("SMTP",$config['cron_smtp']);
+	if (ini_get("SMTP")!= $config['cron_smtp']) @ini_set("SMTP", $config['cron_smtp']);
 	if (ini_get("smtp_port")!=25) @ini_set("smtp_port",25);
 
 	if ($config['multi_part'] ==0)
 	{
 		$file= $dump['backupdatei'];
-		$file_name=(strpos("/",$file)) ? substr($file,strrpos("/",$file)):$file;
+		$file_name=(strpos("/", $file)) ? substr($file,strrpos("/", $file)):$file;
 		$file_type=filetype($config['paths']['backup'].$file);
 		$file_size=filesize($config['paths']['backup'].$file);
 		if (($config['email_maxsize']>0&&$file_size>$config['email_maxsize'])||$config['send_mail_dump'] ==0)
@@ -396,11 +396,11 @@ function DoEmail()
 			$header.="Content-Type: text/html; charset=utf-8\n";
 			if ($config['send_mail_dump']!=0)
 			{
-				$msg_body=sprintf(addslashes($lang['L_EMAILBODY_TOOBIG']),byte_output($config['email_maxsize']),$databases['Name'][$dump['dbindex']],"$file (".byte_output(filesize($config['paths']['backup'].$file)).")<br>");
+				$msg_body=sprintf(addslashes($lang['L_EMAILBODY_TOOBIG']),byte_output($config['email_maxsize']), $databases['Name'][$dump['dbindex']],"$file (".byte_output(filesize($config['paths']['backup'].$file)).")<br>");
 			}
 			else
 			{
-				$msg_body=sprintf(addslashes($lang['L_EMAILBODY_NOATTACH']),$databases['Name'][$dump['dbindex']],"$file (".byte_output(filesize($config['paths']['backup'].$file)).")");
+				$msg_body=sprintf(addslashes($lang['L_EMAILBODY_NOATTACH']), $databases['Name'][$dump['dbindex']],"$file (".byte_output(filesize($config['paths']['backup'].$file)).")");
 			}
 			include_once ('./inc/functions.php');
 			$msg_body.='<a href="'.getServerProtocol().$_SERVER['HTTP_HOST'].substr($_SERVER["PHP_SELF"],0,strrpos($_SERVER["PHP_SELF"],"/")).'/'.$config['paths']['backup'].$file.'">'.$file.'</a>';
@@ -410,10 +410,10 @@ function DoEmail()
 		else
 		{
 			//alles ok, anhang generieren
-			$msg_body=sprintf(addslashes($lang['L_EMAILBODY_ATTACH']),$databases['Name'][$dump['dbindex']],"$file (".byte_output(filesize($config['paths']['backup'].$file)).")");
+			$msg_body=sprintf(addslashes($lang['L_EMAILBODY_ATTACH']), $databases['Name'][$dump['dbindex']],"$file (".byte_output(filesize($config['paths']['backup'].$file)).")");
 			$subject="Backup '".$databases['Name'][$dump['dbindex']]."' - ".date("d\.m\.Y",time());
 			$fp=fopen($config['paths']['backup'].$file,"r");
-			$contents=fread($fp,$file_size);
+			$contents=fread($fp, $file_size);
 			$encoded_file=chunk_split(base64_encode($contents));
 			fclose($fp);
 			$header.="FROM:".$config['email_sender']."\n";
@@ -459,11 +459,11 @@ function DoEmail()
 			$sz=byte_output(@filesize($config['paths']['backup'].$mpdatei[$i-1]));
 			$mpfiles.= $mpdatei[$i-1]." (".$sz.")<br>";
 		}
-		$msg_body=($config['send_mail_dump'] ==1) ? sprintf(addslashes($lang['L_EMAILBODY_MP_ATTACH']),$databases['Name'][$dump['dbindex']],$mpfiles):sprintf(addslashes($lang['L_EMAILBODY_MP_NOATTACH']),$databases['Name'][$dump['dbindex']],$mpfiles);
+		$msg_body=($config['send_mail_dump'] ==1) ? sprintf(addslashes($lang['L_EMAILBODY_MP_ATTACH']), $databases['Name'][$dump['dbindex']], $mpfiles):sprintf(addslashes($lang['L_EMAILBODY_MP_NOATTACH']), $databases['Name'][$dump['dbindex']], $mpfiles);
 		$email_log="Email was sent to '".$config['email_recipient']."'";
 		$email_out= $lang['L_EMAIL_WAS_SEND']."`".$config['email_recipient']."`<br>";
 	}
-	if (@mail($config['email_recipient'],stripslashes($subject),$msg_body,$header))
+	if (@mail($config['email_recipient'],stripslashes($subject), $msg_body, $header))
 	{
 		$out.='<span class="success">'.$email_out.'</span>';
 		WriteLog("$email_log");
@@ -472,7 +472,7 @@ function DoEmail()
 	{
 		$out.='<span class="error">'.$lang['L_MAILERROR'].'</span><br>';
 		WriteLog("Email to '".$config['email_recipient']."' failed !");
-		ErrorLog("Email ",$databases['Name'][$dump['dbindex']],'Subject: '.stripslashes($subject),$lang['L_MAILERROR']);
+		ErrorLog("Email ", $databases['Name'][$dump['dbindex']],'Subject: '.stripslashes($subject), $lang['L_MAILERROR']);
 		$dump['errors']++;
 	}
 
@@ -484,7 +484,7 @@ function DoEmail()
 			$file_type=filetype($config['paths']['backup'].$mpdatei[$i]);
 			$file_size=filesize($config['paths']['backup'].$mpdatei[$i]);
 			$fp=fopen($config['paths']['backup'].$mpdatei[$i],"r");
-			$contents=fread($fp,$file_size);
+			$contents=fread($fp, $file_size);
 			$encoded_file=chunk_split(base64_encode($contents));
 			fclose($fp);
 			$subject= $mp_sub."  [Part ".($i+1)." / ".count($mpdatei)."]";
@@ -509,7 +509,7 @@ function DoEmail()
 			$email_log="Email with $mpdatei[$i] was sent to '".$config['email_recipient']."'";
 			$email_out= $lang['L_EMAIL_WAS_SEND']."`".$config['email_recipient']."`".$lang['L_WITH']."`".$mpdatei[$i]."`.<br>";
 
-			if (@mail($config['email_recipient'],stripslashes($subject),$msg_body,$header))
+			if (@mail($config['email_recipient'],stripslashes($subject), $msg_body, $header))
 			{
 				$out.='<span class="success">'.$email_out.'</span>';
 				WriteLog("$email_log");
@@ -518,7 +518,7 @@ function DoEmail()
 			{
 				$out.='<span class="error">'.$lang['L_MAILERROR'].'</span><br>';
 				WriteLog("Email to '".$config['email_recipient']."' failed !");
-				ErrorLog("Email ",$databases['Name'][$dump['dbindex']],'Subject: '.stripslashes($subject),$lang['L_MAILERROR']);
+				ErrorLog("Email ", $databases['Name'][$dump['dbindex']],'Subject: '.stripslashes($subject), $lang['L_MAILERROR']);
 				$dump['errors']++;
 			}
 		}
@@ -527,11 +527,11 @@ function DoEmail()
 
 function DoFTP($i)
 {
-	global $config,$dump,$out;
+	global $config, $dump, $out;
 
 	if ($config['multi_part'] ==0)
 	{
-		SendViaFTP($i,$dump['backupdatei'],1);
+		SendViaFTP($i, $dump['backupdatei'],1);
 	}
 	else
 	{
@@ -540,22 +540,22 @@ function DoFTP($i)
 		for($a=1;$a<($dump['part']-$dump['part_offset']);$a++)
 		{
 			$mpdatei= $dateistamm.$a.$dateiendung;
-			SendViaFTP($i,$mpdatei,$a);
+			SendViaFTP($i, $mpdatei, $a);
 		}
 	}
 }
 
-function SendViaFTP($i,$source_file,$conn_msg=1)
+function SendViaFTP($i, $source_file, $conn_msg=1)
 {
-	global $config,$out,$lang;
+	global $config, $out, $lang;
 	flush();
 	if ($conn_msg==1) $out.='<span class="success">'.$lang['L_FILESENDFTP']."(".$config['ftp_server'][$i]." - ".$config['ftp_user'][$i].")</span><br>";
 	// Herstellen der Basis-Verbindung
-	if ($config['ftp_useSSL'][$i] ==0) $conn_id=@ftp_connect($config['ftp_server'][$i],$config['ftp_port'][$i],$config['ftp_timeout'][$i]);
+	if ($config['ftp_useSSL'][$i] ==0) $conn_id=@ftp_connect($config['ftp_server'][$i], $config['ftp_port'][$i], $config['ftp_timeout'][$i]);
 	else
-		$conn_id=@ftp_ssl_connect($config['ftp_server'][$i],$config['ftp_port'][$i],$config['ftp_timeout'][$i]);
+		$conn_id=@ftp_ssl_connect($config['ftp_server'][$i], $config['ftp_port'][$i], $config['ftp_timeout'][$i]);
 		// Einloggen mit Benutzername und Kennwort
-	$login_result=@ftp_login($conn_id,$config['ftp_user'][$i],$config['ftp_pass'][$i]);
+	$login_result=@ftp_login($conn_id, $config['ftp_user'][$i], $config['ftp_pass'][$i]);
 	if ($config['ftp_mode'][$i] ==1) ftp_pasv($conn_id,true);
 
 	// Verbindung überprüfen
@@ -571,7 +571,7 @@ function SendViaFTP($i,$source_file,$conn_msg=1)
 	// Upload der Datei
 	$dest= $config['ftp_dir'][$i].$source_file;
 	$source= $config['paths']['backup'].$source_file;
-	$upload=@ftp_put($conn_id,$dest,$source,FTP_BINARY);
+	$upload=@ftp_put($conn_id, $dest, $source,FTP_BINARY);
 
 	// Upload-Status überprüfen
 	if (!$upload)
@@ -592,11 +592,11 @@ function SendViaFTP($i,$source_file,$conn_msg=1)
 
 function DoSFTP($i)
 {
-	global $config,$dump,$out;
+	global $config, $dump, $out;
 
 	if ($config['multi_part'] ==0)
 	{
-		SendViaSFTP($i,$dump['backupdatei'],1);
+		SendViaSFTP($i, $dump['backupdatei'],1);
 	}
 	else
 	{
@@ -605,7 +605,7 @@ function DoSFTP($i)
 		for($a=1;$a<($dump['part']-$dump['part_offset']);$a++)
 		{
 			$mpdatei= $dateistamm.$a.$dateiendung;
-			SendViaSFTP($i,$mpdatei,$a);
+			SendViaSFTP($i, $mpdatei, $a);
 		}
 	}
 }

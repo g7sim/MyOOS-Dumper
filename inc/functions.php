@@ -54,10 +54,10 @@ if (!function_exists('str_ireplace')) // borrowed from http://www.dscripts.net
 			$pos = 0;
 			foreach ($between as $bKey=>$bItem)
 			{
-				$between[$bKey] = substr($string,$pos,strlen($bItem));
+				$between[$bKey] = substr($string, $pos,strlen($bItem));
 				$pos+=strlen($bItem) + strlen($fItem);
 			}
-			$string = implode($replace[$fKey],$between);
+			$string = implode($replace[$fKey], $between);
 		}
 		return ( $string );
 	}
@@ -68,7 +68,7 @@ if (!function_exists('stripos')) // borrowed from php.net comments
 
 	function stripos($haystack, $needle)
 	{
-		return strpos($haystack,stristr($haystack,$needle));
+		return strpos($haystack,stristr($haystack, $needle));
 	}
 }
 
@@ -101,9 +101,9 @@ function DeleteFilesM($dir, $pattern = "*.*")
 		$d=dir($dir);
 		while ($file= $d->read())
 		{
-			if (is_file($dir . $file) && preg_match("/^" . $pattern . "$/",$file))
+			if (is_file($dir . $file) && preg_match("/^" . $pattern . "$/", $file))
 			{
-				if (unlink($dir . $file)) $deleted[$file] =true;
+				if (unlink($dir . $file)) $deleted[$file] = true;
 				else $deleted[$file] =false;
 			}
 		}
@@ -113,7 +113,7 @@ function DeleteFilesM($dir, $pattern = "*.*")
 }
 
 function SetDefault($load_default = false) {
-	global $config,$databases,$nl,$out,$lang,$preConfig;
+	global $config, $databases, $nl, $out, $lang, $preConfig;
 
 	if ($load_default == true) {
 		if (file_exists($config['files']['parameter']) && ( is_readable($config['files']['parameter']) )) include ( $config['files']['parameter'] ); // alte Config lesen
@@ -128,7 +128,7 @@ function SetDefault($load_default = false) {
 	}
 	$restore_values['db_actual'] = isset($databases['db_actual']) ? $databases['db_actual'] : '';
 
-	$old_lang = isset($config['language']) && in_array($config['language'],$lang['languages']) ? $config['language'] : '';
+	$old_lang = isset($config['language']) && in_array($config['language'], $lang['languages']) ? $config['language'] : '';
 	if ($load_default == true)
 	{
 		if (file_exists($config['files']['parameter'])) @unlink($config['files']['parameter']);
@@ -145,22 +145,22 @@ function SetDefault($load_default = false) {
 		include ( "./language/" . $config['language'] . "/lang.php" );
 	}
 
-	$oldVals = array();
+	$oldVals = [];
 	// Zuordnung nach Namen der Db zwischenspeichern, um Eingaben nicht zu verlieren
 	if (isset($databases) && isset($databases['Name'])) {
     	foreach ($databases['Name'] as $k=>$v) {
-    	    if (!isset($oldVals[$k])) $oldVals[$v] = array();
+    	    if (!isset($oldVals[$k])) $oldVals[$v] = [];
             $oldVals[$v]['praefix'] = $databases['praefix'][$k];
             $oldVals[$v]['command_before_dump'] = $databases['command_before_dump'][$k];
             $oldVals[$v]['command_after_dump'] = $databases['command_after_dump'][$k];
     	}
 	}
-	$oldDbArray = array();
+	$oldDbArray = [];
 	if (isset($databases['Name'])) {
 	    $oldDbArray = $databases['Name'];
 	}
 	$databases['Name'] = [];
-	$found_dbs = array();
+	$found_dbs = [];
 	//DB-Liste holen
 	mod_mysqli_connect();
 
@@ -199,7 +199,7 @@ function SetDefault($load_default = false) {
 		$databases['db_selected_index'] =0;
 		$databases['db_actual'] = $databases['Name'][0];
 	}
-	WriteParams(1,$restore_values);
+	WriteParams(1, $restore_values);
 	if ($load_default === true) WriteLog("default settings loaded.");
 
 	return $out;
@@ -209,7 +209,7 @@ function WriteParams($as=0, $restore_values=false)
 {
 	// wenn $as=1 wird versucht den aktuellen Index der Datenbank nach dem Einlesen wieder zu ermitteln
 	// auch wenn sich die Indexnummer durch Loeschaktionen geaendert hat
-	global $config,$databases,$config_dontsave;
+	global $config, $databases, $config_dontsave;
 	$nl="\n";
 	// alte Werte retten
 	if ($as)
@@ -265,7 +265,7 @@ function WriteParams($as=0, $restore_values=false)
 
 	foreach ($config as $var=>$val)
 	{
-		if (!in_array($var,$config_dontsave))
+		if (!in_array($var, $config_dontsave))
 		{
 			if (is_array($val))
 			{
@@ -277,7 +277,7 @@ function WriteParams($as=0, $restore_values=false)
 			}
 			else
 			{
-				if (!in_array($var,$config_dontsave)) $pars_all .= '$config[\''.$var.'\'] = \''.my_addslashes($val) . "';$nl";
+				if (!in_array($var, $config_dontsave)) $pars_all .= '$config[\''.$var.'\'] = \''.my_addslashes($val) . "';$nl";
 			}
 		}
 	}
@@ -315,11 +315,11 @@ function WriteParams($as=0, $restore_values=false)
 	$pars_all.='?>';
 
 	//Datei öffnen und schreiben
-	$ret=true;
+	$ret = true;
 	$file= $config['paths']['config'] . $config['config_file'].'.php';
 	if ($fp=fopen($file,"wb"))
 	{
-		if (!fwrite($fp,$pars_all)) $ret = false;
+		if (!fwrite($fp, $pars_all)) $ret = false;
 		if (!fclose($fp)) $ret = false;
 		@chmod($file,0777);
 	}
@@ -346,7 +346,7 @@ function escape_specialchars($text)
 					'\\',
 					'\"'
 	);
-	$text=str_replace($suchen,$ersetzen,$text);
+	$text=str_replace($suchen, $ersetzen, $text);
 	return $text;
 }
 
@@ -371,7 +371,7 @@ function my_implode($arr, $mode = 0) // 0=String, 1=intval
 }
 
 function WriteCronScript($restore_values = false) {
-	global $nl,$config,$databases,$cron_db_array,$cron_dbpraefix_array,$cron_db_cbd_array,$cron_db_cad_array, $dontBackupDatabases;
+	global $nl, $config, $databases, $cron_db_array, $cron_dbpraefix_array, $cron_db_cbd_array, $cron_db_cad_array, $dontBackupDatabases;
 
 	if (!isset($databases['db_selected_index'])) $databases['db_selected_index'] = 0;
 	if (!isset($databases['command_before_dump'])) $databases['command_before_dump'] = '';
@@ -427,8 +427,8 @@ function WriteCronScript($restore_values = false) {
             $cronDbIndex = 0;
         }
     }
-	$r	= str_replace("\\\\","/",$config['paths']['root']);
-	$r	= str_replace("@","\@",$r);
+	$r	= str_replace("\\\\","/", $config['paths']['root']);
+	$r	= str_replace("@","\@", $r);
 	$p1	= $r . $config['paths']['backup'];
 	$p2	= $r . $config['files']['perllog'] . ((isset($config['logcompression']) && ($config['logcompression'] == 1 )) ? '.gz' : '' );
 	$p3	= $r . $config['files']['perllogcomplete'] . ((isset($config['logcompression']) && ( $config['logcompression'] == 1 )) ? '.gz' : '' );
@@ -549,7 +549,7 @@ function WriteCronScript($restore_values = false) {
 	if (file_exists($sfile)) @unlink($sfile);
 
 	if ($fp = fopen($sfile,"wb")) {
-		if (!fwrite($fp,$cronscript)) $ret = false;
+		if (!fwrite($fp, $cronscript)) $ret = false;
 		if (!fclose($fp)) $ret = false;
 		@chmod("$sfile",0777);
 	} else {
@@ -562,7 +562,7 @@ function WriteCronScript($restore_values = false) {
 		$sfile = $config['paths']['config'].'myoosdumper.conf.php';
 		if ($fp = fopen($sfile,"wb"))
 		{
-			if (!fwrite($fp,$cronscript)) $ret = false;
+			if (!fwrite($fp, $cronscript)) $ret = false;
 			if (!fclose($fp)) $ret = false;
 			@chmod("$sfile",0777);
 		} else {
@@ -615,14 +615,14 @@ function DeleteLog()
 	if ((isset($config['logcompression']) && $config['logcompression'] == 1))
 	{
 		$fp = @gzopen($config['files']['log'].'.gz',"wb");
-		@gzwrite($fp,$log);
+		@gzwrite($fp, $log);
 		@gzclose($fp);
 		@chmod($config['files']['log'].'.gz',0777);
 	}
 	else
 	{
 		$fp = @fopen($config['files']['log'],"wb");
-		@fwrite($fp,$log);
+		@fwrite($fp, $log);
 		@fclose($fp);
 		@chmod($config['files']['log'],0777);
 	}
@@ -631,12 +631,12 @@ function DeleteLog()
 function CreateDirsFTP()
 {
 
-	global $config,$lang,$install_ftp_server,$install_ftp_port,$install_ftp_user_name,$install_ftp_user_pass,$install_ftp_path;
+	global $config, $lang, $install_ftp_server, $install_ftp_port, $install_ftp_user_name, $install_ftp_user_pass, $install_ftp_path;
 	// Herstellen der Basis-Verbindung
 	echo '<hr>'.$lang['L_CONNECT_TO'].' `'.$install_ftp_server.'` Port '.$install_ftp_port.' ...<br>';
 	$conn_id=ftp_connect($install_ftp_server);
 	// Einloggen mit Benutzername und Kennwort
-	$login_result=ftp_login($conn_id,$install_ftp_user_name,$install_ftp_user_pass);
+	$login_result=ftp_login($conn_id, $install_ftp_user_name, $install_ftp_user_pass);
 	// Verbindung überprüfen
 	if (( !$conn_id ) || ( !$login_result )) {
 		echo $lang['L_FTP_NOTCONNECTED'];
@@ -646,7 +646,7 @@ function CreateDirsFTP()
 		if ($config['ftp_mode'] == 1) ftp_pasv($conn_id,true);
 		//Wechsel in betroffenes Verzeichnis
 		echo $lang['L_CHANGEDIR'].' `'.$install_ftp_path.'` ...<br>';
-		ftp_chdir($conn_id,$install_ftp_path);
+		ftp_chdir($conn_id, $install_ftp_path);
 		// Erstellen der Verzeichnisse
 		echo $lang['L_DIRCR1'].' ...<br>';
 		ftp_mkdir($conn_id,"work");
@@ -675,9 +675,9 @@ function ftp_mkdirs($config, $dirname) {
 	$dir = preg_split('/\//', $dirname);
 	for ($i = 0; $i < count($dir) - 1; $i++) {
 		$path.= $dir[$i] . "/";
-		@ftp_mkdir($config['dbconnection'],$path);
+		@ftp_mkdir($config['dbconnection'], $path);
 	}
-	if (@ftp_mkdir($config['dbconnection'],$dirname)) return 1;
+	if (@ftp_mkdir($config['dbconnection'], $dirname)) return 1;
 }
 
 function IsWritable($dir) {
@@ -703,7 +703,7 @@ function IsAccessProtected() {
 
 function SearchDatabases($printout, $db='')
 {
-	global $databases,$config,$lang;
+	global $databases, $config, $lang;
 
 	if (!isset($config['dbconnection'])) mod_mysqli_connect();
 	$db_list = [];
@@ -742,7 +742,7 @@ function my_strip_tags($value) {
 	global $dont_strip;
 	if (is_array($value)) {
 		foreach ($value as $key=>$val) 	{
-			if (!in_array($key,$dont_strip)) $ret[$key] =my_strip_tags($val);
+			if (!in_array($key, $dont_strip)) $ret[$key] =my_strip_tags($val);
 			else $ret[$key] = $val;
 		}
 	}

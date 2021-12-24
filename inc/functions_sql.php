@@ -28,7 +28,7 @@ if (!isset($config['bb_textcolor'])) $config['bb_textcolor'] ="#990033";
 
 function ReadSQL()
 {
-	global $SQL_ARRAY,$config;
+	global $SQL_ARRAY, $config;
 	$sf= $config['paths']['config'].'sql_statements';
 	if (!is_file($sf))
 	{
@@ -44,7 +44,7 @@ function ReadSQL()
 
 function WriteSQL()
 {
-	global $SQL_ARRAY,$config;
+	global $SQL_ARRAY, $config;
 	$sf= $config['paths']['config'].'sql_statements';
 	$str= '';
 	for ($i = 0; $i < count($SQL_ARRAY); $i++)
@@ -55,7 +55,7 @@ function WriteSQL()
 	}
 
 	$fp=fopen($sf,"wb");
-	fwrite($fp,$str);
+	fwrite($fp, $str);
 	fclose($fp);
 
 }
@@ -63,7 +63,7 @@ function WriteSQL()
 function SQL_Name($index)
 {
 	global $SQL_ARRAY;
-	$s=explode('|',$SQL_ARRAY[$index]);
+	$s=explode('|', $SQL_ARRAY[$index]);
 	return $s[0];
 }
 
@@ -72,14 +72,14 @@ function SQL_String($index)
 	global $SQL_ARRAY;
 	if (isset($SQL_ARRAY[$index]) && !empty($SQL_ARRAY[$index]))
 	{
-		$s=explode('|',$SQL_ARRAY[$index],2);
+		$s=explode('|', $SQL_ARRAY[$index],2);
 		return ( isset($s[1]) ) ? $s[1] : '';
 	}
 }
 
 function SQL_ComboBox()
 {
-	global $SQL_ARRAY,$tablename,$nl;
+	global $SQL_ARRAY, $tablename, $nl;
 	$s='';
 	if (is_array($SQL_ARRAY) && count($SQL_ARRAY) > 0)
 	{
@@ -96,7 +96,7 @@ function SQL_ComboBox()
 
 function Table_ComboBox()
 {
-	global $db,$config,$lang,$nl;
+	global $db, $config, $lang, $nl;
 	$tabellen=mysqli_query($config['dbconnection'], 'SHOW TABLES FROM `'.$db.'`');
 	$num_tables = 0;
 	if (is_resource($tabellen)) {
@@ -114,7 +114,7 @@ function Table_ComboBox()
 
 function TableComboBox($default='')
 {
-	global $db,$config,$lang,$nl;
+	global $db, $config, $lang, $nl;
 
 	$sql="SHOW TABLES FROM $db";
 	$tabellen=mod_query($sql);
@@ -138,7 +138,7 @@ function DB_Exists($db)
 	{
 		if (strtolower($row['Database']) == strtolower($db))
 		{
-			$erg=true;
+			$erg = true;
 			break;
 		}
 	}
@@ -158,7 +158,7 @@ function Table_Exists($db, $table)
 		{
 			$tables[] = $row[0];
 		}
-		if (in_array($table,$tables)) return true;
+		if (in_array($table, $tables)) return true;
 	}
 	return false;
 }
@@ -173,8 +173,8 @@ function DB_Empty($dbn)
 function sqlReturnsRecords($sql)
 {
 	global $mysql_SQLhasRecords;
-	$s=explode(' ',$sql);
-	return in_array(strtoupper($s[0]),$mysql_SQLhasRecords) ? 1 : 0;
+	$s=explode(' ', $sql);
+	return in_array(strtoupper($s[0]), $mysql_SQLhasRecords) ? 1 : 0;
 }
 
 function getCountSQLStatements($sql)
@@ -195,7 +195,7 @@ function splitSQLStatements2Array($sql)
 	$z=0;
 	$sqlArr= [];
 	$tmp='';
-	$sql=str_replace("\n",'',$sql);
+	$sql=str_replace("\n",'', $sql);
 	$l=strlen($sql);
 	$inQuotes=false;
 	for ($i = 0; $i < $l; $i++)
@@ -263,8 +263,8 @@ function Table_Copy($source, $destination, $insert_data, $destinationdb="")
 	$row=mysqli_fetch_row($res);
 	$c= $row[1];
 	$a1=strpos($c,"`");
-	$a2=strpos($c,"`",$a1 + 1);
-	$c=substr($c,0,$a1 + 1) . $destination . substr($c,$a2);
+	$a2=strpos($c,"`", $a1 + 1);
+	$c=substr($c,0, $a1 + 1) . $destination . substr($c, $a2);
 	if (substr($c,-1) == ";") $c=substr($c,0,strlen($c) - 1);
 	$SQL_Array.=( $insert_data == 1 ) ? "$c SELECT * FROM $source ;\n" : "$c ;\n";
 	//echo "<h5>$SQL_Array</h5>";
@@ -274,7 +274,7 @@ function Table_Copy($source, $destination, $insert_data, $destinationdb="")
 
 function MOD_DoSQL($sqlcommands, $limit="")
 {
-	global $config,$out,$numrowsabs,$numrows,$num_befehle,$time_used,$sql;
+	global $config, $out, $numrowsabs, $numrows, $num_befehle, $time_used, $sql;
 
 	if (!isset($sql['parser']['sql_commands'])) $sql['parser']['sql_commands'] =0;
 	if (!isset($sql['parser']['sql_errors'])) $sql['parser']['sql_errors'] =0;
@@ -360,12 +360,12 @@ function SQLParser($command, $debug=0)
 		if (strtoupper(substr($s,0,7)) == "INSERT ") $sql['parser']['insert']++;
 		else $sql['parser']['update']++;
 		$i=strpos(strtoupper($s)," VALUES") + 7;
-		$st=substr($s,$i);
+		$st=substr($s, $i);
 		$i=strpos($st,"(") + 1;
-		$st=substr($st,$i);
+		$st=substr($st, $i);
 		$st=substr($st,0,strlen($st) - 2);
 
-		$tb=explode(",",$st);
+		$tb=explode(",", $st);
 		for ($i = 0; $i < count($tb); $i++)
 		{
 			$first= $B_Esc= $B_Ticks= $B_Dashes=0;
@@ -481,7 +481,7 @@ function SQLParser($command, $debug=0)
 
 function SQLOutput($sqlcommand, $meldung='')
 {
-	global $sql,$lang;
+	global $sql, $lang;
 	$s='<h6 align="center">'.$lang['L_SQL_OUTPUT'].'</h6><div id="sqloutbox"><strong>';
 	if ($meldung != '') $s.=trim($meldung);
 
@@ -519,11 +519,11 @@ function GetCreateTable($db, $tabelle)
 
 function KindSQL($sql)
 {
-	if (preg_match('@^((-- |#)[^\n]*\n|/\*.*?\*/)*(DROP|CREATE)[[:space:]]+(IF EXISTS[[:space:]]+)?(TABLE|DATABASE)[[:space:]]+(.+)@im',$sql))
+	if (preg_match('@^((-- |#)[^\n]*\n|/\*.*?\*/)*(DROP|CREATE)[[:space:]]+(IF EXISTS[[:space:]]+)?(TABLE|DATABASE)[[:space:]]+(.+)@im', $sql))
 	{
 		return 2;
 	}
-	elseif (preg_match('@^((-- |#)[^\n]*\n|/\*.*?\*/)*(DROP|CREATE)[[:space:]]+(IF EXISTS[[:space:]]+)?(TABLE|DATABASE)[[:space:]]+(.+)@im',$sql))
+	elseif (preg_match('@^((-- |#)[^\n]*\n|/\*.*?\*/)*(DROP|CREATE)[[:space:]]+(IF EXISTS[[:space:]]+)?(TABLE|DATABASE)[[:space:]]+(.+)@im', $sql))
 	{
 		return 1;
 	}
@@ -531,7 +531,7 @@ function KindSQL($sql)
 
 function GetPostParams()
 {
-	global $db,$dbid,$tablename,$context,$limitstart,$order,$orderdir,$sql;
+	global $db, $dbid, $tablename, $context, $limitstart, $order, $orderdir, $sql;
 	$db= $_POST['db'];
 	$dbid= $_POST['dbid'];
 	$tablename= $_POST['tablename'];
@@ -547,13 +547,13 @@ function GetPostParams()
 // we need to built the same index to get the postet values for inserts and updates
 function correct_post_index($index)
 {
-	$index=str_replace(' ','_',$index);
-	$index=str_replace('.','_',$index);
+	$index=str_replace(' ','_', $index);
+	$index=str_replace('.','_', $index);
 	return $index;
 }
 function ComboCommandDump($when, $index, $disabled = '')
 {
-	global $SQL_ARRAY,$nl,$databases,$lang;
+	global $SQL_ARRAY, $nl, $databases, $lang;
 	if ( (is_array($SQL_ARRAY) && count($SQL_ARRAY) == 0) || !is_array($SQL_ARRAY) )
 	{
 		$r='<a href="sql.php?context=1" class="uls">'.$lang['L_SQL_BEFEHLE'].'</a>';
@@ -719,39 +719,39 @@ function simple_bbcode_conversion($a)
 
 	//replacements
 	$a=nl2br($a);
-	$a=str_replace('<br>',' <br>',$a);
-	$a=str_replace('<br />',' <br>',$a);
+	$a=str_replace('<br>',' <br>', $a);
+	$a=str_replace('<br />',' <br>', $a);
 
-	$a=preg_replace("/\[url=(.*?)\](.*?)\[\/url\]/si","<a class=\"small\"  href=\"$1\" target=\"blank\">$2</a>",$a);
-	$a=preg_replace("/\[urltargetself=(.*?)\](.*?)\[\/urltargetself\]/si","<a class=\"small\"  href=\"$1\" target=\"blank\">$2</a>",$a);
-	$a=preg_replace("/\[url\](.*?)\[\/url\]/si","<a class=\"small\"  href=\"$1\" target=\"blank\">$1</a>",$a);
-	$a=preg_replace("/\[ed2k=\+(.*?)\](.*?)\[\/ed2k\]/si","<a class=\"small\"  href=\"$1\" target=\"blank\">$2</a>",$a);
-	$a=preg_replace("/\[ed2k=(.*?)\](.*?)\[\/ed2k\]/si","<a class=\"small\"  href=\"$1\" target=\"blank\">$2</a>",$a);
+	$a=preg_replace("/\[url=(.*?)\](.*?)\[\/url\]/si","<a class=\"small\"  href=\"$1\" target=\"blank\">$2</a>", $a);
+	$a=preg_replace("/\[urltargetself=(.*?)\](.*?)\[\/urltargetself\]/si","<a class=\"small\"  href=\"$1\" target=\"blank\">$2</a>", $a);
+	$a=preg_replace("/\[url\](.*?)\[\/url\]/si","<a class=\"small\"  href=\"$1\" target=\"blank\">$1</a>", $a);
+	$a=preg_replace("/\[ed2k=\+(.*?)\](.*?)\[\/ed2k\]/si","<a class=\"small\"  href=\"$1\" target=\"blank\">$2</a>", $a);
+	$a=preg_replace("/\[ed2k=(.*?)\](.*?)\[\/ed2k\]/si","<a class=\"small\"  href=\"$1\" target=\"blank\">$2</a>", $a);
 
-	$a=preg_replace("/\[center\](.*?)\[\/center\]/si","<div align=\"center\">$1</div>",$a);
-	$a=preg_replace("/\[size=([1-2]?[0-9])\](.*?)\[\/size\]/si","<span style=\"font-size= $1px;\">$2</span>",$a);
-	$a=preg_replace("/\[size=([1-2]?[0-9]):(.*?)\](.*?)\[\/size(.*?)\]/si","<span style=\"font-size= $1px;\">$3</span>",$a);
-	$a=preg_replace("/\[font=(.*?)\](.*?)\[\/font\]/si","<span style=\"font-family:$1;\">$2</span>",$a);
-	$a=preg_replace("/\[color=(.*?)\](.*?)\[\/color\]/si","<span style=\"color= $1;\">$2</span>",$a);
-	$a=preg_replace("/\[color=(.*?):(.*?)\](.*?)\[\/color(.*?)\]/si","<span style=\"color= $1;\">$3</span>",$a);
-	$a=preg_replace("/\[img\](.*?)\[\/img\]/si","<img src=\"$1\" vspace=4 hspace=4>",$a);
+	$a=preg_replace("/\[center\](.*?)\[\/center\]/si","<div align=\"center\">$1</div>", $a);
+	$a=preg_replace("/\[size=([1-2]?[0-9])\](.*?)\[\/size\]/si","<span style=\"font-size= $1px;\">$2</span>", $a);
+	$a=preg_replace("/\[size=([1-2]?[0-9]):(.*?)\](.*?)\[\/size(.*?)\]/si","<span style=\"font-size= $1px;\">$3</span>", $a);
+	$a=preg_replace("/\[font=(.*?)\](.*?)\[\/font\]/si","<span style=\"font-family:$1;\">$2</span>", $a);
+	$a=preg_replace("/\[color=(.*?)\](.*?)\[\/color\]/si","<span style=\"color= $1;\">$2</span>", $a);
+	$a=preg_replace("/\[color=(.*?):(.*?)\](.*?)\[\/color(.*?)\]/si","<span style=\"color= $1;\">$3</span>", $a);
+	$a=preg_replace("/\[img\](.*?)\[\/img\]/si","<img src=\"$1\" vspace=4 hspace=4>", $a);
 	//$a=preg_replace("/\[b\](.*?)\[\/b\]/si", "<strong>$1</strong>", $a);
-	$a=preg_replace("/\[b(.*?)\](.*?)\[\/b(.*?)\]/si","<strong>$2</strong>",$a);
+	$a=preg_replace("/\[b(.*?)\](.*?)\[\/b(.*?)\]/si","<strong>$2</strong>", $a);
 	//$a=preg_replace("/\[u\](.*?)\[\/u\]/si", "<u>$1</u>", $a);
-	$a=preg_replace("/\[u(.*?)\](.*?)\[\/u(.*?)\]/si","<u>$2</u>",$a);
+	$a=preg_replace("/\[u(.*?)\](.*?)\[\/u(.*?)\]/si","<u>$2</u>", $a);
 	//$a=preg_replace("/\[i\](.*?)\[\/i\]/si", "<em>$1</em>", $a);
-	$a=preg_replace("/\[i(.*?)\](.*?)\[\/i(.*?)\]/si","<em>$2</em>",$a);
+	$a=preg_replace("/\[i(.*?)\](.*?)\[\/i(.*?)\]/si","<em>$2</em>", $a);
 	//$a=preg_replace("/\[quote\](.*?)\[\/quote\]/si", "<p align=\"left\" style=\"border: 2px solid silver;padding:4px;\">$1</p>", $a);
-	$a=preg_replace("/\[quote(.*?)\](.*?)\[\/quote(.*?)\]/si","<p align=\"left\" style=\"border: 2px solid silver;padding:4px;\">$2</p>",$a);
-	$a=preg_replace("/\[code(.*?)\](.*?)\[\/code(.*?)\]/si","<p align=\"left\" style=\"border: 2px solid red;color:green;padding:4px;\">$2</p>",$a);
-	$a=preg_replace("/\[hide\](.*?)\[\/hide\]/si","<div style=\"background-color:#ccffcc;\">$1</div>",$a);
-	$a=preg_replace("/(^|\s)+((http:\/\/)|(www.))(.+)(\s|$)+/Uis"," <a href=\"http://$4$5\" target=\"_blank\">http://$4$5</a> ",$a);
+	$a=preg_replace("/\[quote(.*?)\](.*?)\[\/quote(.*?)\]/si","<p align=\"left\" style=\"border: 2px solid silver;padding:4px;\">$2</p>", $a);
+	$a=preg_replace("/\[code(.*?)\](.*?)\[\/code(.*?)\]/si","<p align=\"left\" style=\"border: 2px solid red;color:green;padding:4px;\">$2</p>", $a);
+	$a=preg_replace("/\[hide\](.*?)\[\/hide\]/si","<div style=\"background-color:#ccffcc;\">$1</div>", $a);
+	$a=preg_replace("/(^|\s)+((http:\/\/)|(www.))(.+)(\s|$)+/Uis"," <a href=\"http://$4$5\" target=\"_blank\">http://$4$5</a> ", $a);
 	return $tag_start . $a . $tag_end;
 }
 
 function ExtractTablenameFromSQL($q)
 {
-	global $databases,$db,$dbid;
+	global $databases, $db, $dbid;
 	$tablename='';
 	if (strlen($q) > 100) $q=substr($q,0,100);
 	$p=trim($q);
@@ -762,7 +762,7 @@ function ExtractTablenameFromSQL($q)
 	{
 		$parts= [];
 		$p=substr($p,strpos(strtoupper($p),'FROM') + 5);
-		$parts=explode(' ',$p);
+		$parts=explode(' ', $p);
 		$p= $parts[0];
 	}
     // remove keyword DATABASES and the database name after that
@@ -796,14 +796,14 @@ function ExtractTablenameFromSQL($q)
 					'',
 					''
 	);
-	$cleaned=trim(str_ireplace($suchen,$ersetzen,$p));
+	$cleaned=trim(str_ireplace($suchen, $ersetzen, $p));
 	$tablename= $cleaned;
 	if (strpos($cleaned,' ')) $tablename=substr($cleaned,0,strpos($cleaned,' '));
-	$tablename=str_replace('`','',$tablename); // remove backticks
+	$tablename=str_replace('`','', $tablename); // remove backticks
 	// take care of db-name.tablename
 	if (strpos($tablename,'.'))
 	{
-		$p=explode('.',$tablename);
+		$p=explode('.', $tablename);
 		$databases['db_actual'] = $p[0];
 		// if database is changed in Query we need to get the index of the actual db
 		$db_temp=array_flip($databases['Name']);
@@ -816,14 +816,14 @@ function ExtractTablenameFromSQL($q)
 		//echo "<br>" . $db;
 		$tablename= $p[1];
 	}
-	//	if (Table_Exists($databases['db_actual'],$tablename)) return $tablename;
+	//	if (Table_Exists($databases['db_actual'], $tablename)) return $tablename;
 	//	else return '';
 	return $tablename;
 }
 
 function GetOptionsCombo($arr, $default)
 {
-	global $feldtypen,$feldattribute,$feldnull,$feldextras,$feldkeys,$feldrowformat;
+	global $feldtypen, $feldattribute, $feldnull, $feldextras, $feldkeys, $feldrowformat;
 	$r='';
 	foreach ($arr as $s)
 	{
@@ -858,7 +858,7 @@ function getFieldinfos($db, $tabelle)
 {
 	global $config;
 	$fields_infos= [];
-	$t=GetCreateTable($db,$tabelle);
+	$t=GetCreateTable($db, $tabelle);
 	$sqlf="SHOW FULL FIELDS FROM `$db`.`$tabelle`;";
 	$res=mod_query($sqlf);
 	$anz_fields=mysqli_num_rows($res);
@@ -897,16 +897,16 @@ function getFieldinfos($db, $tabelle)
 		if (isset($row['Field'])) $fields_infos[$i]['name'] = $row['Field'];
 		$fields_infos[$i]['size'] =get_attribut_size_from_type($fields_infos[$i]['type']);
 		// remove size from type for readability in output
-		$fields_infos[$i]['type'] =str_replace('('.$fields_infos[$i]['size'].')','',$fields_infos[$i]['type']);
+		$fields_infos[$i]['type'] =str_replace('('.$fields_infos[$i]['size'].')','', $fields_infos[$i]['type']);
 		// look for attributes, everthing behind the first space is an atribut
-		$attributes=explode(' ',$fields_infos[$i]['type'],2);
+		$attributes=explode(' ', $fields_infos[$i]['type'],2);
 		if (isset($attributes[1]))
 		{
 			// we found attributes
 			unset($attributes[0]); // delete type
-			$fields_infos[$i]['attributes'] =trim(implode(' ',$attributes)); //merge all other attributes
+			$fields_infos[$i]['attributes'] =trim(implode(' ', $attributes)); //merge all other attributes
 			// remove attributes from type
-			$fields_infos[$i]['type'] =trim(str_replace($fields_infos[$i]['attributes'],'',$fields_infos[$i]['type']));
+			$fields_infos[$i]['type'] =trim(str_replace($fields_infos[$i]['attributes'],'', $fields_infos[$i]['type']));
 		}
 		if (isset($row['NULL'])) $fields_infos[$i]['null'] = $row['NULL'];
 		if (isset($row['Null'])) $fields_infos[$i]['null'] = $row['Null'];
@@ -965,7 +965,7 @@ function getExtendedFieldInfo($db, $table)
 {
 	global $config;
 	$fields_infos= [];
-	$t=GetCreateTable($db,$table);
+	$t=GetCreateTable($db, $table);
 	$sqlf="SHOW FULL FIELDS FROM `$db`.`$table`;";
 	$res=mod_query($sqlf);
 	$num_fields=mysqli_num_rows($res);
@@ -996,16 +996,16 @@ function getExtendedFieldInfo($db, $table)
 		if (isset($row['Field'])) $f[$i]['field'] = $row['Field'];
 		$f[$i]['size'] =get_attribut_size_from_type($f[$i]['type']);
 		// remove size from type for readability in output
-		$f[$i]['type'] =str_replace('('.$f[$i]['size'].')','',$f[$i]['type']);
+		$f[$i]['type'] =str_replace('('.$f[$i]['size'].')','', $f[$i]['type']);
 		// look for attributes, everthing behind the first space is an atribut
-		$attributes=explode(' ',$f[$i]['type'],2);
+		$attributes=explode(' ', $f[$i]['type'],2);
 		if (isset($attributes[1]))
 		{
 			// we found attributes
 			unset($attributes[0]); // delete type
-			$f[$i]['attributes'] =trim(implode(' ',$attributes)); //merge all other attributes
+			$f[$i]['attributes'] =trim(implode(' ', $attributes)); //merge all other attributes
 			// remove attributes from type
-			$f[$i]['type'] =trim(str_replace($f[$i]['attributes'],'',$f[$i]['type']));
+			$f[$i]['type'] =trim(str_replace($f[$i]['attributes'],'', $f[$i]['type']));
 		}
 		if (isset($row['NULL'])) $f[$i]['null'] = $row['NULL'];
 		if (isset($row['Null'])) $f[$i]['null'] = $row['Null'];
@@ -1079,8 +1079,8 @@ function build_where_from_record($data)
 	$ret = '';
 	foreach ($data as $key=>$val)
 	{
-		$val = str_replace('<span class="treffer">','',$val);
-		$val = str_replace('</span>','',$val);
+		$val = str_replace('<span class="treffer">','', $val);
+		$val = str_replace('</span>','', $val);
 		$nLen = strlen($val);
 		if (!empty($val) && ($nLen < 200)){		
 			$ret .='`'.$key.'`="'.addslashes($val).'" AND ';
@@ -1212,7 +1212,7 @@ function get_output_attribut_null($null)
 					'NO',
 					'NOT NULL'
 	);
-	if (in_array($null,$not_null)) return $lang['L_NO'];
+	if (in_array($null, $not_null)) return $lang['L_NO'];
 	else return $lang['L_YES'];
 }
 
@@ -1221,7 +1221,7 @@ function get_attribut_size_from_type($type)
 	$size='';
 	$matches= [];
 	$pattern='/\((\d.*?)\)/msi';
-	preg_match($pattern,$type,$matches);
+	preg_match($pattern, $type, $matches);
 	if (isset($matches[1])) $size= $matches[1];
 	return $size;
 }

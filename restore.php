@@ -70,7 +70,7 @@ if (isset($_GET['filename']))
 	if (!isset($databases['db_actual_tableselected'])) $databases['db_actual_tableselected'] ='';
 	if ($databases['db_actual_tableselected']!='')
 	{
-		$restore['tables_to_restore'] =explode('|',$databases['db_actual_tableselected']);
+		$restore['tables_to_restore'] =explode('|', $databases['db_actual_tableselected']);
 	}
 	else
 		$restore['tables_to_restore'] =false;
@@ -95,7 +95,7 @@ $aus= [];
 $pageheader=MODheader().headline($lang['L_RESTORE']);
 $aus1= $page_parameter='';
 $RestoreFertig= $eingetragen= $dauer= $filegroesse=0;
-mod_mysqli_connect($restore['dump_encoding'],true,$restore['actual_table']);
+mod_mysqli_connect($restore['dump_encoding'],true, $restore['actual_table']);
 @mysqli_select_db($config['dbconnection'], $databases['db_actual']) or die($lang['L_DB_SELECT_ERROR'].$databases['db_actual'].$lang['L_DB_SELECT_ERROR2']);
 
 // open backup file
@@ -127,14 +127,14 @@ if ($restore['filehandle'])
 	{
 		if ($restore['compressed'] ==0) $filegroesse=filesize($config['paths']['backup'].$restore['filename']);
 		// Dateizeiger an die richtige Stelle setzen
-		($restore['compressed']) ? gzseek($restore['filehandle'],$restore['offset']) : fseek($restore['filehandle'],$restore['offset']);
+		($restore['compressed']) ? gzseek($restore['filehandle'], $restore['offset']) : fseek($restore['filehandle'], $restore['offset']);
 
 		// Jetzt basteln wir uns mal unsere Befehle zusammen...
 		$a=0;
 		$dauer=0;
 		$restore['EOB'] =false;
 		// Disable Keys of actual table to speed up restoring
-		if (is_array($restore['tables_to_restore'])&&sizeof($restore['tables_to_restore'])>0&&in_array($restore['actual_table'],$restore['tables_to_restore']))
+		if (is_array($restore['tables_to_restore'])&&sizeof($restore['tables_to_restore'])>0&&in_array($restore['actual_table'], $restore['tables_to_restore']))
 		{
 			@mysqli_query($config['dbconnection'], '/*!40000 ALTER TABLE `'.$restore['actual_table'].'` DISABLE KEYS */;');
 
@@ -170,20 +170,20 @@ if ($restore['filehandle'])
 					{
 						if (strtolower(substr($meldung,0,15))=='duplicate entry')
 						{
-							ErrorLog('RESTORE',$databases['db_actual'],$sql_command,$meldung,1);
+							ErrorLog('RESTORE', $databases['db_actual'], $sql_command, $meldung,1);
 							$restore['notices']++;
 						}
 						else
 						{
 							if ($config['stop_with_error'] ==0)
 							{
-								Errorlog('RESTORE',$databases['db_actual'],$sql_command,$meldung);
+								Errorlog('RESTORE', $databases['db_actual'], $sql_command, $meldung);
 								$restore['errors']++;
 							}
 							else
 							{
-								Errorlog('RESTORE',$databases['db_actual'],$sql_command,'Restore failed: '.$meldung,0);
-								SQLError($sql_command,$meldung);
+								Errorlog('RESTORE', $databases['db_actual'], $sql_command,'Restore failed: '.$meldung,0);
+								SQLError($sql_command, $meldung);
 								die($sql_command.' -> '.$meldung);
 							}
 						}
@@ -209,19 +209,19 @@ if ($restore['filehandle'])
 	if ($prozent>100) $prozent=100;
 
 	if ($aus1!='') $aus[] ='<br>'.$aus1.'<br><br>';
-	$aus[] =sprintf($lang['L_RESTORE_DB'],$databases['db_actual'],$config['dbhost']).'<br>'.$lang['L_FILE'].': <b>'.$restore['filename'].'</b><br>'.$lang['L_CHARSET'].': <strong>'.$restore['dump_encoding'].'</strong><br>';
+	$aus[] =sprintf($lang['L_RESTORE_DB'], $databases['db_actual'], $config['dbhost']).'<br>'.$lang['L_FILE'].': <b>'.$restore['filename'].'</b><br>'.$lang['L_CHARSET'].': <strong>'.$restore['dump_encoding'].'</strong><br>';
 	if ($restore['part']>0) $aus[] ='<br>Multipart File <strong>'.$restore['part'].'</strong><br>';
 	$tabellen_fertig=($restore['table_ready']>0) ? $restore['table_ready'] : '0';
 	$to_do=($restore['anzahl_tabellen']>0) ? $restore['anzahl_tabellen'] : $lang['L_UNKNOWN'];
-	if ($restore['anzahl_tabellen']>0) $aus[] =sprintf($lang['L_RESTORE_TABLES_COMPLETED'],$tabellen_fertig,$to_do);
+	if ($restore['anzahl_tabellen']>0) $aus[] =sprintf($lang['L_RESTORE_TABLES_COMPLETED'], $tabellen_fertig, $to_do);
 	else
-		$aus[] =sprintf($lang['L_RESTORE_TABLES_COMPLETED0'],$tabellen_fertig);
+		$aus[] =sprintf($lang['L_RESTORE_TABLES_COMPLETED0'], $tabellen_fertig);
 	$done=number_format($restore['eintraege_ready'],0,',','.');
 	$to_do=number_format($restore['anzahl_eintraege'],0,',','.');
-	if ($restore['anzahl_eintraege']>0) $aus[] =sprintf($lang['L_RESTORE_RUN1'],$done,$to_do);
+	if ($restore['anzahl_eintraege']>0) $aus[] =sprintf($lang['L_RESTORE_RUN1'], $done, $to_do);
 	else
-		$aus[] =sprintf($lang['L_RESTORE_RUN0'],$done);
-	$aus[] =sprintf($lang['L_RESTORE_RUN2'],$restore['actual_table']).$lang['L_PROGRESS_OVER_ALL'].'<br>';
+		$aus[] =sprintf($lang['L_RESTORE_RUN0'], $done);
+	$aus[] =sprintf($lang['L_RESTORE_RUN2'], $restore['actual_table']).$lang['L_PROGRESS_OVER_ALL'].'<br>';
 
 	//Fortschrittsbalken
 	$prozentbalken=(round($prozent,0)*3);
@@ -256,7 +256,7 @@ if ($restore['filehandle'])
 		if ($restore['anzahl_zeilen']<$config['minspeed']) $restore['anzahl_zeilen'] = $config['minspeed'];
 	}
 	$restore['anzahl_zeilen'] =intval($restore['anzahl_zeilen']);
-	if ($restore['fileEOF']&&$restore['part'] ==0) $restore['EOB'] =true;
+	if ($restore['fileEOF']&&$restore['part'] ==0) $restore['EOB'] = true;
 	if ($restore['EOB'])
 	{
 		// Uff, geschafft! Jetzt darf die Leitung wieder abkuehlen. :-)
@@ -266,7 +266,7 @@ if ($restore['filehandle'])
 		WriteLog("Restore '".$restore['filename']."' finished in ".zeit_format($restore['xtime']).".");
 		$aus[] = $lang['L_RESTORE_TOTAL_COMPLETE']."<br>";
 		$aus[] = $lang['L_FILE'].': <b>'.$restore['filename'].'</b><br><br>';
-		$aus[] =sprintf($lang['L_RESTORE_COMPLETE'],$restore['table_ready']).'<br>';
+		$aus[] =sprintf($lang['L_RESTORE_COMPLETE'], $restore['table_ready']).'<br>';
 		$aus[] =sprintf($lang['L_RESTORE_COMPLETE2'],number_format($restore['eintraege_ready'],0,",","."));
 		$aus[] ='<p class="small">'.zeit_format($restore['xtime']).', '.$restore['aufruf'].' '.$lang['L_PAGE_REFRESHS'].' </p>';
 		if ($restore['errors']>0) $aus[] = $lang['L_ERRORS'].': '.$restore['errors'].'  <a href="log.php?r=3">&raquo; '.$lang['L_VIEW'].'</a><br>';
@@ -288,10 +288,10 @@ if ($restore['filehandle'])
 				$to_do=number_format($restore['anzahl_eintraege'],0,",",".");
 				$aus= [];
 				$aus[] ='<h3>'.$lang['L_RESTORE'].'</h3>';
-				$aus[] =sprintf($lang['L_RESTORE_DB'],$databases['db_actual'],$config['dbhost']);
+				$aus[] =sprintf($lang['L_RESTORE_DB'], $databases['db_actual'], $config['dbhost']);
 				$aus[] ='<p class="error">'.$lang['L_MULTI_PART'].': '.$lang['L_FILE_MISSING'].' \''.$nextfile.'\' !</p>';
-				$aus[] =sprintf($lang['L_RESTORE_RUN1'],$done,$to_do);
-				$aus[] =sprintf($lang['L_RESTORE_RUN2'],$restore['actual_table']);
+				$aus[] =sprintf($lang['L_RESTORE_RUN1'], $done, $to_do);
+				$aus[] =sprintf($lang['L_RESTORE_RUN2'], $restore['actual_table']);
 				$aus[] ='<p class="small">'.zeit_format(time()-$restore['xtime']).', '.$restore['aufruf'].' '.$lang['L_PAGE_REFRESHS'];
 				$aus[] =($restore['part']>0) ? ', '.$lang['L_FILE'].' '.$restore['part'] : '';
 				$aus[] =($restore['errors']>0) ? ', <span class="error">'.$restore['errors'].' errors</span>' : '';
@@ -317,14 +317,14 @@ $pagefooter=($RestoreFertig==1) ? MODFooter() : '</div></BODY></HTML>';
 $page_parameter='<form action="restore.php?MyOOSDumperID='.session_id().'" method="POST" name="restore"></form>';
 if ($RestoreFertig==1)
 {
-	$complete_page= $pageheader.(($aus!='') ? implode("\n",$aus) : '').$pagefooter;
+	$complete_page= $pageheader.(($aus!='') ? implode("\n", $aus) : '').$pagefooter;
 }
 else
 {
 	$aus[] = $page_parameter;
 	$_SESSION['restore'] = $restore;
 	$selbstaufruf='<script>setTimeout("document.restore.submit()",10);</script>';
-	$complete_page= $pageheader.(($aus!='') ? implode("\n",$aus) : '').$selbstaufruf.$pagefooter;
+	$complete_page= $pageheader.(($aus!='') ? implode("\n", $aus) : '').$selbstaufruf.$pagefooter;
 }
 echo $complete_page;
 ob_end_flush();

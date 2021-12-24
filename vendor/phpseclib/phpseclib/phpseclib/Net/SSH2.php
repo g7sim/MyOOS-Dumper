@@ -206,7 +206,7 @@ class SSH2
      * @var string
      * @access private
      */
-    var $errors = array();
+    var $errors = [];
 
     /**
      * Server Identifier
@@ -350,7 +350,7 @@ class SSH2
      * @var array
      * @access private
      */
-    var $preferred = array();
+    var $preferred = [];
 
     /**
      * Block Size for Server to Client Encryption
@@ -470,7 +470,7 @@ class SSH2
      * @var array
      * @access private
      */
-    var $message_numbers = array();
+    var $message_numbers = [];
 
     /**
      * Disconnection Message 'reason codes' defined in RFC4253
@@ -479,7 +479,7 @@ class SSH2
      * @var array
      * @access private
      */
-    var $disconnect_reasons = array();
+    var $disconnect_reasons = [];
 
     /**
      * SSH_MSG_CHANNEL_OPEN_FAILURE 'reason codes', defined in RFC4254
@@ -488,7 +488,7 @@ class SSH2
      * @var array
      * @access private
      */
-    var $channel_open_failure_reasons = array();
+    var $channel_open_failure_reasons = [];
 
     /**
      * Terminal Modes
@@ -498,7 +498,7 @@ class SSH2
      * @var array
      * @access private
      */
-    var $terminal_modes = array();
+    var $terminal_modes = [];
 
     /**
      * SSH_MSG_CHANNEL_EXTENDED_DATA's data_type_codes
@@ -508,7 +508,7 @@ class SSH2
      * @var array
      * @access private
      */
-    var $channel_extended_data_type_codes = array();
+    var $channel_extended_data_type_codes = [];
 
     /**
      * Send Sequence Number
@@ -542,7 +542,7 @@ class SSH2
      * @var array
      * @access private
      */
-    var $server_channels = array();
+    var $server_channels = [];
 
     /**
      * Channel Buffers
@@ -555,7 +555,7 @@ class SSH2
      * @var array
      * @access private
      */
-    var $channel_buffers = array();
+    var $channel_buffers = [];
 
     /**
      * Channel Status
@@ -566,7 +566,7 @@ class SSH2
      * @var array
      * @access private
      */
-    var $channel_status = array();
+    var $channel_status = [];
 
     /**
      * Packet Size
@@ -577,7 +577,7 @@ class SSH2
      * @var array
      * @access private
      */
-    var $packet_size_client_to_server = array();
+    var $packet_size_client_to_server = [];
 
     /**
      * Message Number Log
@@ -586,7 +586,7 @@ class SSH2
      * @var array
      * @access private
      */
-    var $message_number_log = array();
+    var $message_number_log = [];
 
     /**
      * Message Log
@@ -595,7 +595,7 @@ class SSH2
      * @var array
      * @access private
      */
-    var $message_log = array();
+    var $message_log = [];
 
     /**
      * The Window Size
@@ -632,7 +632,7 @@ class SSH2
      * @var array
      * @access private
      */
-    var $window_size_server_to_client = array();
+    var $window_size_server_to_client = [];
 
     /**
      * Window size, client to server
@@ -643,7 +643,7 @@ class SSH2
      * @var array
      * @access private
      */
-    var $window_size_client_to_server = array();
+    var $window_size_client_to_server = [];
 
     /**
      * Server signature
@@ -820,7 +820,7 @@ class SSH2
      * @var array
      * @access private
      */
-    var $keyboard_requests_responses = array();
+    var $keyboard_requests_responses = [];
 
     /**
      * Banner Message
@@ -985,7 +985,7 @@ class SSH2
      * @var array
      * @access private
      */
-    var $auth = array();
+    var $auth = [];
 
     /**
      * The authentication methods that may productively continue authentication.
@@ -1396,7 +1396,7 @@ class SSH2
     {
         $identifier = 'SSH-2.0-phpseclib_2.0';
 
-        $ext = array();
+        $ext = [];
         if (function_exists('sodium_crypto_box_publickey_from_secretkey')) {
             $ext[] = 'libsodium';
         }
@@ -2259,9 +2259,9 @@ class SSH2
         while (count($args)) {
             if (!$this->auth_methods_to_continue || !$this->smartMFA) {
                 $newargs = $args;
-                $args = array();
+                $args = [];
             } else {
-                $newargs = array();
+                $newargs = [];
                 foreach ($this->auth_methods_to_continue as $method) {
                     switch ($method) {
                         case 'publickey':
@@ -4866,7 +4866,7 @@ class SSH2
             );
         }
 
-        $ciphers = array();
+        $ciphers = [];
         foreach ($engines as $engine) {
             foreach ($algos as $algo) {
                 $obj = $this->_encryption_algorithm_to_crypt_instance($algo);

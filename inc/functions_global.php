@@ -19,7 +19,7 @@
 ini_set('display_errors', 0);
 
 $mod_path=realpath(dirname(__FILE__).'/../').'/';
-if (!defined('MOD_PATH')) define('MOD_PATH',$mod_path);
+if (!defined('MOD_PATH')) define('MOD_PATH', $mod_path);
 if (file_exists(MOD_PATH.'inc/runtime.php')) include (MOD_PATH.'inc/runtime.php');
 else
 	die('Couldn\'t read runtime.php!');
@@ -57,7 +57,7 @@ function get_page_parameter($parameter, $ziel='dump')
 
 function mu_sort($array, $key_sort)
 {
-	$key_sorta=explode(',',$key_sort);
+	$key_sorta=explode(',', $key_sort);
 	$keys=array_keys($array[0]);
 	$n=0;
 
@@ -69,7 +69,7 @@ function mu_sort($array, $key_sort)
 
 	for ($i = 0; $i<count($keys); $i++)
 	{
-		if (!in_array($keys[$i],$key_sorta))
+		if (!in_array($keys[$i], $key_sorta))
 		{
 			$nkeys[$n] = $keys[$i];
 			$n+="1";
@@ -91,7 +91,7 @@ function mu_sort($array, $key_sort)
 
 function FillMultiDBArrays()
 {
-	global $config,$databases;
+	global $config, $databases;
 
 	// Nur füllen wenn überhaupt Datenbanken gefunden wurden
 	if ((isset($databases['Name']))&&(count($databases['Name'])>0))
@@ -111,7 +111,7 @@ function FillMultiDBArrays()
 		}
 		else
 		{
-			$databases['multi'] =explode(';',$databases['multisetting']);
+			$databases['multi'] =explode(';', $databases['multisetting']);
 			$flipped=array_flip($databases['Name']);
 			for ($i = 0; $i<count($databases['multi']); $i++)
 			{
@@ -137,7 +137,7 @@ function FillMultiDBArrays()
 
 function DBDetailInfo($index)
 {
-	global $databases,$config;
+	global $databases, $config;
 
 	$databases['Detailinfo']['tables'] = $databases['Detailinfo']['records'] = $databases['Detailinfo']['size'] =0;
 	mod_mysqli_connect();
@@ -163,7 +163,7 @@ function DBDetailInfo($index)
 
 function Stringformat($s, $count)
 {
-	if ($count>=strlen($s)) return str_repeat("0",$count-strlen($s)).$s;
+	if ($count>=strlen($s)) return str_repeat("0", $count-strlen($s)).$s;
 	else
 		return $s;
 }
@@ -227,12 +227,12 @@ function byte_output($bytes, $precision=2, $names=Array())
 			$suffix=(isset($names[$level])) ? $names[$level] : '';
 			break;
 	}
-	return sprintf("%01.".$precision."f",round($bytes,$precision)).' '.$suffix;
+	return sprintf("%01.".$precision."f",round($bytes, $precision)).' '.$suffix;
 }
 
 function ExtractDBname($s)
 {
-	$sp=explode('_',$s);
+	$sp=explode('_', $s);
 	$anz=count($sp)-1;
 	$r=0;
 	if ($anz>4)
@@ -245,7 +245,7 @@ function ExtractDBname($s)
 		{
 			$r+=strlen($sp[$i])+1;
 		}
-		return substr($s,0,$r-1);
+		return substr($s,0, $r-1);
 	}
 	else
 	{
@@ -257,12 +257,12 @@ function ExtractDBname($s)
 function ExtractBUT($s)
 {
 	$i=strpos(strtolower($s),"part");
-	if ($i>0) $s=substr($s,0,$i-1);
+	if ($i>0) $s=substr($s,0, $i-1);
 	$i=strpos(strtolower($s),"crondump");
-	if ($i>0) $s=substr($s,0,$i-1);
+	if ($i>0) $s=substr($s,0, $i-1);
 	$i=strpos(strtolower($s),".sql");
-	if ($i>0) $s=substr($s,0,$i);
-	$sp=explode("_",$s);
+	if ($i>0) $s=substr($s,0, $i);
+	$sp=explode("_", $s);
 
 	$anz=count($sp)-1;
 	if (strtolower($sp[$anz])=='perl') $anz--;
@@ -279,7 +279,7 @@ function ExtractBUT($s)
 
 function WriteLog($aktion)
 {
-	global $config,$lang;
+	global $config, $lang;
 	$log=date('d.m.Y H:i:s').' '.htmlspecialchars($aktion)."\n";
 
 	$logfile=(isset($config['logcompression']) && ($config['logcompression'] ==1)) ? $config['files']['log'].'.gz' : $config['files']['log'];
@@ -294,7 +294,7 @@ function WriteLog($aktion)
 		$fp=@gzopen($logfile,'a');
 		if ($fp)
 		{
-			@gzwrite($fp,$log).'<br>';
+			@gzwrite($fp, $log).'<br>';
 			@gzclose($fp);
 		}
 		else
@@ -305,7 +305,7 @@ function WriteLog($aktion)
 		$fp=@fopen($logfile,"ab");
 		if ($fp)
 		{
-			@fwrite($fp,$log);
+			@fwrite($fp, $log);
 			@fclose($fp);
 		}
 		else
@@ -359,12 +359,12 @@ function ErrorLog($dest, $db, $sql, $error, $art=1)
 
 function DirectoryWarnings($path="")
 {
-	global $config,$lang;
+	global $config, $lang;
 	$warn='';
-	if (!is_writable($config['paths']['work'])) $warn.=sprintf($lang['L_WRONG_RIGHTS'],$config['paths']['work'],'0777');
-	if (!is_writable($config['paths']['config'])) $warn.=sprintf($lang['L_WRONG_RIGHTS'],$config['paths']['config'],'0777');
-	if (!is_writable($config['paths']['backup'])) $warn.=sprintf($lang['L_WRONG_RIGHTS'],$config['paths']['backup'],'0777');
-	if (!is_writable($config['paths']['log'])) $warn.=sprintf($lang['L_WRONG_RIGHTS'],$config['paths']['log'],'0777');
+	if (!is_writable($config['paths']['work'])) $warn.=sprintf($lang['L_WRONG_RIGHTS'], $config['paths']['work'],'0777');
+	if (!is_writable($config['paths']['config'])) $warn.=sprintf($lang['L_WRONG_RIGHTS'], $config['paths']['config'],'0777');
+	if (!is_writable($config['paths']['backup'])) $warn.=sprintf($lang['L_WRONG_RIGHTS'], $config['paths']['backup'],'0777');
+	if (!is_writable($config['paths']['log'])) $warn.=sprintf($lang['L_WRONG_RIGHTS'], $config['paths']['log'],'0777');
 
 	if ($warn!='') $warn='<span class="warnung"><strong>'.$warn.'</strong></span>';
 	return $warn;
@@ -375,11 +375,11 @@ function TestWorkDir()
 	global $config;
 
 	$ret=SetFileRechte($config['paths']['work']);
-	if ($ret===true) $ret=SetFileRechte($config['paths']['backup']);
-	if ($ret===true) $ret=SetFileRechte($config['paths']['log']);
-	if ($ret===true) $ret=SetFileRechte($config['paths']['config']);
+	if ($ret== = true) $ret=SetFileRechte($config['paths']['backup']);
+	if ($ret== = true) $ret=SetFileRechte($config['paths']['log']);
+	if ($ret== = true) $ret=SetFileRechte($config['paths']['config']);
 
-	if ($ret===true)
+	if ($ret== = true)
 	{
 		if (!file_exists($config['files']['parameter'])) SetDefault(true);
 		if (!file_exists($config['files']['log'])) DeleteLog();
@@ -390,7 +390,7 @@ function TestWorkDir()
 function SetFileRechte($file, $is_dir=1, $perm=0777)
 {
 	global $lang;
-	$ret=true;
+	$ret = true;
 	if ($is_dir==1)
 	{
 		if (substr($file,-1)!="/") $file.="/";
@@ -403,20 +403,20 @@ function SetFileRechte($file, $is_dir=1, $perm=0777)
 		// Wenn es sich um ein Verzeichnis handelt -> anlegen
 		if ($is_dir==1)
 		{
-			$ret=@mkdir($file,$perm);
-			if (!$ret===true)
+			$ret=@mkdir($file, $perm);
+			if (!$ret== = true)
 			{
 				// Hat nicht geklappt -> Rueckmeldung
-				$ret=sprintf($lang['L_CANT_CREATE_DIR'],$file);
+				$ret=sprintf($lang['L_CANT_CREATE_DIR'], $file);
 			}
 		}
 	}
 
 	// wenn bisher alles ok ist -> Rechte setzen - egal ob Datei oder Verzeichnis
-	if ($ret===true)
+	if ($ret== = true)
 	{
-		$ret=@chmod($file,$perm);
-		if (!$ret===true) $ret=sprintf($lang['L_WRONG_RIGHTS'],$file,decoct($perm));
+		$ret=@chmod($file, $perm);
+		if (!$ret== = true) $ret=sprintf($lang['L_WRONG_RIGHTS'], $file,decoct($perm));
 	}
 	return $ret;
 }
@@ -479,7 +479,7 @@ function EmptyDB($dbn)
 
 function AutoDelete()
 {
-	global $del_files,$config,$lang,$out;
+	global $del_files, $config, $lang, $out;
 	$out='';
 	if (isset($config['max_backup_files']) && ($config['max_backup_files']>0))
 	{
@@ -542,11 +542,11 @@ function AutoDelete()
 							if ($out=='') $out.= $lang['L_FM_AUTODEL1'].'<br>';
 							if (@unlink('./'.$config['paths']['backup'].$f))
 							{
-								$out.='<span class="nomargin">'.sprintf($lang['L_DELETE_FILE_SUCCESS'],$f).'</span><br>';
+								$out.='<span class="nomargin">'.sprintf($lang['L_DELETE_FILE_SUCCESS'], $f).'</span><br>';
 							}
 							else
 							{
-								$out.= $lang['L_ERROR'].': <span class="error nomargin">'.sprintf($lang['L_DELETE_FILE_ERROR'],$f).'</span><br>';
+								$out.= $lang['L_ERROR'].': <span class="error nomargin">'.sprintf($lang['L_DELETE_FILE_ERROR'], $f).'</span><br>';
 							}
 						}
 					}
@@ -560,8 +560,8 @@ function AutoDelete()
 
 function DeleteFile($files, $function='max')
 {
-	global $config,$lang;
-	$delfile=explode("|",$files);
+	global $config, $lang;
+	$delfile=explode("|", $files);
 	$r='<p class="error">'.$lang['L_FM_AUTODEL1'].'<br>';
 	$r.= $delfile[3]."<br>";
 	$part= $delfile[2];
@@ -610,7 +610,7 @@ function ReadStatusline($line)
 	else
 	{
 		// MySQLDumper-File - Informationen extrahieren
-		$s=explode(':',$line);
+		$s=explode(':', $line);
 		if (count($s)<12)
 		{
 			//fehlenden Elemente auffüllen
@@ -651,8 +651,8 @@ function ReadStatusline($line)
 
 function NextPart($s, $first=0, $keep_suffix=false)
 {
-	$nf=explode('_',$s);
-	$i=array_search('part',$nf)+1;
+	$nf=explode('_', $s);
+	$i=array_search('part', $nf)+1;
 	$p=substr($nf[$i],0,strpos($nf[$i],'.'));
 	$ext=substr($nf[$i],strlen($p));
 	if ($first==1)
@@ -663,7 +663,7 @@ function NextPart($s, $first=0, $keep_suffix=false)
 	{
 		$nf[$i] =++$p.$ext;
 	}
-	$filename=implode('_',$nf);
+	$filename=implode('_', $nf);
 	return $filename;
 }
 
@@ -679,7 +679,7 @@ function zeit_format($t)
 
 function TesteFTP($i)
 {
-	global $lang,$config;
+	global $lang, $config;
 	if (!isset($config['ftp_timeout'][$i])) $config['ftp_timeout'][$i] =30;
 	$s='';
 	if ($config['ftp_port'][$i] ==''||$config['ftp_port'][$i] ==0) $config['ftp_port'][$i] =21;
@@ -707,13 +707,13 @@ function TesteFTP($i)
 
 		if ($config['ftp_useSSL'][$i] ==0)
 		{
-			$conn_id=@ftp_connect($config['ftp_server'][$i],$config['ftp_port'][$i],$config['ftp_timeout'][$i]);
+			$conn_id=@ftp_connect($config['ftp_server'][$i], $config['ftp_port'][$i], $config['ftp_timeout'][$i]);
 		}
 		else
 		{
-			$conn_id=@ftp_ssl_connect($config['ftp_server'][$i],$config['ftp_port'][$i],$config['ftp_timeout'][$i]);
+			$conn_id=@ftp_ssl_connect($config['ftp_server'][$i], $config['ftp_port'][$i], $config['ftp_timeout'][$i]);
 		}
-		if ($conn_id) $login_result=@ftp_login($conn_id,$config['ftp_user'][$i],$config['ftp_pass'][$i]);
+		if ($conn_id) $login_result=@ftp_login($conn_id, $config['ftp_user'][$i], $config['ftp_pass'][$i]);
 		if (!$conn_id||(!$login_result))
 		{
 			$s.='<br><span class="error">'.$lang['L_CONN_NOT_POSSIBLE'].'</span>';
@@ -728,7 +728,7 @@ function TesteFTP($i)
 	if ($pass==2)
 	{
 		$s.='<br><strong>Login ok</strong><br>'.$lang['L_CHANGEDIR'].' `'.$config['ftp_dir'][$i].'` ';
-		$dirc=@ftp_chdir($conn_id,$config['ftp_dir'][$i]);
+		$dirc=@ftp_chdir($conn_id, $config['ftp_dir'][$i]);
 		if (!$dirc)
 		{
 			$s.='<br><span class="error">'.$lang['L_CHANGEDIRERROR'].'</span>';
@@ -748,7 +748,7 @@ function TesteFTP($i)
 
 function TesteSFTP($i)
 {
-	global $lang,$config;
+	global $lang, $config;
 
 	if ($config['sftp_timeout'][$i] ==''||$config['sftp_timeout'][$i] ==0) $config['sftp_timeout'][$i] =30;
 	if ($config['sftp_port'][$i] ==''||$config['sftp_port'][$i] ==0) $config['sftp_port'][$i] =22;
@@ -843,9 +843,9 @@ function TesteSFTP($i)
 }
 
 
-function SendViaSFTP($i,$source_file,$conn_msg=1)
+function SendViaSFTP($i, $source_file, $conn_msg=1)
 {
-	global $config,$out,$lang;
+	global $config, $out, $lang;
 	flush();
 	if ($conn_msg==1) $out.='<span class="success">'.$lang['L_FILESENDSFTP']."(".$config['sftp_server'][$i]." - ".$config['sftp_user'][$i].")</span><br>";
 	
@@ -918,9 +918,9 @@ function Realpfad($p)
 {
 	global $config;
 	$dir=dirname(__FILE__);
-	$dir=str_replace('inc','',$dir);
-	$dir=str_replace('\\','/',$dir);
-	$dir=str_replace('//','/',$dir);
+	$dir=str_replace('inc','', $dir);
+	$dir=str_replace('\\','/', $dir);
+	$dir=str_replace('//','/', $dir);
 	if (substr($dir,-1)!='/') $dir.='/';
 	return $dir;
 }
@@ -967,7 +967,7 @@ function GetThemes()
 
 function GetLanguageCombo($k="op", $class="", $name="", $start="", $end="")
 {
-	global $config,$lang;
+	global $config, $lang;
 	$default= $config['language'];
 	$dh=opendir($config['paths']['root']."language/");
 	$r= '';
@@ -1006,7 +1006,7 @@ function GetLanguageCombo($k="op", $class="", $name="", $start="", $end="")
 // detect language subdirs and add them to the global definition of $lang
 function GetLanguageArray()
 {
-	global $config,$lang;
+	global $config, $lang;
 	$dh=opendir($config['paths']['root']."language/");
 	unset($lang['languages']);
 	$lang['languages'] = [];
@@ -1040,7 +1040,7 @@ function headline($title, $mainframe=1)
 
 function PicCache($rpath='./')
 {
-	global $BrowserIcon,$config;
+	global $BrowserIcon, $config;
 
 	$t='<div style="display:none">';
 
@@ -1099,9 +1099,9 @@ function save_bracket($str)
 	return $str;
 }
 
-function DownGrade($s, $show=true)
+function DownGrade($s, $show = true)
 {
-	$tmp=explode(",",$s);
+	$tmp=explode(",", $s);
 	//echo "<pre>";print_r($tmp);echo "</pre>";
 
 
@@ -1111,7 +1111,7 @@ function DownGrade($s, $show=true)
 
 		if (strpos($t,"collate "))
 		{
-			$tmp2=explode(" ",$tmp[$i]);
+			$tmp2=explode(" ", $tmp[$i]);
 			for ($j=0; $j<count($tmp2); $j++)
 			{
 				if (strtolower($tmp2[$j])=="collate")
@@ -1121,12 +1121,12 @@ function DownGrade($s, $show=true)
 					$j++;
 				}
 			}
-			$tmp[$i] =implode(" ",$tmp2);
+			$tmp[$i] =implode(" ", $tmp2);
 		}
 
 		if (strpos($t,"engine="))
 		{
-			$tmp2=explode(" ",$tmp[$i]);
+			$tmp2=explode(" ", $tmp[$i]);
 			for ($j=0; $j<count($tmp2); $j++)
 			{
 				if (substr(strtoupper($tmp2[$j]),0,7)=="ENGINE=") $tmp2[$j] ="TYPE=".substr($tmp2[$j],7,strlen($tmp2[$j])-7);
@@ -1141,13 +1141,13 @@ function DownGrade($s, $show=true)
 					$tmp2[$j-1] = '';
 				}
 			}
-			$tmp[$i] =implode(" ",$tmp2);
+			$tmp[$i] =implode(" ", $tmp2);
 		}
 
 		// character Set sprache  entfernen
 		if (strpos($t,"character set"))
 		{
-			$tmp2=explode(" ",$tmp[$i]);
+			$tmp2=explode(" ", $tmp[$i]);
 			$end=false;
 
 			for ($j=0; $j<count($tmp2); $j++)
@@ -1159,12 +1159,12 @@ function DownGrade($s, $show=true)
 					$tmp2[$j+2] =save_bracket($tmp2[$j+2]);
 				}
 			}
-			$tmp[$i] =implode(" ",$tmp2);
+			$tmp[$i] =implode(" ", $tmp2);
 		}
 
 		if (strpos($t,"timestamp"))
 		{
-			$tmp2=explode(" ",$tmp[$i]);
+			$tmp2=explode(" ", $tmp[$i]);
 			$end=false;
 
 			for ($j=0; $j<count($tmp2); $j++)
@@ -1173,13 +1173,13 @@ function DownGrade($s, $show=true)
 				if (strtolower($tmp2[$j])=="timestamp")
 				{
 					$tmp2[$j] ="TIMESTAMP(14)";
-					$end=true;
+					$end = true;
 				}
 			}
-			$tmp[$i] =implode(" ",$tmp2);
+			$tmp[$i] =implode(" ", $tmp2);
 		}
 	}
-	$t=implode(",",$tmp);
+	$t=implode(",", $tmp);
 	if (substr(rtrim($t),-1)!=";") $t=rtrim($t).";";
 	return $t;
 }
@@ -1189,8 +1189,8 @@ function MySQLi_Ticks($s)
 	$klammerstart= $lastklammerstart= $end=0;
 	$inner_s_start=strpos($s,'(');
 	$inner_s_end=strrpos($s,')');
-	$inner_s=substr($s,$inner_s_start+1,$inner_s_end-(1+$inner_s_start));
-	$pieces=explode(',',$inner_s);
+	$inner_s=substr($s, $inner_s_start+1, $inner_s_end-(1+$inner_s_start));
+	$pieces=explode(',', $inner_s);
 	for ($i = 0; $i<count($pieces); $i++)
 	{
 		$r=trim($pieces[$i]);
@@ -1206,13 +1206,13 @@ function MySQLi_Ticks($s)
 			if (substr($r,0,1)!='`'&&substr($r,0,1)!='\''&&$klammerstart==0&&$end==0&&$lastklammerstart==0)
 			{
 				$pos=strpos($r,' ');
-				$r='`'.substr($r,0,$pos).'`'.substr($r,$pos);
+				$r='`'.substr($r,0, $pos).'`'.substr($r, $pos);
 			}
 		}
 		$pieces[$i] = $r;
 		$lastklammerstart= $klammerstart;
 	}
-	$back=substr($s,0,$inner_s_start+1).implode(',',$pieces).');';
+	$back=substr($s,0, $inner_s_start+1).implode(',', $pieces).');';
 	return $back;
 }
 
@@ -1298,25 +1298,25 @@ function get_index($arr, $selected)
  */
 function read_config($file=false)
 {
-	global $config,$databases;
+	global $config, $databases;
 	$ret = false;
 	if (!$file) $file= $config['config_file'];
 	// protect from including external files
 	$search=array(':', 'http', 'ftp', ' ');
 	$replace=array('', '', '', '');
-	$file=str_replace($search,$replace,$file);
+	$file=str_replace($search, $replace, $file);
 
 	if (is_readable($config['paths']['config'].$file.'.php'))
 	{
 		// to prevent modern server from caching the new configuration we need to evaluate it this way
 		clearstatcache();
 		$f=implode('',file($config['paths']['config'].$file.'.php'));
-		$f=str_replace('<?php','',$f);
-		$f=str_replace('?>','',$f);
+		$f=str_replace('<?php','', $f);
+		$f=str_replace('?>','', $f);
 		eval($f);
 		$config['config_file'] = $file;
 		$_SESSION['config_file'] = $config['config_file'];
-		$ret=true;
+		$ret = true;
 	}
 	return $ret;
 }
@@ -1372,7 +1372,7 @@ function get_sql_encodings()
 	$config['mysql_possible_character_sets'] = [];
 
 	// MySQL-Version >= 4.1
-	$config['mysql_can_change_encoding'] =true;
+	$config['mysql_can_change_encoding'] = true;
 	$sqlt='SHOW CHARACTER SET';
 	$res=mod_query($sqlt) or die(SQLError($sqlt,mysqli_error($config['dbconnection'])));
 
@@ -1406,7 +1406,7 @@ function get_sql_encodings()
  */
 function stripslashes_deep($value)
 {
-	$value=is_array($value) ? array_map('stripslashes_deep',$value) : stripslashes($value);
+	$value=is_array($value) ? array_map('stripslashes_deep', $value) : stripslashes($value);
 	return $value;
 }
 
@@ -1418,7 +1418,7 @@ function stripslashes_deep($value)
  */
 function trim_deep($value)
 {
-	$value=is_array($value) ? array_map('trim_deep',$value) : trim($value);
+	$value=is_array($value) ? array_map('trim_deep', $value) : trim($value);
 	return $value;
 }
 
@@ -1440,7 +1440,7 @@ function fetchFileFromURL($url, $file, $local_file, $local_path='./data/')
 	if ($data)
 	{
 		$d=fopen($local_path.$local_file,"wb");
-		$ret=fwrite($d,$data);
+		$ret=fwrite($d, $data);
 		fclose($d);
 		return $ret;
 	}
@@ -1467,18 +1467,18 @@ function fetchFileDataFromURL($url)
 	$path= $url_parsed['path'];
 	if (isset($url_parsed['query'])&&$url_parsed['query']!='') $path.='?'.$url_parsed['query'];
 
-	$fp=fsockopen($host,$port,$errno,$errstr,3);
+	$fp=fsockopen($host, $port, $errno, $errstr,3);
 	if ($fp)
 	{
 		$out="GET $path HTTP/1.1\r\nHost: $host\r\n";
 		$out.="Connection: close\r\n\r\n";
-		fwrite($fp,$out);
+		fwrite($fp, $out);
 		$body=false;
 		while (!feof($fp))
 		{
 			$s=fgets($fp,1024);
 			if ($body) $in.= $s;
-			if ($s=="\r\n") $body=true;
+			if ($s=="\r\n") $body = true;
 		}
 
 		fclose($fp);

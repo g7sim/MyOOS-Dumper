@@ -119,7 +119,7 @@ else
 		$tabledata= [];
 		$i=0;
 		//Tabellenfinos lesen
-		gzseek($fp,$offset);
+		gzseek($fp, $offset);
 		$eof=false;
 		while (!$eof)
 		{
@@ -127,7 +127,7 @@ else
 
 			if (substr($line,0,9) == '-- TABLE|')
 			{
-				$d=explode('|',$line);
+				$d=explode('|', $line);
 				$tabledata[$i]['name'] = $d[1];
 				$tabledata[$i]['records'] = $d[2];
 				$tabledata[$i]['size'] = $d[3];
@@ -135,8 +135,8 @@ else
 				$tabledata[$i]['engine'] = isset($d[5]) ? $d[5] : '';
 				$i++;
 			}
-			if (substr($line,0,6) == '-- EOF') $eof=true;
-			if (substr(strtolower($line),0,6) == 'create') $eof=true;
+			if (substr($line,0,6) == '-- EOF') $eof = true;
+			if (substr(strtolower($line),0,6) == 'create') $eof = true;
 		}
 		for ($i = 0; $i < sizeof($tabledata); $i++)
 		{

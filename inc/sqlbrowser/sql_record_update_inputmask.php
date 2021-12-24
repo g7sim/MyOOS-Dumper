@@ -23,7 +23,7 @@ $tpl->set_filenames(array(
 	'show' => './tpl/sqlbrowser/sql_record_update_inputmask.tpl'));
 
 $target=($mode=="searchedit") ? '?mode=searchedit' : '?mode=update'; // jump back to search hit list after saving
-$fields=getExtendedFieldInfo($db,$tablename);
+$fields=getExtendedFieldInfo($db, $tablename);
 
 $sqledit="SELECT * FROM `$tablename` WHERE ".$recordkey;
 $res=mod_query($sqledit);

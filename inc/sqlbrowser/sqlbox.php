@@ -45,7 +45,7 @@ if (isset($_POST['submit_openfile']))
 		else
 			$read__user_sqlfile=file($fn);
 		$aus.='<span>geladenes File: <strong>'.$_FILES['upfile']['name'].'</strong>&nbsp;&nbsp;&nbsp;'.byte_output(filesize($_FILES['upfile']['tmp_name'])).'</span>';
-		$sql_loaded=implode("",$read__user_sqlfile);
+		$sql_loaded=implode("", $read__user_sqlfile);
 	}
 }
 

@@ -44,7 +44,7 @@ function CheckCSVOptions()
 
 function ExportCSV()
 {
-	global $sql,$config;
+	global $sql, $config;
 	$t= '';
 	$time_start=time();
 	if (!isset($config['dbconnection'])) mod_mysqli_connect();
@@ -83,7 +83,7 @@ function ExportCSV()
 					}
 					elseif ($row[$feld] == '0' || $row[$feld] != '')
 					{
-						if ($sql['export']['enc'] != "") $t.= $sql['export']['enc'] . str_replace($sql['export']['enc'],$sql['export']['esc'] . $sql['export']['enc'],$row[$feld]) . $sql['export']['enc'];
+						if ($sql['export']['enc'] != "") $t.= $sql['export']['enc'] . str_replace($sql['export']['enc'], $sql['export']['esc'] . $sql['export']['enc'], $row[$feld]) . $sql['export']['enc'];
 						else $t.= $row[$feld];
 					}
 					else
@@ -114,7 +114,7 @@ function ExportCSV()
 
 function CSVOutput($str, $last=0)
 {
-	global $sql,$config;
+	global $sql, $config;
 	if ($sql['export']['sendfile'] == 0)
 	{
 		//Display
@@ -153,10 +153,10 @@ function CSVOutput($str, $last=0)
 
 function DoImport()
 {
-	global $sql,$lang;
+	global $sql, $lang;
 	$r='<span class="swarnung">';
 	$zeilen=count($sql['import']['csv']) - $sql['import']['namefirstline'];
-	$sql['import']['first_zeile'] =explode($sql['import']['trenn'],$sql['import']['csv'][0]);
+	$sql['import']['first_zeile'] =explode($sql['import']['trenn'], $sql['import']['csv'][0]);
 	$importfelder=count($sql['import']['first_zeile']);
 
 	if ($sql['import']['tablecreate'] == 0)
@@ -165,7 +165,7 @@ function DoImport()
 		$tabellenfelder=mysqli_num_rows($res);
 		if ($importfelder != $tabellenfelder)
 		{
-			$r.='<br>'.sprintf($lang['L_CSV_FIELDCOUNT_NOMATCH'],$tabellenfelder,$importfelder);
+			$r.='<br>'.sprintf($lang['L_CSV_FIELDCOUNT_NOMATCH'], $tabellenfelder, $importfelder);
 		}
 		else
 		{
@@ -177,7 +177,7 @@ function DoImport()
 		$ok=ImportCreateTable();
 		if ($ok == 0)
 		{
-			$r.='<br>'.sprintf($lang['L_CSV_ERRORCREATETABLE'],$sql['import']['table']);
+			$r.='<br>'.sprintf($lang['L_CSV_ERRORCREATETABLE'], $sql['import']['table']);
 		}
 	}
 	if ($ok == 1)
@@ -199,7 +199,7 @@ function DoImport()
 			//echo "Zeile $i: $zc<br>";
 			if ($zc != "")
 			{ // && substr($zc,-1)== $enc) {
-				$zeile=explode($sql['import']['trenn'],$zc);
+				$zeile=explode($sql['import']['trenn'], $zc);
 				for ($j=0; $j < $importfelder; $j++)
 				{
 					$a=( $zeile[$j] == "" && $enc == "" ) ? "''" : $zeile[$j];
@@ -211,7 +211,7 @@ function DoImport()
 			}
 
 		}
-		$r.=sprintf($lang['L_CSV_FIELDSLINES'],$importfelder,$sql['import']['lines_imported']);
+		$r.=sprintf($lang['L_CSV_FIELDSLINES'], $importfelder, $sql['import']['lines_imported']);
 	}
 
 	$r.='</span>';
@@ -221,7 +221,7 @@ function DoImport()
 
 function ImportCreateTable()
 {
-	global $sql,$lang,$db,$config;
+	global $sql, $lang, $db, $config;
 	$tbl= [];
 	$sql = "SHOW TABLES FROM $db";
 	$tabellen=mod_query($sql);
@@ -232,7 +232,7 @@ function ImportCreateTable()
 	}
 	$i=0;
 	$sql['import']['table'] = $sql['import']['table'] . $i;
-	while (in_array($sql['import']['table'],$tbl))
+	while (in_array($sql['import']['table'], $tbl))
 	{
 		$sql['import']['table'] =substr($sql['import']['table'],0,strlen($sql['import']['table']) - 1) . ++$i;
 	}
@@ -261,7 +261,7 @@ function ImportCreateTable()
 
 function ExportXML()
 {
-	global $sql,$config;
+	global $sql, $config;
 	$tab="\t";
 	$level=0;
 	$t='<?xml version="1.0" encoding="UTF-8" ?>'."\n".'<database name="'.$sql['export']['db'].'">'."\n";
@@ -271,7 +271,7 @@ function ExportXML()
 	if (!isset($config['dbconnection'])) mod_mysqli_connect();
 	for ($table=0; $table < count($sql['export']['tables']); $table++)
 	{
-		$t.=str_repeat($tab,$level++).'<table name="'.$sql['export']['tables'][$table].'">'."\n";
+		$t.=str_repeat($tab, $level++).'<table name="'.$sql['export']['tables'][$table].'">'."\n";
 		$sqlt="SHOW Fields FROM `" . $sql['export']['db'] . "`.`" . $sql['export']['tables'][$table] . "`;";
 		$res=mod_query($sqlt);
 		if ($res)
@@ -279,23 +279,23 @@ function ExportXML()
 			$numfields=mysqli_num_rows($res);
 			if ($sql['export']['xmlstructure'] == 1)
 			{
-				$t.=str_repeat($tab,$level++).'<structure>'."\n";
+				$t.=str_repeat($tab, $level++).'<structure>'."\n";
 				for ($feld=0; $feld < $numfields; $feld++)
 				{
 					$row=mysqli_fetch_array($res);
-					$t.=str_repeat($tab,$level++).'<field no="'.$feld.'">'."\n";
-					$t.=str_repeat($tab,$level).'<name>'.$row['Field'].'</name>'."\n";
-					$t.=str_repeat($tab,$level).'<type>'.$row['Type'].'</type>'."\n";
-					$t.=str_repeat($tab,$level).'<null>'.$row['Null'].'</null>'."\n";
-					$t.=str_repeat($tab,$level).'<key>'.$row['Key'].'</key>'."\n";
-					$t.=str_repeat($tab,$level).'<default>'.$row['Default'].'</default>'."\n";
-					$t.=str_repeat($tab,$level).'<extra>'.$row['Extra'].'</extra>'."\n";
+					$t.=str_repeat($tab, $level++).'<field no="'.$feld.'">'."\n";
+					$t.=str_repeat($tab, $level).'<name>'.$row['Field'].'</name>'."\n";
+					$t.=str_repeat($tab, $level).'<type>'.$row['Type'].'</type>'."\n";
+					$t.=str_repeat($tab, $level).'<null>'.$row['Null'].'</null>'."\n";
+					$t.=str_repeat($tab, $level).'<key>'.$row['Key'].'</key>'."\n";
+					$t.=str_repeat($tab, $level).'<default>'.$row['Default'].'</default>'."\n";
+					$t.=str_repeat($tab, $level).'<extra>'.$row['Extra'].'</extra>'."\n";
 					$t.=str_repeat($tab,--$level).'</field>'."\n";
 				}
 				$t.=str_repeat($tab,--$level).'</structure>'."\n";
 			}
 		}
-		$t.=str_repeat($tab,$level++).'<data>'."\n";
+		$t.=str_repeat($tab, $level++).'<data>'."\n";
 		$sqlt="SELECT * FROM `" . $sql['export']['db'] . "`.`" . $sql['export']['tables'][$table] . "`;";
 		$res=mod_query($sqlt);
 		if ($res)
@@ -303,12 +303,12 @@ function ExportXML()
 			$numrows=mysqli_num_rows($res);
 			for ($data=0; $data < $numrows; $data++)
 			{
-				$t.=str_repeat($tab,$level) . "<row>\n";
+				$t.=str_repeat($tab, $level) . "<row>\n";
 				$level++;
 				$row=mysqli_fetch_row($res);
 				for ($feld=0; $feld < $numfields; $feld++)
 				{
-					$t.=str_repeat($tab,$level).'<field no="'.$feld.'">'.$row[$feld].'</field>'."\n";
+					$t.=str_repeat($tab, $level).'<field no="'.$feld.'">'.$row[$feld].'</field>'."\n";
 				}
 				$t.=str_repeat($tab,--$level) . "</row>\n";
 				$sql['export']['lines']++;
@@ -335,7 +335,7 @@ function ExportXML()
 
 function ExportHTML()
 {
-	global $sql,$config,$lang;
+	global $sql, $config, $lang;
 	$header='<html><head><title>MOD Export</title></head>';
 	$footer="\n\n</body>\n</html>";
 	$content= '';
@@ -366,7 +366,7 @@ function ExportHTML()
 					$structure.="<tr class=\"Header\">\n";
 					for ($i = 0; $i < count($row); $i++)
 					{
-						$str=mysqli_fetch_field($res,$i);
+						$str=mysqli_fetch_field($res, $i);
 						$fieldname[$i] = $str->name;
 						$fieldtyp[$i] = $str->type;
 						$structure.="<th>" . $str->name . "</th>\n";

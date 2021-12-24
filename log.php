@@ -133,7 +133,7 @@ if (file_exists($lfile))
 		}
 		elseif ($r == 3)
 		{
-			$z=explode("|:|",$zeile);
+			$z=explode("|:|", $zeile);
 			for ($i = 0; $i < count($z); $i++)
 			{
 				$out.='<span>'.substr($z[$i],0,strpos($z[$i],": ")).'</span> '.substr($z[$i],strpos($z[$i],": ")) . "<br>";
@@ -155,7 +155,7 @@ $ersetzen=array(
 				'',
 				''
 );
-$out=str_replace($suchen,$ersetzen,$out);
+$out=str_replace($suchen, $ersetzen, $out);
 
 if ($out != "")
 {

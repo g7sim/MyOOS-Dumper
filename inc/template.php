@@ -174,7 +174,7 @@ class MODTemplate
 		// evaluate the variable assignment.
 		eval($code);
 		// assign the value of the generated variable to the given varname.
-		$this->assign_var($varname,$_str);
+		$this->assign_var($varname, $_str);
 
 		return true;
 	}
@@ -189,7 +189,7 @@ class MODTemplate
 		if (strstr($blockname,'.'))
 		{
 			// Nested block.
-			$blocks=explode('.',$blockname);
+			$blocks=explode('.', $blockname);
 			$blockcount=sizeof($blocks) - 1;
 			$str='$this->_tpldata';
 			for ($i = 0; $i < $blockcount; $i++)
@@ -306,8 +306,8 @@ class MODTemplate
 	public function compile($code, $do_not_echo=false, $retvar='')
 	{
 		// replace \ with \\ and then ' with \'.
-		$code=str_replace('\\','\\\\',$code);
-		$code=str_replace('\'','\\\'',$code);
+		$code=str_replace('\\','\\\\', $code);
+		$code=str_replace('\'','\\\'', $code);
 
 
 		// change template varrefs into PHP varrefs
@@ -315,22 +315,22 @@ class MODTemplate
 
 		// This one will handle varrefs WITH namespaces
 		$varrefs= [];
-		preg_match_all('#\{(([a-z0-9\-_]+?\.)+?)([a-z0-9\-_]+?)\}#is',$code,$varrefs);
+		preg_match_all('#\{(([a-z0-9\-_]+?\.)+?)([a-z0-9\-_]+?)\}#is', $code, $varrefs);
 		$varcount=sizeof($varrefs[1]);
 		for ($i = 0; $i < $varcount; $i++)
 		{
 			$namespace= $varrefs[1][$i];
 			$varname= $varrefs[3][$i];
-			$new= $this->generate_block_varref($namespace,$varname);
+			$new= $this->generate_block_varref($namespace, $varname);
 
-			$code=str_replace($varrefs[0][$i],$new,$code);
+			$code=str_replace($varrefs[0][$i], $new, $code);
 		}
 
 		// This will handle the remaining root-level varrefs
-		$code=preg_replace('#\{([a-z0-9\-_]*?)\}#is','\'.( ( isset($this->_tpldata[\'.\'][0][\'\1\']) ) ? $this->_tpldata[\'.\'][0][\'\1\'] : \'\' ) . \'',$code);
+		$code=preg_replace('#\{([a-z0-9\-_]*?)\}#is','\'.( ( isset($this->_tpldata[\'.\'][0][\'\1\']) ) ? $this->_tpldata[\'.\'][0][\'\1\'] : \'\' ) . \'', $code);
 
 		// Break it up into lines.
-		$code_lines=explode("\n",$code);
+		$code_lines=explode("\n", $code);
 
 		$block_nesting_level=0;
 		$block_names= [];
@@ -341,13 +341,13 @@ class MODTemplate
 		for ($i = 0; $i < $line_count; $i++)
 		{
 			$code_lines[$i] =chop($code_lines[$i]);
-			if (preg_match('#<!-- BEGIN (.*?) -->#',$code_lines[$i],$m))
+			if (preg_match('#<!-- BEGIN (.*?) -->#', $code_lines[$i], $m))
 			{
 				$n[0] = $m[0];
 				$n[1] = $m[1];
 
 				// Added: dougk_ff7-Keeps templates from bombing if begin is on the same line as end.. I think. :)
-				if (preg_match('#<!-- END (.*?) -->#',$code_lines[$i],$n))
+				if (preg_match('#<!-- END (.*?) -->#', $code_lines[$i], $n))
 				{
 					$block_nesting_level++;
 					$block_names[$block_nesting_level] = $m[1];
@@ -364,7 +364,7 @@ class MODTemplate
 
 
 						// Generate a namespace string for this block.
-						$namespace=implode('.',$block_names);
+						$namespace=implode('.', $block_names);
 						// strip leading period from root level..
 						$namespace=substr($namespace,2);
 						// Get a reference to the data array for this block that depends on the
@@ -401,7 +401,7 @@ class MODTemplate
 
 
 						// Generate a namespace string for this block.
-						$namespace=implode('.',$block_names);
+						$namespace=implode('.', $block_names);
 						// strip leading period from root level..
 						$namespace=substr($namespace,2);
 						// Get a reference to the data array for this block that depends on the
@@ -414,7 +414,7 @@ class MODTemplate
 					}
 				}
 			}
-			elseif (preg_match('#<!-- END (.*?) -->#',$code_lines[$i],$m))
+			elseif (preg_match('#<!-- END (.*?) -->#', $code_lines[$i], $m))
 			{
 				// We have the end of a block.
 				unset($block_names[$block_nesting_level]);
@@ -436,7 +436,7 @@ class MODTemplate
 		}
 
 		// Bring it back into a single string of lines of code.
-		$code=implode("\n",$code_lines);
+		$code=implode("\n", $code_lines);
 		return $code;
 
 	}
@@ -478,7 +478,7 @@ class MODTemplate
 	public function generate_block_data_ref($blockname, $include_last_iterator)
 	{
 		// Get an array of the blocks involved.
-		$blocks=explode(".",$blockname);
+		$blocks=explode(".", $blockname);
 		$blockcount=sizeof($blocks) - 1;
 		$varref='$this->_tpldata';
 		// Build up the string with everything but the last child.

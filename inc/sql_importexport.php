@@ -33,11 +33,11 @@ if ($import == 1)
 	}
 	else
 	{
-		$sql['import']['endline'] =str_replace('\\r',"\015",$sql['import']['endline']);
-		$sql['import']['endline'] =str_replace('\\n',"\012",$sql['import']['endline']);
-		$sql['import']['endline'] =str_replace('\\t',"\011",$sql['import']['endline']);
+		$sql['import']['endline'] =str_replace('\\r',"\015", $sql['import']['endline']);
+		$sql['import']['endline'] =str_replace('\\n',"\012", $sql['import']['endline']);
+		$sql['import']['endline'] =str_replace('\\t',"\011", $sql['import']['endline']);
 	}
-	$sql['import']['endline'] =str_replace('\\t',"\011",$sql['import']['endline']);
+	$sql['import']['endline'] =str_replace('\\t',"\011", $sql['import']['endline']);
 	if (isset($_POST['f_import_csvnull'])) $sql['import']['null'] = $_POST['f_import_csvnull'];
 	$sql['import']['namefirstline'] = (isset($_POST['f_import_namefirstline']) ) ? $_POST['f_import_namefirstline'] : 0;
 	$sql['import']['emptydb'] = (isset($_POST['import_emptydb']) ) ? 1 : 0;
@@ -65,7 +65,7 @@ if ($import == 1)
 			if ($_POST['import_source'] == 0)
 			{
 				//Import aus textbox
-				$sql['import']['csv'] =explode($sql['import']['endline'],$sql['import']['text']);
+				$sql['import']['csv'] =explode($sql['import']['endline'], $sql['import']['text']);
 
 			}
 			else
@@ -79,7 +79,7 @@ if ($import == 1)
 					$fn= $_FILES['upfile']['tmp_name'];
 
 					$sql['import']['csv'] =( substr($_FILES['upfile']['name'],-3) == ".gz" ) ? gzfile($fn) : file($fn);
-					$sql['import']['text'] =implode("",$sql['import']['csv']);
+					$sql['import']['text'] =implode("", $sql['import']['csv']);
 					$aus.='<span>'.$lang['L_SQL_UPLOADEDFILE'].'<strong>'.$_FILES['upfile']['name'].'</strong>&nbsp;&nbsp;&nbsp;'.byte_output(filesize($_FILES['upfile']['tmp_name'])).'</span>';
 
 				}
@@ -94,7 +94,7 @@ if ($import == 1)
 	$impaus.='<form action="sql.php?db='.$db.'&amp;dbid='.$dbid.'&amp;context=4&amp;import=1" method="post" enctype="multipart/form-data">'.$nl;
 	$impaus.='';
 	$impaus.='<a href="sql.php?db='.$db.'&amp;dbid='.$dbid.'&amp;context=4">'.$lang['L_EXPORT'].'</a>';
-	$impaus.='<h6>'.sprintf($lang['L_SQL_IMPORT'],$databases['Name'][$dbid]).'</h6>';
+	$impaus.='<h6>'.sprintf($lang['L_SQL_IMPORT'], $databases['Name'][$dbid]).'</h6>';
 	$impaus.='<table class="bordersmall"><tr class="thead"><th>'.$nl;
 	$impaus.= $lang['L_IMPORTOPTIONS'].'</th><th>'.$lang['L_CSVOPTIONS'].'</th></tr>'.$nl;
 
@@ -166,11 +166,11 @@ else
 			}
 			else
 			{
-				$sql['export']['endline'] =str_replace('\\r',"\015",$sql['export']['endline']);
-				$sql['export']['endline'] =str_replace('\\n',"\012",$sql['export']['endline']);
-				$sql['export']['endline'] =str_replace('\\t',"\011",$sql['export']['endline']);
+				$sql['export']['endline'] =str_replace('\\r',"\015", $sql['export']['endline']);
+				$sql['export']['endline'] =str_replace('\\n',"\012", $sql['export']['endline']);
+				$sql['export']['endline'] =str_replace('\\t',"\011", $sql['export']['endline']);
 			}
-			$sql['export']['endline'] =str_replace('\\t',"\011",$sql['export']['endline']);
+			$sql['export']['endline'] =str_replace('\\t',"\011", $sql['export']['endline']);
 		}
 		elseif ($sql['export']['format'] == 1)
 		{
@@ -231,16 +231,16 @@ else
 		for ($i = 0; $i < $sql['export']['tablecount']; $i++)
 		{
 			$row=mysqli_fetch_array($res);
-			$tblstr.='<option value="'.$row['Name'].'" '.( ( isset($sql['export']['tables']) && in_array($row['Name'],$sql['export']['tables']) ) ? ' selected="selected"' : '').'>'.$row['Name'].' ('.$row['Rows'].')</option>'."\n";
+			$tblstr.='<option value="'.$row['Name'].'" '.( ( isset($sql['export']['tables']) && in_array($row['Name'], $sql['export']['tables']) ) ? ' selected="selected"' : '').'>'.$row['Name'].' ('.$row['Rows'].')</option>'."\n";
 			$sql['export']['recordcount']+= $row['Rows'];
 		}
 	}
 
-	$exaus= $aus.'<h4>'.sprintf($lang['L_SQL_EXPORT'],$databases['Name'][$dbid]).'</h4>';
+	$exaus= $aus.'<h4>'.sprintf($lang['L_SQL_EXPORT'], $databases['Name'][$dbid]).'</h4>';
 
 	$exaus.='<form action="sql.php?db='.$db.'&amp;dbid='.$dbid.'&amp;context=4" method="post">'.$nl;
 	$exaus.='<a href="sql.php?db='.$db.'&amp;dbid='.$dbid.'&amp;context=4&amp;import=1">'.$lang['L_IMPORT'].'</a>';
-	$exaus.='<h6>'.sprintf($lang['L_SQL_EXPORT'],$databases['Name'][$dbid]).'</h6>';
+	$exaus.='<h6>'.sprintf($lang['L_SQL_EXPORT'], $databases['Name'][$dbid]).'</h6>';
 	$exaus.='<table class="bdr"><tr class="thead"><th>'.$lang['L_TABLES'].'</th>'.$nl;
 	$exaus.='<th>'.$lang['L_EXPORTOPTIONS'].'</th>';
 	$exaus.='<th>'.$lang['L_EXPORT'].'</th></tr><tr>';
@@ -299,7 +299,7 @@ else
 		if (!$download)
 		{
 			echo '</textarea><br>'.$nl;
-			echo '<span style="color:blue;">'.$lang['L_EXPORTFINISHED'].'</span>&nbsp;&nbsp;'.sprintf($lang['L_EXPORTLINES'],$sql['export']['lines']) . $nl;
+			echo '<span style="color:blue;">'.$lang['L_EXPORTFINISHED'].'</span>&nbsp;&nbsp;'.sprintf($lang['L_EXPORTLINES'], $sql['export']['lines']) . $nl;
 		}
 		else
 		{

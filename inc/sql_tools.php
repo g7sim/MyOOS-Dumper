@@ -37,7 +37,7 @@ if (isset($_POST['dbdosubmit']))
             if (MOD_DoSQL("DROP DATABASE `" . $databases['Name'][$db_index] . "`"))
             {
                 echo SQLOutput($out,'<p class="success">'.$lang['L_DB'].' `'.$databases['Name'][$db_index].'` '.$lang['L_SQL_DELETED'].'</p>');
-                $changed=true;
+                $changed = true;
             }
 		    break;
 		case "empty":
@@ -46,32 +46,32 @@ if (isset($_POST['dbdosubmit']))
 			break;
 		case "rename":
 			$dbold= $databases['Name'][$db_index];
-            if (DB_Copy($dbold,$newname,1))
+            if (DB_Copy($dbold, $newname,1))
             {
                 echo SQLOutput($out,'<p class="success">'.$lang['L_DB'].' `'.$dbold.'` '.$lang['L_SQL_RENAMEDTO'].' `'.$newname.'`.</p>');
-                $changed=true;
+                $changed = true;
             }
 			break;
 		case "copy":
 			$dbold= $databases['Name'][$db_index];
-            if (DB_Copy($dbold,$newname))
+            if (DB_Copy($dbold, $newname))
             {
-                $changed=true;
-                echo SQLOutput($out,'<p class="success">'.sprintf($lang['L_SQL_DBCOPY'],$dbold,$newname).'</p>');
+                $changed = true;
+                echo SQLOutput($out,'<p class="success">'.sprintf($lang['L_SQL_DBCOPY'], $dbold, $newname).'</p>');
             }
             break;
 		case "structure":
-            if (DB_Copy($databases['Name'][$db_index],$newname,0,0))
+            if (DB_Copy($databases['Name'][$db_index], $newname,0,0))
             {
-                $changed=true;
-                echo SQLOutput($out,'<p class="success">'.sprintf($lang['L_SQL_DBSCOPY'],$databases['Name'][$db_index],$newname).'</p>');
+                $changed = true;
+                echo SQLOutput($out,'<p class="success">'.sprintf($lang['L_SQL_DBSCOPY'], $databases['Name'][$db_index], $newname).'</p>');
             }
             break;
 		case "rights":
 			break;
 	}
 
-	if ($changed==true)
+	if ($changed= = true)
 	{
 		SetDefault();
 		include ( $config['files']['parameter'] );
@@ -91,10 +91,10 @@ if (isset($_POST['dbwantaction']))
 			if (isset($_POST['db_default_charset']) && intval(substr(MOD_NEW_VERSION,0,1)) > 3)
 			{
 				$db_default_charset_string= $config['mysql_possible_character_sets'][$_POST['db_default_charset']];
-				$db_default_charset=explode(' ',$db_default_charset_string);
+				$db_default_charset=explode(' ', $db_default_charset_string);
 				if (isset($db_default_charset[0])) $sqlc.=' DEFAULT CHARACTER SET `'.$db_default_charset[0].'`';
 			}
-			$db_default_collation=@explode('|',$col);
+			$db_default_collation=@explode('|', $col);
 			if (isset($db_default_collation[1])) $sqlc.=' COLLATE `'.$db_default_collation[1].'`';
 
             if (mod_query($sqlc))
@@ -128,11 +128,11 @@ if (isset($_POST['dbwantaction']))
 		switch ($db_action)
 		{
 			case "drop":
-				echo '<strong>'.sprintf($lang['L_ASKDBDELETE'],$databases['Name'][$i]).'</strong><br><br>';
+				echo '<strong>'.sprintf($lang['L_ASKDBDELETE'], $databases['Name'][$i]).'</strong><br><br>';
 				echo '<input type="submit" name="dbdosubmit" value="'.$lang['L_DO_NOW'].'" class="Formbutton">';
 				break;
 			case "empty":
-				echo '<strong>'.sprintf($lang['L_ASKDBEMPTY'],$databases['Name'][$i]).'</strong><br><br>';
+				echo '<strong>'.sprintf($lang['L_ASKDBEMPTY'], $databases['Name'][$i]).'</strong><br><br>';
 				echo '<input type="submit" name="dbdosubmit" value="'.$lang['L_DO_NOW'].'" class="Formbutton">';
 				break;
 			case "rename":
@@ -144,7 +144,7 @@ if (isset($_POST['dbwantaction']))
                 }
 				break;
 			case "copy":
-				echo '<strong>'.sprintf($lang['L_ASKDBCOPY'],$databases['Name'][$db_index],$newname).'</strong><br><br>';
+				echo '<strong>'.sprintf($lang['L_ASKDBCOPY'], $databases['Name'][$db_index], $newname).'</strong><br><br>';
 				if ($newname == '') echo '<p class="error">'.$lang['L_SQL_NAMEDEST_MISSING'].'</p>';
 				else
 				{
@@ -172,7 +172,7 @@ echo '<tr><td colspan="2" align="center"><strong>'.$lang['L_CREATE_DATABASE'].'<
 echo '<tr><td>Name:</td><td><input type="text" class="text" name="db_create" size="20"></td></tr>';
 
 echo '<tr><td>'.$lang['L_DEFAULT_CHARSET'].':</td><td><select name="db_default_charset">';
-echo make_options($config['mysql_possible_character_sets'],get_index($config['mysql_possible_character_sets'],$config['mysql_standard_character_set']));
+echo make_options($config['mysql_possible_character_sets'],get_index($config['mysql_possible_character_sets'], $config['mysql_standard_character_set']));
 echo '</select></td></tr>';
 
 echo '<tr><td>'.$lang['L_COLLATION'].'</td><td><select name="db_collate">'.CollationCombo('',1).'</select></td></tr>';

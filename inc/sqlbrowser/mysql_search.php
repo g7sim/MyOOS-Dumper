@@ -48,14 +48,14 @@ if (isset($_GET['mode'])&&$_GET['mode'] =="kill"&&$rk>'')
 
 function mysqli_search($db, $tabelle, $suchbegriffe, $suchart, $offset=0, $anzahl_ergebnisse=20, $auszuschliessende_tabellen='')
 {
-	global $tables,$config,$lang;
+	global $tables, $config, $lang;
 
 	$ret = false;
 	$link=mod_mysqli_connect();
 	if (sizeof($tables)>0)
 	{
-		$suchbegriffe=trim(str_replace('*','',$suchbegriffe));
-		$suchworte=explode(' ',$suchbegriffe);
+		$suchbegriffe=trim(str_replace('*','', $suchbegriffe));
+		$suchworte=explode(' ', $suchbegriffe);
 		if (($suchbegriffe>'')&&(is_array($suchworte)))
 		{
 			// Leere Einträge (durch doppelte Leerzeichen) entfernen
@@ -71,7 +71,7 @@ function mysqli_search($db, $tabelle, $suchbegriffe, $suchart, $offset=0, $anzah
       
 			// Felder ermitteln
 			$sql='SHOW COLUMNS FROM `'.$db.'`.`'.$tables[$tabelle].'`';
-			$res=mysqli_query($link,$sql);
+			$res=mysqli_query($link, $sql);
 			if (!$res===false)
 			{
 				// Felder der Tabelle ermitteln
@@ -88,7 +88,7 @@ function mysqli_search($db, $tabelle, $suchbegriffe, $suchart, $offset=0, $anzah
 				if (count($felder) > 0)
 				{
 					//Concat-String bildem
-					$concat=implode('`),LOWER(`',$felder);
+					$concat=implode('`),LOWER(`', $felder);
 					$concat='CONCAT_WS(\'\',LOWER(`'.$concat.'`))';
 					$where='';
 					foreach ($suchworte as $suchbegriff)
@@ -123,9 +123,9 @@ function mysqli_search($db, $tabelle, $suchbegriffe, $suchart, $offset=0, $anzah
 
 								$feld,
 								$suchbegriff);
-							$feldbedingung[] =str_replace($suchen,$ersetzen,$pattern);
+							$feldbedingung[] =str_replace($suchen, $ersetzen, $pattern);
 						}
-						$bedingung[] ='('.implode(' '.$suchart.' ',$feldbedingung).') ';
+						$bedingung[] ='('.implode(' '.$suchart.' ', $feldbedingung).') ';
 					}
 				}
 				else
@@ -133,7 +133,7 @@ function mysqli_search($db, $tabelle, $suchbegriffe, $suchart, $offset=0, $anzah
 					$_SESSION['mysql_search']['suchbegriffe'] ='';
 					die(sprintf($lang['L_ERROR_NO_FIELDS'], $tabelle));
 				}
-				$where=implode(' OR ',$bedingung);
+				$where=implode(' OR ', $bedingung);
 				$sql='SELECT * FROM `'.$db.'`.`'.$tables[$tabelle].'` WHERE ('.$where.') LIMIT '.$offset.','.$anzahl_ergebnisse;
 			}
 		}
@@ -150,7 +150,7 @@ function mysqli_search($db, $tabelle, $suchbegriffe, $suchart, $offset=0, $anzah
 				{
 					foreach ($suchworte as $suchbegriff)
 					{
-						$row[$key] =markiere_suchtreffer($suchbegriff,$row[$key]);
+						$row[$key] =markiere_suchtreffer($suchbegriff, $row[$key]);
 					}
 					$row[$key] =ersetze_suchtreffer($row[$key]);
 				}
@@ -179,7 +179,7 @@ function markiere_suchtreffer($suchbegriff, $suchstring)
 		{
 			for ($offset= $trefferpos; $offset<=strlen($str); $offset++)
 			{
-				$start=strpos($str,$suchbegriff,$offset);
+				$start=strpos($str, $suchbegriff, $offset);
 				if ($start===false) $offset=strlen($str)+1;
 				else
 				{
@@ -190,14 +190,14 @@ function markiere_suchtreffer($suchbegriff, $suchstring)
 						// Steht die Fundstelle zwischen < und > (also im HTML-Tag) ?
 						for ($position= $start; $position>=0; $position--)
 						{
-							if (substr($str,$position,1)==">")
+							if (substr($str, $position,1)==">")
 							{
 								$in_html=false;
 								$position=-1; // Schleife verlassen
 							}
-							if (substr($str,$position,1)=="<")
+							if (substr($str, $position,1)=="<")
 							{
-								$in_html=true;
+								$in_html = true;
 								$position=-1; // Schleife verlassen
 							}
 						}
@@ -205,13 +205,13 @@ function markiere_suchtreffer($suchbegriff, $suchstring)
 						{
 							for ($position2= $start; $position2<strlen($str); $position2++)
 							{
-								if (substr($str,$position2,1)=="<")
+								if (substr($str, $position2,1)=="<")
 								{
 									$position2=strlen($str)+1;
 								}
-								if (substr($str,$position2,1)==">")
+								if (substr($str, $position2,1)==">")
 								{
-									$in_html=true;
+									$in_html = true;
 									$position2=strlen($str)+1;
 									$offset=strlen($str)+1;
 								}
@@ -219,8 +219,8 @@ function markiere_suchtreffer($suchbegriff, $suchstring)
 						}
 						if (!$in_html)
 						{
-							$ersetzen=substr($suchstring,$start,strlen($suchbegriff));
-							$str=substr($suchstring,0,$start);
+							$ersetzen=substr($suchstring, $start,strlen($suchbegriff));
+							$str=substr($suchstring,0, $start);
 							$str.=chr(1).$ersetzen.chr(2);
 							$str.=substr($suchstring,($start+strlen($ersetzen)),(strlen($suchstring)-strlen($ersetzen)));
 							$suchstring= $str;
@@ -250,7 +250,7 @@ function ersetze_suchtreffer($text)
 
 		'<span class="treffer">',
 		'</span>');
-	return str_replace($such,$ersetzen,htmlspecialchars($text));
+	return str_replace($such, $ersetzen,htmlspecialchars($text));
 }
 
 $suchbegriffe=trim($suchbegriffe); // Leerzeichen vorne und hinten wegschneiden
@@ -312,10 +312,10 @@ $tpl->assign_vars(array(
 	'LANG_SEARCH_IN_TABLE' => $lang['L_SEARCH_IN_TABLE']));
 
 $max_treffer=20;
-$treffer=mysqli_search($db,$table_selected,$suchbegriffe,$suchart,$offset,$max_treffer+1);
+$treffer=mysqli_search($db, $table_selected, $suchbegriffe, $suchart, $offset, $max_treffer+1);
 if (is_array($treffer)&&isset($treffer[0]))
 {
-	$search_message=sprintf($lang['L_SEARCH_RESULTS'],$suchbegriffe,$tables[$table_selected]);
+	$search_message=sprintf($lang['L_SEARCH_RESULTS'], $suchbegriffe, $tables[$table_selected]);
 	$anzahl_treffer=count($treffer);
 	// Blaettern-Buttons
 	$tpl->assign_block_vars('HITS',array(
@@ -343,7 +343,7 @@ if (is_array($treffer)&&isset($treffer[0]))
 	if ($zeige_treffer== $max_treffer+1) $zeige_treffer= $max_treffer;
 
 	// built key - does a primary key exist?
-	$fieldinfos=getExtendedFieldinfo($db,$tables[$table_selected]);
+	$fieldinfos=getExtendedFieldinfo($db, $tables[$table_selected]);
 	//v($fieldinfos);
 	// auf zusammengesetzte Schlüssel untersuchen
 	$table_keys = isset($fieldinfos['primary_keys']) ? $fieldinfos['primary_keys'] : '';
@@ -358,8 +358,8 @@ if (is_array($treffer)&&isset($treffer[0]))
 			foreach ($table_keys as $k)
 			{
 				// remove hit marker from value
-				$x=str_replace('<span class="treffer">','',$treffer[$a][$k]);
-				$x=str_replace('</span>','',$x);
+				$x=str_replace('<span class="treffer">','', $treffer[$a][$k]);
+				$x=str_replace('</span>','', $x);
 				$keystring.='`'.$k.'`="'.addslashes($x).'" AND ';
 			}
 			$keystring=substr($keystring,0,-5);
@@ -397,11 +397,11 @@ else
 	if (!isset($tables[$table_selected])) $tables[$table_selected] ='';
 	if ($suchbegriffe=='') $tpl->assign_block_vars('NO_ENTRIES',array(
 
-		'LANG_NO_ENTRIES' => sprintf($lang['L_NO_ENTRIES'],$tables[$table_selected])));
+		'LANG_NO_ENTRIES' => sprintf($lang['L_NO_ENTRIES'], $tables[$table_selected])));
 	else
 		$tpl->assign_block_vars('NO_RESULTS',array(
 
-			'LANG_SEARCH_NO_RESULTS' => sprintf($lang['L_SEARCH_NO_RESULTS'],$suchbegriffe,$tables[$table_selected])));
+			'LANG_SEARCH_NO_RESULTS' => sprintf($lang['L_SEARCH_NO_RESULTS'], $suchbegriffe, $tables[$table_selected])));
 }
 
 $tpl->pparse('show');

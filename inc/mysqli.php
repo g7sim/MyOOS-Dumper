@@ -264,7 +264,7 @@ $mysql_SQLhasRecords = array (
 
 function mod_mysqli_connect($encoding='utf8mb4', $keycheck_off=false, $actual_table='')
 {
-    global $config,$databases;
+    global $config, $databases;
 
     if (isset($config['dbconnection']) && is_resource($config['dbconnection'])) {
         return $config['dbconnection'];
@@ -289,7 +289,7 @@ function mod_mysqli_connect($encoding='utf8mb4', $keycheck_off=false, $actual_ta
 	if ($config['mysql_standard_character_set'] != $encoding) {
 		$set_encoding = mysqli_query($config['dbconnection'],'SET NAMES \''.$encoding.'\'');
 		if ($set_encoding === false) $config['mysql_can_change_encoding'] =false;
-		else $config['mysql_can_change_encoding'] =true;
+		else $config['mysql_can_change_encoding'] = true;
 	}
 	if ($keycheck_off) {
 	    // only called with this param when restoring
@@ -309,23 +309,23 @@ function GetMySQLVersion()
 	$res=mod_query("SELECT VERSION()");
 	$row=mysqli_fetch_array($res);
 	$version= $row[0];
-	if (!defined('MOD_MYSQL_VERSION')) define('MOD_MYSQL_VERSION',$version);
-	$versions=explode('.',$version);
+	if (!defined('MOD_MYSQL_VERSION')) define('MOD_MYSQL_VERSION', $version);
+	$versions=explode('.', $version);
 	$new=false;
-	if ($versions[0] == 4 && $versions[1] >= 1) $new=true;
-	if ($versions[0] > 4) $new=true;
-	if (!defined('MOD_NEW_VERSION')) define('MOD_NEW_VERSION',$new);
+	if ($versions[0] == 4 && $versions[1] >= 1) $new = true;
+	if ($versions[0] > 4) $new = true;
+	if (!defined('MOD_NEW_VERSION')) define('MOD_NEW_VERSION', $new);
 
 	return $version;
 }
 
-function mod_query($query, $error_output=true)
+function mod_query($query, $error_output = true)
 {
 	global $config;
 	// print_mem();
 	if (!isset($config['dbconnection'])) mod_mysqli_connect();
 	// echo "<br>Query: ".htmlspecialchars($query).'<br>';
-	$res=mysqli_query($config['dbconnection'],$query);
+	$res=mysqli_query($config['dbconnection'], $query);
 	// print_mem();
 	if (false === $res && $error_output) SQLError($query,mysqli_error($config['dbconnection']));
 	return $res;
@@ -385,13 +385,13 @@ function Highlight_SQL($sql)
 					case "T_AS":
 					case "T_FOR":
 
-						$end.=( in_array(strtoupper($token[1]),$sql_keywords) ) ? "<span style=\"color:#990099;font-weight:bold;\">" . $token[1] . "</span>" : $token[1];
+						$end.=( in_array(strtoupper($token[1]), $sql_keywords) ) ? "<span style=\"color:#990099;font-weight:bold;\">" . $token[1] . "</span>" : $token[1];
 						break;
 					case "T_IF":
 					case "T_LOGICAL_AND":
 					case "T_LOGICAL_OR":
 					case "T_LOGICAL_XOR":
-						$end.=( in_array(strtoupper($token[1]),$sql_keywords) ) ? "<span style=\"color:#0000ff;font-weight:bold;\">" . $token[1] . "</span>" : $token[1];
+						$end.=( in_array(strtoupper($token[1]), $sql_keywords) ) ? "<span style=\"color:#0000ff;font-weight:bold;\">" . $token[1] . "</span>" : $token[1];
 						break;
 					case "T_CLOSE_TAG":
 					case "T_OPEN_TAG":
@@ -402,7 +402,7 @@ function Highlight_SQL($sql)
 			}
 		}
 	}
-	$end=preg_replace("/`(.*?)`/si","<span style=\"color:red;\">`$1`</span>",$end);
+	$end=preg_replace("/`(.*?)`/si","<span style=\"color:red;\">`$1`</span>", $end);
 	return $end;
 }
 
@@ -426,7 +426,7 @@ function Fieldlist($db, $tbl)
 // reads all Tableinfos and place them in $dump-Array
 function getDBInfos()
 {
-	global $databases,$dump,$config,$tbl_sel,$flipped;
+	global $databases, $dump, $config, $tbl_sel, $flipped;
 	for ($ii=0; $ii < count($databases['multi']); $ii++)
 	{
 		$dump['dbindex'] = $flipped[$databases['multi'][$ii]];
@@ -460,7 +460,7 @@ function getDBInfos()
 
             if (isset($tbl_sel))
 				{
-					if (in_array($row['Name'],$dump['tblArray']))
+					if (in_array($row['Name'], $dump['tblArray']))
 					{
 						$dump['tables'][] = $databases['Name'][$dump['dbindex']].'|'.$row['Name'];
 						$dump['records'][] = $databases['Name'][$dump['dbindex']].'|'.$row['Rows'];
@@ -487,7 +487,7 @@ function getDBInfos()
 					if ($res2 === false)
 					{
 						$read_error = mysqli_error($config['dbconnection']);
-						SQLError($read_error,$sql_2);
+						SQLError($read_error, $sql_2);
 						WriteLog($read_error);
 						if ($config['stop_with_error'] > 0)
 						{
@@ -514,7 +514,7 @@ function getDBInfos()
 					if ($dump['tables'][$a] == $skip_data)
 					{
 						$index= $a;
-						$t=explode('|',$dump['records'][$a]);
+						$t=explode('|', $dump['records'][$a]);
 						$rekords_to_skip= $t[1];
 						break;
 					}
@@ -529,7 +529,7 @@ function getDBInfos()
 function getDBIndex($db, $table)
 {
 	global $dump;
-	$index=array_keys($dump['tables'],$db.'|'.$table);
+	$index=array_keys($dump['tables'], $db.'|'.$table);
 	return $index[0];
 }
 

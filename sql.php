@@ -126,7 +126,7 @@ if ($sql_to_display_data == 1) {
 	$op = strpos(strtoupper($sql['sql_statement']), ' ORDER ');
 	if ($op > 0) {
 		//is order by last ?
-		$sql['order_statement'] = substr($sql['sql_statement'],$op);
+		$sql['order_statement'] = substr($sql['sql_statement'], $op);
 		if (strpos($sql['order_statement'],')') > 0) {
 			$sql['order_statement'] = '';
 		} else {
@@ -147,7 +147,7 @@ mysqli_select_db($config['dbconnection'], $db);
 if (isset($_POST['update'])||isset($_GET['update']))
 {
 	GetPostParams();
-	$f 		= explode('|',$_POST['feldnamen']);
+	$f 		= explode('|', $_POST['feldnamen']);
 	$sqlu 	= 'UPDATE `'.$_POST['db'].'`.`'.$tablename.'` SET ';
 	for ($i = 0; $i < count($f); $i++) {
 		$index = isset($_POST[$f[$i]]) ? $f[$i] : correct_post_index($f[$i]);
@@ -169,7 +169,7 @@ if (isset($_POST['update'])||isset($_GET['update']))
 if (isset($_POST['insert']))
 {
 	GetPostParams();
-	$f = explode('|',$_POST['feldnamen']);
+	$f = explode('|', $_POST['feldnamen']);
 	$sqlu = 'INSERT INTO `'.$tablename.'` SET ';
 	for ($i = 0; $i<count($f); $i++)
 	{
@@ -196,61 +196,51 @@ $tabellenansicht = (substr(strtoupper($sql['sql_statement']),0,5) == 'SHOW ') ? 
 
 if (!isset($limitstart)) $limitstart = 0;
 $limitende = $config['sql_limit'];
-if (strtolower(substr($sql['sql_statement'],0,6)) == 'select') $limit = ' LIMIT '.$limitstart.', '.$limitende.';';
+if (strtolower(substr($sql['sql_statement'], 0, 6)) == 'select') $limit = ' LIMIT '.$limitstart.', '.$limitende.';';
 
-$params = "sql.php?db=".$db."&amp;tablename=".$tablename."&amp;dbid=".$dbid.'&amp;context='.$context.'&amp;sql_statement='.urlencode($sql['sql_statement']).'&amp;tdc='.$tdcompact.'&amp;showtables='.$showtables;
-if ($order != "") $params .= "&amp;order=".$order."&amp;orderdir=".$orderdir.'&amp;context='.$context;
-if ($bb>-1) $params .= "&amp;bb=".$bb;
+$params = 'sql.php?db='.$db.'&amp;tablename='.$tablename.'&amp;dbid='.$dbid.'&amp;context='.$context.'&amp;sql_statement='.urlencode($sql['sql_statement']).'&amp;tdc='.$tdcompact.'&amp;showtables='.$showtables;
+if ($order != "") $params .= '&amp;order='.$order.'&amp;orderdir='.$orderdir.'&amp;context='.$context;
+if ($bb>-1) $params .= '&amp;bb='.$bb;
 
 $aus = headline($lang['L_SQL_BROWSER']);
 
-if ($search == 0 && !$download)
-{
+if ($search == 0 && !$download) {
 	echo $aus;
 	$aus = '';
-	include ('./inc/sqlbrowser/sqlbox.php');
+	include './inc/sqlbrowser/sqlbox.php';
 
-	if ($mode>'' && $context == 0)
-	{
+	if ($mode > '' && $context == 0) {
 		if (isset($recordkey) && $recordkey>'') $rk = urldecode($recordkey);
 		if (isset($_GET['tablename'])) $tablename = $_GET['tablename'];
 
-		if ($mode == 'kill'||$mode == 'kill_view')
-		{
-			if ($showtables == 0)
-			{
+		if ($mode == 'kill'||$mode == 'kill_view') {
+			if ($showtables == 0) {
 				$sqlk = "DELETE FROM `$tablename` WHERE ".$rk." LIMIT 1";
 				$res = mod_query($sqlk);
 				//echo "<br>".$sqlk;
 				$aus .= '<p class = "success">'.$lang['L_SQL_RECORDDELETED'].'</p>';
-			}
-			else
-			{
+			} else {
 				$sqlk = "DROP TABLE `$rk`";
 				if ($mode == 'kill_view') $sqlk = 'DROP VIEW `'.$rk.'`';
 				$res = mod_query($sqlk);
-				$aus .= '<p class = "success">'.sprintf($lang['L_SQL_RECORDDELETED'],$rk).'</p>';
+				$aus .= '<p class = "success">'.sprintf($lang['L_SQL_RECORDDELETED'], $rk).'</p>';
 			}
 		}
-		if ($mode == "empty")
-		{
+		if ($mode == "empty") {
 
-			if ($showtables != 0)
-			{
+			if ($showtables != 0) {
 				$sqlk = "TRUNCATE `$rk`";
 				$res = mod_query($sqlk);
-				$aus .= '<p class = "success">'.sprintf($lang['L_SQL_TABLEEMPTIED'],$rk).'</p>';
+				$aus .= '<p class = "success">'.sprintf($lang['L_SQL_TABLEEMPTIED'], $rk).'</p>';
 			}
 		}
-		if ($mode == "emptyk")
-		{
-			if ($showtables != 0)
-			{
+		if ($mode == "emptyk") {
+			if ($showtables != 0) {
 				$sqlk = "TRUNCATE `$rk`;";
 				$res = mod_query($sqlk);
 				$sqlk = "ALTER TABLE `$rk` AUTO_INCREMENT = 1;";
 				$res = mod_query($sqlk);
-				$aus .= '<p class = "success">'.sprintf($lang['L_SQL_TABLEEMPTIEDKEYS'],$rk).'</p>';
+				$aus .= '<p class = "success">'.sprintf($lang['L_SQL_TABLEEMPTIEDKEYS'], $rk).'</p>';
 			}
 		}
 
@@ -264,18 +254,19 @@ function switch_area(textarea)
 }
 </script>';
 
-		if ($mode == 'edit'||$mode == 'searchedit') include ('./inc/sqlbrowser/sql_record_update_inputmask.php');
-		if ($mode == 'new') include ('./inc/sqlbrowser/sql_record_insert_inputmask.php');
+		if ($mode == 'edit'||$mode == 'searchedit') include './inc/sqlbrowser/sql_record_update_inputmask.php';
+		if ($mode == 'new') include ('./inc/sqlbrowser/sql_record_insert_inputmask.php';
 	}
-	if ($context == 0) include_once ('./inc/sqlbrowser/sql_dataview.php');
-	if ($context == 1) include ('./inc/sqlbrowser/sql_commands.php');
-	if ($context == 2) include ('./inc/sqlbrowser/sql_tables.php');
-	if ($context == 3) include ('./inc/sql_tools.php');
+	if ($context == 0) include_once './inc/sqlbrowser/sql_dataview.php';
+	if ($context == 1) include './inc/sqlbrowser/sql_commands.php';
+	if ($context == 2) include './inc/sqlbrowser/sql_tables.php';
+	if ($context == 3) include './inc/sql_tools.php';
 }
-if ($context == 4) include ('./inc/sql_importexport.php');
-if ($search == 1) include ('./inc/sqlbrowser/mysql_search.php');
-if (!$download)
-{
+if ($context == 4) include './inc/sql_importexport.php';
+if ($search == 1) include './inc/sqlbrowser/mysql_search.php';
+
+
+if (!$download) {
 	?>
 <script>
 function BrowseInput(el)
@@ -296,7 +287,7 @@ function BrowseInput(el)
 
 function FormHiddenParams()
 {
-	global $db,$dbid,$tablename,$context,$limitstart,$order,$orderdir;
+	global $db, $dbid, $tablename, $context, $limitstart, $order, $orderdir;
 
 	$s = '<input type = "hidden" name = "db" value = "'.$db.'">';
 	$s .= '<input type = "hidden" name = "dbid" value = "'.$dbid.'">';

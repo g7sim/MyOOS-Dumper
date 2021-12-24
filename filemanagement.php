@@ -18,7 +18,7 @@
 
 define('OOS_VALID_MOD', true);
 
-if (isset($_GET['action'])&&$_GET['action'] =='dl') $download=true;
+if (isset($_GET['action'])&&$_GET['action'] =='dl') $download = true;
 include ('./inc/header.php');
 include_once ('./language/'.$config['language'].'/lang.php');
 include_once ('./language/'.$config['language'].'/lang_dump.php');
@@ -40,8 +40,8 @@ $destfile=(isset($_POST['destfile'])) ? $_POST['destfile'] : '';
 $compressed=(isset($_POST['compressed'])) ? $_POST['compressed'] : '';
 $dk=(isset($_POST['dumpKommentar'])) ?  $_POST['dumpKommentar'] : '';
 
-$dk=str_replace(':','|',$dk); // remove : because of statusline
-$dump['sel_dump_encoding'] =(isset($_POST['sel_dump_encoding'])) ? $_POST['sel_dump_encoding'] : get_index($config['mysql_possible_character_sets'],$config['mysql_standard_character_set']);
+$dk=str_replace(':','|', $dk); // remove : because of statusline
+$dump['sel_dump_encoding'] =(isset($_POST['sel_dump_encoding'])) ? $_POST['sel_dump_encoding'] : get_index($config['mysql_possible_character_sets'], $config['mysql_standard_character_set']);
 $dump['dump_encoding'] = isset($config['mysql_possible_character_sets'][$dump['sel_dump_encoding']]) ? $config['mysql_possible_character_sets'][$dump['sel_dump_encoding']] : 0;
 
 if ($action=='dl')
@@ -86,9 +86,9 @@ if ($databases['multisetting'] =="")
 }
 else
 {
-	$databases['multi'] =explode(";",$databases['multisetting']);
+	$databases['multi'] =explode(";", $databases['multisetting']);
 	$multi_praefixe= [];
-	$multi_praefixe=explode(";",$databases['multisetting_praefix']);
+	$multi_praefixe=explode(";", $databases['multisetting_praefix']);
 	$toolboxstring='<br>';
 	if (is_array($databases['multi']))
 	{
@@ -105,7 +105,7 @@ else
 if (isset($_POST['dump_tbl']))
 {
 	$check_dirs=TestWorkDir();
-	if (!$check_dirs===true) die($check_dirs);
+	if (!$check_dirs== = true) die($check_dirs);
 	$databases['db_actual_tableselected'] =substr($_POST['tbl_array'],0,strlen($_POST['tbl_array'])-1);
 	WriteParams();
 	$dump['fileoperations'] =0;
@@ -126,7 +126,7 @@ if (isset($_POST['dump']))
 	else
 	{
 		@$check_dir=TestWorkDir();
-		if (!$check_dir===true) die($check_dir);
+		if (!$check_dir== = true) die($check_dir);
 		$databases['db_actual_tableselected'] = '';
 		WriteParams();
 		$dump['fileoperations'] =0;
@@ -171,7 +171,7 @@ if (isset($_POST['restore']))
 			if (isset($_POST['sel_dump_encoding_restore']))
 			{
 				$encodingstring= $config['mysql_possible_character_sets'][$_POST['sel_dump_encoding_restore']];
-				$encoding=explode(' ',$encodingstring);
+				$encoding=explode(' ', $encodingstring);
 				$dump_encoding= $encoding[0];
 			}
 			else
@@ -185,7 +185,7 @@ if (isset($_POST['restore']))
 					echo '<form action="filemanagement.php?action=restore&amp;kind=0" method="POST">';
 					echo '<table><tr><td>'.$lang['L_FM_CHOOSE_ENCODING'].':</td><td>';
 					echo '<select name="sel_dump_encoding_restore">';
-					echo make_options($config['mysql_possible_character_sets'],$dump['sel_dump_encoding']);
+					echo make_options($config['mysql_possible_character_sets'], $dump['sel_dump_encoding']);
 					echo '</select></td></tr><tr><td>';
 					echo $lang['L_MYSQL_CONNECTION_ENCODING'].':</td><td><strong>'.$config['mysql_standard_character_set'].'</strong></td></tr>';
 
@@ -226,7 +226,7 @@ if (isset($_POST['delete']))
 		}
 		for ($i = 0; $i<count($delfiles); $i++)
 		{
-			$del=array_merge($del,DeleteFilesM($fpath,$delfiles[$i]));
+			$del=array_merge($del,DeleteFilesM($fpath, $delfiles[$i]));
 		}
 	}
 	else
@@ -246,7 +246,7 @@ if (isset($_POST['deleteall'])||isset($_POST['deleteallfilter']))
 		$del=array_merge($del,DeleteFilesM($fpath,"*.gz"));
 	}
 	else
-		$del=DeleteFilesM($fpath,$databases['db_actual']."*");
+		$del=DeleteFilesM($fpath, $databases['db_actual']."*");
 }
 
 // print file-delete-messages
@@ -285,7 +285,7 @@ if (isset($_POST['upload']))
 			$erlaubt= array (
 
 			".gz", ".sql");
-			if (!in_array($endung,$erlaubt))
+			if (!in_array($endung, $erlaubt))
 			{
 				$msg.="<font color=\"red\">".$lang['L_FM_UPLOADNOTALLOWED1']."<br>";
 				$msg.= $lang['L_FM_UPLOADNOTALLOWED2']."</font>";
@@ -294,7 +294,7 @@ if (isset($_POST['upload']))
 			{
 				if (!$error)
 				{
-					if (move_uploaded_file($_FILES['upfile']['tmp_name'],$fpath.$_FILES['upfile']['name'])) @chmod($fpath.$upfile_name,0777);
+					if (move_uploaded_file($_FILES['upfile']['tmp_name'], $fpath.$_FILES['upfile']['name'])) @chmod($fpath.$upfile_name,0777);
 					else
 						$error.="<font color=\"red\">".$lang['L_FM_UPLOADMOVEERROR']."<br>";
 				}
@@ -370,7 +370,7 @@ switch ($action)
 		echo $tbl_abfrage;
 		echo '<tr><td><label for="sel_dump_encoding">'.$lang['L_FM_CHOOSE_ENCODING'].'</label></td>';
 		echo '<td><select name="sel_dump_encoding" id="sel_dump_encoding">';
-		echo make_options($config['mysql_possible_character_sets'],$dump['sel_dump_encoding']);
+		echo make_options($config['mysql_possible_character_sets'], $dump['sel_dump_encoding']);
 		echo '</select></td></tr>';
 		echo '<tr><td>'.$lang['L_MYSQL_CONNECTION_ENCODING'].':</td><td><strong>'.$config['mysql_standard_character_set'].'</strong></td></tr>';
 		echo '</table>';
@@ -426,11 +426,11 @@ switch ($action)
 		{
 			if (isset($config['ftp_transfer'][$x])&&$config['ftp_transfer'][$x]>0)
 			{
-				echo table_output($lang['L_FTP_TRANSFER'],sprintf(str_replace('<br>',' ',$lang['L_FTP_SEND_TO']),$config['ftp_server'][$x],$config['ftp_dir'][$x]),1,2);
+				echo table_output($lang['L_FTP_TRANSFER'],sprintf(str_replace('<br>',' ', $lang['L_FTP_SEND_TO']), $config['ftp_server'][$x], $config['ftp_dir'][$x]),1,2);
 			}
 			if (isset($config['sftp_transfer'][$x])&&$config['sftp_transfer'][$x]>0)
 			{
-				echo table_output($lang['L_SFTP_TRANSFER'],sprintf(str_replace('<br>',' ',$lang['L_SFTP_SEND_TO']),$config['sftp_server'][$x],$config['sftp_dir'][$x]),1,2);
+				echo table_output($lang['L_SFTP_TRANSFER'],sprintf(str_replace('<br>',' ', $lang['L_SFTP_SEND_TO']), $config['sftp_server'][$x], $config['sftp_dir'][$x]),1,2);
 			}
 		}
 		//echo '</td></tr>';
@@ -498,11 +498,11 @@ switch ($action)
 		{
 			if (isset($config['ftp_transfer'][$x])&&$config['ftp_transfer'][$x]>0)
 			{
-				echo table_output($lang['L_FTP_TRANSFER'],sprintf(str_replace('<br>',' ',$lang['L_FTP_SEND_TO']),$config['ftp_server'][$x],$config['ftp_dir'][$x]),1,2);
+				echo table_output($lang['L_FTP_TRANSFER'],sprintf(str_replace('<br>',' ', $lang['L_FTP_SEND_TO']), $config['ftp_server'][$x], $config['ftp_dir'][$x]),1,2);
 			}
 			if (isset($config['sftp_transfer'][$x])&&$config['sftp_transfer'][$x]>0)
 			{
-				echo table_output($lang['L_SFTP_TRANSFER'],sprintf(str_replace('<br>',' ',$lang['L_SFTP_SEND_TO']),$config['sftp_server'][$x],$config['sftp_dir'][$x]),1,2);
+				echo table_output($lang['L_SFTP_TRANSFER'],sprintf(str_replace('<br>',' ', $lang['L_SFTP_SEND_TO']), $config['sftp_server'][$x], $config['sftp_dir'][$x]),1,2);
 			}
 		}
 		//echo '</td></tr>';
@@ -518,7 +518,7 @@ switch ($action)
 		break;
 
 	case 'restore':
-		echo headline(sprintf($lang['L_FM_RESTORE_HEADER'],$databases['db_actual']));
+		echo headline(sprintf($lang['L_FM_RESTORE_HEADER'], $databases['db_actual']));
 		echo ($msg>'') ? $msg : '';
 		echo $autodel;
 		echo '<form name="fm" id="fm" method="post" action="'.$href.'">';
@@ -562,7 +562,7 @@ switch ($action)
 		echo headline($lang['L_CONVERTER']);
 		echo '<br><br><form action="filemanagement.php?action=convert" method="post">';
 		echo '<table class="bdr"><tr><th colspan="2">'.$lang['L_CONVERT_TITLE'].'</th></tr>';
-		echo '<tr><td>'.$lang['L_CONVERT_FILE'].'</td><td>'.FilelisteCombo($config['paths']['backup'],$selectfile).'</td></tr>';
+		echo '<tr><td>'.$lang['L_CONVERT_FILE'].'</td><td>'.FilelisteCombo($config['paths']['backup'], $selectfile).'</td></tr>';
 		echo '<tr><td>'.$lang['L_CONVERT_FILENAME'].':</td><td><input type="text" name="destfile" size="50" value="'.$destfile.'"></td></tr>';
 		echo '<tr><td><input type="checkbox" name="compressed" value="1" '.(($compressed==1) ? "checked" : "").'>&nbsp;'.$lang['L_COMPRESSED'].'</td>';
 		echo '<td><input type="submit" name="startconvert" value=" '.$lang['L_CONVERT_START'].' " class="Formbutton"></td></tr>';
@@ -574,7 +574,7 @@ switch ($action)
 
 			if ($selectfile!=""&&file_exists($config['paths']['backup'].$selectfile)&&strlen($destfile)>2)
 			{
-				Converter($selectfile,$destfile,$compressed);
+				Converter($selectfile, $destfile, $compressed);
 			}
 			else
 				echo $lang['L_CONVERT_WRONG_PARAMETERS'];

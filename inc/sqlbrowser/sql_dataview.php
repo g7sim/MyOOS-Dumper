@@ -54,7 +54,7 @@ function add_sortkey($name)
 {
 	global $keysort;
 	//echo "<br>Uebergeben: ".$name;
-	if (array_key_exists($name,$keysort)) $ret= $keysort[$name];
+	if (array_key_exists($name, $keysort)) $ret= $keysort[$name];
 	else $ret=0;
 	return $ret;
 }
@@ -104,7 +104,7 @@ if ($sql_to_display_data == 0)
 	$numrowsabs= $numrows=0;
 	MOD_DoSQL($sql['sql_statement']);
 	echo SQLOutput($out);
-	$skip_mysql_execution=true;
+	$skip_mysql_execution = true;
 }
 else
 {
@@ -189,7 +189,7 @@ if ($numrowsabs > 0 && $Anzahl_SQLs <= 1)
 
 		for ($x=0; $x < count($row); $x++)
 		{
-		    //	$temp[$x]['data'] =mysqli_fetch_field($res,$x);
+		    //	$temp[$x]['data'] =mysqli_fetch_field($res, $x);
 			$temp[$x]['data'] =mysqli_fetch_field($res);
 			$temp[$x]['sort'] =add_sortkey($temp[$x]['data']->name);
 		}
@@ -258,7 +258,7 @@ if ($numrowsabs > 0 && $Anzahl_SQLs <= 1)
 			if ($showtables == 1 && $tabellenansicht == 1)
 			{
 				// Spalten sortieren, wenn wir uns in einer Tabellenuebersicht befinden
-				$xx=mu_sort($data,"$s[0],$s[1],$s[2],$s[3],$s[4],$s[5],$s[6],$s[7],$s[8],$s[9],$s[10],$s[11],$s[12],$s[13],$s[14],$s[15],$s[16]");
+				$xx=mu_sort($data,"$s[0], $s[1], $s[2], $s[3], $s[4], $s[5], $s[6], $s[7], $s[8], $s[9], $s[10], $s[11], $s[12], $s[13], $s[14], $s[15], $s[16]");
 				$temp[$i] = $xx[0];		
 				
 				/***********************
@@ -299,10 +299,10 @@ if ($numrowsabs > 0 && $Anzahl_SQLs <= 1)
 			if ($key > -1)
 			{
 				$primary_key='';
-				$keys=explode('|',$key);
+				$keys=explode('|', $key);
 				foreach ($sortkey as $rowkey=>$rowval)
 				{
-					if (in_array($rowkey,$keys))
+					if (in_array($rowkey, $keys))
 					{
 						if (strlen($primary_key) > 0) $primary_key.=' AND ';
 						$primary_key.='`'.urlencode($rowkey).'`=\''.urlencode($rowval).'\'';
@@ -350,13 +350,13 @@ if ($numrowsabs > 0 && $Anzahl_SQLs <= 1)
 							$d.='<a href="sql.php?db='.$db.'&amp;dbid='.$dbid.'&amp;tablename='.$tablename.'&amp;context=2">'.$icon['edit'].'</a>&nbsp;'.$nl . $nl;
 							if (!( isset($row['Comment']) && ( substr(strtoupper($row['Comment']),0,4) == 'VIEW' ) ))
 							{
-								$d.='<a href="'.$p.'&amp;mode=empty" onclick="if(!confirm(\''.sprintf($lang['L_ASKTABLEEMPTY'],$tablename).'\')) return false;">'.$icon['table_truncate'].'</a>&nbsp;'.$nl . $nl;
-								$d.='<a href="'.$p.'&amp;mode=emptyk" onclick="if(!confirm(\''.sprintf($lang['L_ASKTABLEEMPTYKEYS'],$tablename).'\')) return false;">'.$icon['table_truncate_reset'].'</a>&nbsp;'.$nl . $nl;
-								$d.='<a href="'.$p.'&amp;mode=kill" onclick="if(!confirm(\''.sprintf($lang['L_ASKDELETETABLE'],$tablename).'\')) return false;">'.$icon['delete'].'</a>&nbsp;'.$nl . $nl;
+								$d.='<a href="'.$p.'&amp;mode=empty" onclick="if(!confirm(\''.sprintf($lang['L_ASKTABLEEMPTY'], $tablename).'\')) return false;">'.$icon['table_truncate'].'</a>&nbsp;'.$nl . $nl;
+								$d.='<a href="'.$p.'&amp;mode=emptyk" onclick="if(!confirm(\''.sprintf($lang['L_ASKTABLEEMPTYKEYS'], $tablename).'\')) return false;">'.$icon['table_truncate_reset'].'</a>&nbsp;'.$nl . $nl;
+								$d.='<a href="'.$p.'&amp;mode=kill" onclick="if(!confirm(\''.sprintf($lang['L_ASKDELETETABLE'], $tablename).'\')) return false;">'.$icon['delete'].'</a>&nbsp;'.$nl . $nl;
 							}
 							else
 							{
-								$d.='<a href="'.$p.'&amp;mode=kill_view" onclick="if(!confirm(\''.sprintf($lang['L_ASKDELETETABLE'],$tablename).'\')) return false;">'.$icon['delete'].'</a>&nbsp;'.$nl . $nl;
+								$d.='<a href="'.$p.'&amp;mode=kill_view" onclick="if(!confirm(\''.sprintf($lang['L_ASKDELETETABLE'], $tablename).'\')) return false;">'.$icon['delete'].'</a>&nbsp;'.$nl . $nl;
 							}
 						}
 					}
@@ -381,7 +381,7 @@ if ($numrowsabs > 0 && $Anzahl_SQLs <= 1)
 					{
 						if (isset($temp[$i][$rowkey])) $data=( $fdesc[$rowkey]['type'] == 'string' || $fdesc[$rowkey]['type'] == 'blob' ) ? convert_to_utf8($temp[$i][$rowkey]) : $temp[$i][$rowkey];
 						else $data='';
-						if (in_array($rowkey,$byte_output)) $data=byte_output($data);
+						if (in_array($rowkey, $byte_output)) $data=byte_output($data);
 
 					}
 				}

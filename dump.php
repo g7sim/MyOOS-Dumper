@@ -36,7 +36,7 @@ if (isset($_GET['config']))
 	$replace=array(
 
 	'','','','');
-	$config_file=str_replace($search,$replace,$_GET['config']);
+	$config_file=str_replace($search, $replace, $_GET['config']);
 	if (is_readable($config['paths']['config'].$config_file.'.php'))
 	{
 		$config['files']['parameter'] = $config['paths']['config'].$config_file.'.php';
@@ -92,7 +92,7 @@ else
 		include_once ('./inc/functions_sql.php');
 		get_sql_encodings();
 		$encodingline= $config['mysql_possible_character_sets'][$_GET['sel_dump_encoding']];
-		$encoding=explode(' ',$encodingline);
+		$encoding=explode(' ', $encodingline);
 		$dump['dump_encoding'] = isset($encoding[0]) ? $encoding[0]:$encodingline;
 	}
 	include ('./inc/define_icons.php');
@@ -106,8 +106,8 @@ $mp2=array(
 FillMultiDBarrays();
 if ($databases['db_actual_tableselected']!=''&&$config['multi_dump'] ==0)
 {
-	$dump['tblArray'] =explode('|',$databases['db_actual_tableselected']);
-	$tbl_sel=true;
+	$dump['tblArray'] =explode('|', $databases['db_actual_tableselected']);
+	$tbl_sel = true;
 	$msgTbl=sprintf($lang['L_NR_TABLES_SELECTED'],count($dump['tblArray']));
 }
 // Korrektur -> Multi-DB-array ist gefuellt (damit die Infos in der Konfig nicht verloren gehen), aber Multidump ist nicht aktiviert)
@@ -143,24 +143,24 @@ $num_tables=count($dump['tables']);
 
 if ((isset($config['optimize_tables_beforedump']) && ($config['optimize_tables_beforedump'] ==1)) && $dump['table_offset'] ==-1)
 {
-	$out.=sprintf($lang['L_NR_TABLES_OPTIMIZED'],$num_tables).'<br>';
+	$out.=sprintf($lang['L_NR_TABLES_OPTIMIZED'], $num_tables).'<br>';
 }
 $dump['data'] ='';
 $dump['dbindex'] =(isset($_POST['dbindex'])) ? $_POST['dbindex']:$flipped[$databases['multi'][0]];
 
 //Ausgaben-Header bauen
 $aus_header[] =headline('Backup: '.((isset($config['multi_dump']) && ($config['multi_dump'] ==1)) ? 'Multidump ('.count($databases['multi']).' '.$lang['L_DBS'].')':$lang['L_DB'].': '.$databases['Name'][$dump['dbindex']].(($databases['praefix'][$dump['dbindex']]!='') ? ' ('.$lang['L_WITHPRAEFIX'].' <span>'.$databases['praefix'][$dump['dbindex']].'</span>)':'')));
-if (isset($aus_error)&&count($aus_error)>0) $aus_header=array_merge($aus_header,$aus_error);
+if (isset($aus_error)&&count($aus_error)>0) $aus_header=array_merge($aus_header, $aus_error);
 
 if ($num_tables==0)
 {
 	//keine Tabellen gefunden
-	$aus[] ='<br><br><p class="error">'.$lang['L_ERROR'].': '.sprintf($lang['L_DUMP_NOTABLES'],$databases['Name'][$dump['dbindex']]).'</p>';
+	$aus[] ='<br><br><p class="error">'.$lang['L_ERROR'].': '.sprintf($lang['L_DUMP_NOTABLES'], $databases['Name'][$dump['dbindex']]).'</p>';
     if (!$config['multi_dump'] ==1)
 	{
 		echo $pageheader;
 		echo get_page_parameter($dump);
-		echo implode("\n",$aus);
+		echo implode("\n", $aus);
 		echo '</body></html>';
 		exit();
 	}
@@ -232,7 +232,7 @@ else
 				}
 
 				$create_statement='';
-				$create_statement=get_def($adbname,$table);
+				$create_statement=get_def($adbname, $table);
 
 				if (!($create_statement===false))
 				{
@@ -242,8 +242,8 @@ else
 				{
 					WriteToDumpFile(); // save data we have up to now
 					// error reading table definition
-					$read_create_error=sprintf($lang['L_FATAL_ERROR_DUMP'],$table,$adbname).': '.mysqli_error($config['dbconnection']);
-					Errorlog("DUMP",$databases['db_actual'],'',$read_create_error,0);
+					$read_create_error=sprintf($lang['L_FATAL_ERROR_DUMP'], $table, $adbname).': '.mysqli_error($config['dbconnection']);
+					Errorlog("DUMP", $databases['db_actual'],'', $read_create_error,0);
 					WriteLog($read_create_error);
 					if ($config['stop_with_error']>0)
 					{
@@ -253,15 +253,15 @@ else
 				}
 			}
 			WriteToDumpFile();
-			if (!in_array($adbname.'|'.$table,$dump['skip_data'])&&$dump['table_types'][getDBIndex($adbname,$table)]!='VIEW')
+			if (!in_array($adbname.'|'.$table, $dump['skip_data'])&&$dump['table_types'][getDBIndex($adbname, $table)]!='VIEW')
 			{
-				get_content($adbname,$table);
+				get_content($adbname, $table);
 				$dump['restzeilen']--;
 			}
 			else
 			{
 				// skip data
-				if ($dump['table_types'][getDBIndex($adbname,$table)]!='VIEW') $dump['data'] .= '/*!40000 ALTER TABLE `'.$table.'` ENABLE KEYS */;'."\n";
+				if ($dump['table_types'][getDBIndex($adbname, $table)]!='VIEW') $dump['data'] .= '/*!40000 ALTER TABLE `'.$table.'` ENABLE KEYS */;'."\n";
 				WriteToDumpFile();
 				$dump['table_offset']++;
 			}
@@ -311,7 +311,7 @@ else
 
 		// get nr of recorsd from dump-array
 		$record_string= $dump['records'][$dump['table_offset']];
-		$record_string=explode('|',$record_string);
+		$record_string=explode('|', $record_string);
 		$dump['zeilen_total'] = $record_string[1];
 
 		if ($dump['zeilen_total']>0) $fortschritt=intval((100*$dump['zeilen_offset'])/$dump['zeilen_total']);
@@ -431,15 +431,15 @@ else
 		if (isset($config['multi_dump']) && ($config['multi_dump'] ==1))
 		{
 			$aus[] =sprintf($lang['L_MULTIDUMP'],count($databases['multi'])).': ';
-			$aus[] ='<strong>'.implode(', ',$databases['multi']).'</strong>';
+			$aus[] ='<strong>'.implode(', ', $databases['multi']).'</strong>';
 			$aus2='';
 			$out='';
 		}
 		else
 		{
-			$aus[] ='<br>'.sprintf($lang['L_DUMP_ENDERGEBNIS'],$num_tables,number_format($dump['countdata'],0,',','.'));
+			$aus[] ='<br>'.sprintf($lang['L_DUMP_ENDERGEBNIS'], $num_tables,number_format($dump['countdata'],0,',','.'));
 		}
-		if ($dump['errors']>0) $aus[] =sprintf($lang['L_DUMP_ERRORS'],$dump['errors']);
+		if ($dump['errors']>0) $aus[] =sprintf($lang['L_DUMP_ERRORS'], $dump['errors']);
 
 		$aus[] ='<form action="dump.php?MyOOSDumperID='.session_id().'" method="POST">'.$out.'<br>'.'<p class="small">'.zeit_format($xtime).', '.$dump['aufruf'].' '.$lang['L_PAGE_REFRESHS'].$aus2.'</p>'."\n";
 		$aus[] ="\n".'<br><input class="Formbutton" type="button" value="'.$lang['L_BACK_TO_CONTROL'].'" onclick="self.location.href=\''.$relativ_path.'filemanagement.php\'">';
@@ -458,7 +458,7 @@ else
 //=====================================================================
 
 //Craft page
-$aus=array_merge($aus_header,$aus);
+$aus=array_merge($aus_header, $aus);
 
 $dump['xtime'] = $xtime;
 if ($DumpFertig!=1)
@@ -476,6 +476,6 @@ else
 	$pagefooter=MODFooter('',1);
 	$selbstaufruf='';
 }
-$complete_page= $pageheader.implode("\n",$aus)."\n".$selbstaufruf."\n".$pagefooter;
+$complete_page= $pageheader.implode("\n", $aus)."\n".$selbstaufruf."\n".$pagefooter;
 echo $complete_page;
 ob_end_flush();

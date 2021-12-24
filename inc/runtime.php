@@ -69,10 +69,10 @@ if (intval($m) == 0) $m=trim(str_replace('M','',get_cfg_var('memory_limit')));
 $config['php_ram'] = $m;
 
 //Ist zlib moeglich?
-$p1=explode(', ',$config['phpextensions']);
-$p2=explode(',',str_replace(' ','',$config['disabled']));
+$p1=explode(', ', $config['phpextensions']);
+$p2=explode(',',str_replace(' ','', $config['disabled']));
 
-$config['zlib'] = ( in_array('zlib',$p1) && ( !in_array('gzopen',$p2) || !in_array('gzwrite',$p2) || !in_array('gzgets',$p2) || !in_array('gzseek',$p2) || !in_array('gztell',$p2) ) );
+$config['zlib'] = ( in_array('zlib', $p1) && ( !in_array('gzopen', $p2) || !in_array('gzwrite', $p2) || !in_array('gzgets', $p2) || !in_array('gzseek', $p2) || !in_array('gztell', $p2) ) );
 
 //Tuning-Ecke
 $config['tuning_add'] =1.1;

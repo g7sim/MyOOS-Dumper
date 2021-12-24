@@ -20,7 +20,7 @@ define('DEBUG',0);
 if (!defined('MOD_VERSION')) die('No direct access.');
 function get_sqlbefehl()
 {
-	global $restore,$config,$databases,$lang;
+	global $restore, $config, $databases, $lang;
 
 	//Init
 	$restore['fileEOF'] =false;
@@ -86,8 +86,8 @@ function get_sqlbefehl()
 			// Am Ende eines MySQLDumper-Backups angelangt?
 			elseif ($sub6=='-- EOB'||$sub4=='# EO')
 			{
-				$restore['EOB'] =true;
-				$restore['fileEOF'] =true;
+				$restore['EOB'] = true;
+				$restore['fileEOF'] = true;
 				$zeile='';
 				$zeile2='';
 				$sqlparser_status=100;
@@ -158,7 +158,7 @@ function get_sqlbefehl()
 				{
 					// INSERT Syntax ermitteln und merken
 					$ipos=strpos(strtoupper($complete_sql),' VALUES');
-					if (!$ipos===false) $restore['insert_syntax'] =substr($complete_sql,0,$ipos);
+					if (!$ipos===false) $restore['insert_syntax'] =substr($complete_sql,0, $ipos);
 					else
 						$restore['insert_syntax'] ='INSERT INTO `'.$restore['actual_table'].'`';
 				}
@@ -181,13 +181,13 @@ function get_sqlbefehl()
 					{
 						if ($config['minspeed']>0) $restore['anzahl_zeilen'] = $config['minspeed'];
 						// Soll die Tabelle hergestellt werden?
-						$do_it=true;
+						$do_it = true;
 						if (is_array($restore['tables_to_restore']))
 						{
 							$do_it = false;
-							if (in_array($restore['actual_table'],$restore['tables_to_restore']))
+							if (in_array($restore['actual_table'], $restore['tables_to_restore']))
 							{
-								$do_it=true;
+								$do_it = true;
 							}
 						}
 						if ($do_it)
@@ -262,11 +262,11 @@ function get_sqlbefehl()
 									}
 								}
 
-		if (($restore['compressed'])&&(gzeof($restore['filehandle']))) $restore['fileEOF'] =true;
-		if ((!$restore['compressed'])&&(feof($restore['filehandle']))) $restore['fileEOF'] =true;
+		if (($restore['compressed'])&&(gzeof($restore['filehandle']))) $restore['fileEOF'] = true;
+		if ((!$restore['compressed'])&&(feof($restore['filehandle']))) $restore['fileEOF'] = true;
 	}
 	// wenn bestimmte Tabellen wiederhergestellt werden sollen -> pruefen
-	if (is_array($restore['tables_to_restore'])&&!(in_array($restore['actual_table'],$restore['tables_to_restore'])))
+	if (is_array($restore['tables_to_restore'])&&!(in_array($restore['actual_table'], $restore['tables_to_restore'])))
 	{
 		$complete_sql='';
 	}
@@ -282,13 +282,13 @@ function submit_create_action($sql)
 	if (strtoupper(substr($sql,0,16))=='CREATE ALGORITHM')
 	{
 		// It`s a VIEW. We need to substitute the original DEFINER with the actual MySQL-User
-		$parts=explode(' ',$sql);
-		for ($i=0,$count=sizeof($parts);$i<$count;$i++)
+		$parts=explode(' ', $sql);
+		for ($i=0, $count=sizeof($parts);$i<$count;$i++)
 		{
 			if (strtoupper(substr($parts[$i],0,8))=='DEFINER=')
 			{
 				$parts[$i] ='DEFINER=`'.$config['dbuser'].'`@`'.$config['dbhost'].'`';
-				$sql=implode(' ',$parts);
+				$sql=implode(' ', $parts);
 				$i= $count;
 			}
 		}
@@ -337,15 +337,15 @@ function get_insert_syntax($table)
 
 function del_inline_comments($sql)
 {
-	//$sql=str_replace("\n",'<br>',$sql);
+	//$sql=str_replace("\n",'<br>', $sql);
 	$array= [];
-	preg_match_all("/(\/\*(.+)\*\/)/U",$sql,$array);
+	preg_match_all("/(\/\*(.+)\*\/)/U", $sql, $array);
 	if (is_array($array[0]))
 	{
-		$sql=str_replace($array[0],'',$sql);
+		$sql=str_replace($array[0],'', $sql);
 		if (DEBUG) echo "Nachher: :<br>".$sql."<br><hr>";
 	}
-	//$sql=trim(str_replace('<br>',"\n",$sql));
+	//$sql=trim(str_replace('<br>',"\n", $sql));
 	//Wenn nach dem Entfernen nur noch ein ; übrigbleibt -> entfernen
 	if ($sql==';') $sql='';
 	return $sql;
@@ -356,19 +356,19 @@ function get_tablename($t)
 {
 	// alle Schluesselbegriffe entfernen, bis der Tabellenname am Anfang steht
 	$t=substr($t,0,150); // verkuerzen, um Speicher zu sparen - wir brauchenhier nur den Tabellennamen
-	$t=str_ireplace('DROP TABLE','',$t);
-	$t=str_ireplace('DROP VIEW','',$t);
-	$t=str_ireplace('CREATE TABLE','',$t);
-	$t=str_ireplace('INSERT INTO','',$t);
-	$t=str_ireplace('REPLACE INTO','',$t);
-	$t=str_ireplace('IF NOT EXISTS','',$t);
-	$t=str_ireplace('IF EXISTS','',$t);
+	$t=str_ireplace('DROP TABLE','', $t);
+	$t=str_ireplace('DROP VIEW','', $t);
+	$t=str_ireplace('CREATE TABLE','', $t);
+	$t=str_ireplace('INSERT INTO','', $t);
+	$t=str_ireplace('REPLACE INTO','', $t);
+	$t=str_ireplace('IF NOT EXISTS','', $t);
+	$t=str_ireplace('IF EXISTS','', $t);
 	if (substr(strtoupper($t),0,16)=='CREATE ALGORITHM')
 	{
 		$pos=strpos($t,'DEFINER VIEW ');
-		$t=substr($t,$pos,strlen($t)-$pos);
+		$t=substr($t, $pos,strlen($t)-$pos);
 	}
-	$t=str_ireplace(';',' ;',$t); // tricky -> insert space as delimiter
+	$t=str_ireplace(';',' ;', $t); // tricky -> insert space as delimiter
 	$t=trim($t);
 
 	// jetzt einfach nach dem ersten Leerzeichen suchen
@@ -378,12 +378,12 @@ function get_tablename($t)
 	$position=1;
 	while (!$found)
 	{
-		if (substr($t,$position,1)== $delimiter) $found=true;
-		if ($position>=strlen($t)) $found=true;
+		if (substr($t, $position,1)== $delimiter) $found = true;
+		if ($position>=strlen($t)) $found = true;
 		$position++;
 	}
-	$t=substr($t,0,$position);
-	$t=trim(str_replace('`','',$t));
+	$t=substr($t,0, $position);
+	$t=trim(str_replace('`','', $t));
 	return $t;
 }
 
@@ -412,7 +412,7 @@ function remove_comment_at_eol($string)
 		$pos=strrpos($string,'/*');
 		if ($pos>0)
 		{
-			$string=trim(substr($string,0,$pos));
+			$string=trim(substr($string,0, $pos));
 		}
 	}
 	return $string;

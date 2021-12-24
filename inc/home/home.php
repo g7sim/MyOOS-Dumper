@@ -36,7 +36,7 @@ while (false!==($filename=readdir($dh)))
 		if (!isset($Last_BU[2])||(isset($Last_BU[2])&&$ft>$Last_BU[2]))
 		{
 			$Last_BU[0] = $filename;
-			$Last_BU[1] =date("d.m.Y H:i",$ft);
+			$Last_BU[1] =date("d.m.Y H:i", $ft);
 			$Last_BU[2] = $ft;
 		}
 	}
@@ -67,7 +67,7 @@ if ($directory_warnings>'') $tpl->assign_block_vars('DIRECTORY_WARNINGS',array(
 	'MSG' => $directory_warnings));
 
 if ($config['disabled']>'') $tpl->assign_block_vars('DISABLED_FUNCTIONS',array(
-	'PHP_DISABLED_FUNCTIONS' => str_replace(',',', ',$config['disabled'])));
+	'PHP_DISABLED_FUNCTIONS' => str_replace(',',', ', $config['disabled'])));
 
 if (!extension_loaded('ftp')) $tpl->assign_block_vars('NO_FTP',array());
 if (!$config['zlib']) $tpl->assign_block_vars('NO_ZLIB',array());

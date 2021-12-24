@@ -17,7 +17,7 @@
    ---------------------------------------------------------------------- */
 
 $mod_path=realpath(dirname(__FILE__).'/../').'/';
-if (!defined('MOD_PATH')) define('MOD_PATH',$mod_path);
+if (!defined('MOD_PATH')) define('MOD_PATH', $mod_path);
 session_name('MyOOSDumperID');
 session_start();
 if (!isset($download))

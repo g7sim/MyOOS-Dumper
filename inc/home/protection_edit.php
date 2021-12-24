@@ -46,7 +46,7 @@ if ((isset($_GET['create'])&&$_GET['create'] ==1)||(isset($_POST['create'])&&$_P
 if (isset($_POST['submit'])&&isset($_POST['thta']))
 {
 	$fp=fopen($hta_complete,'w');
-	fwrite($fp,$_POST['thta']);
+	fwrite($fp, $_POST['thta']);
 	fclose($fp);
 }
 if (file_exists($hta_complete))
@@ -66,7 +66,7 @@ echo '<tr><td>'.$lang['L_FILE'].':</td><td><input type="text" name="hta_file" va
 echo '</table>';
 if ($htaccessdontexist!=1)
 {
-	echo '<table class="bdr"><tr><td style="width:70%;"><textarea rows="25" cols="40" name="thta" id="thta">'.htmlspecialchars(implode("",$htaccess_exist)).'</textarea><br><br>';
+	echo '<table class="bdr"><tr><td style="width:70%;"><textarea rows="25" cols="40" name="thta" id="thta">'.htmlspecialchars(implode("", $htaccess_exist)).'</textarea><br><br>';
 	echo '</td><td valign="top">';
 	//Presets
 	echo '<h6>Presets</h6><p><strong>'.$lang['L_HTACCESS30'].'</strong><p>

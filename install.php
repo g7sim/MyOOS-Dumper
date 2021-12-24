@@ -257,12 +257,12 @@ switch ($phase)
 				}
 				else
 				{
-				    $databases = array();
+				    $databases = [];
 					echo '<p class="success">'.$lang['L_CONNECTION_OK'].'</p><span class="ssmall">';
 					$connection="ok";
 					$connstr="$dbhost|$dbuser|$dbpass|$dbport|$dbsocket|$manual_db";
 					echo '<input type="hidden" name="connstr" value="'.$connstr.'">';
-					if ($manual_db > '') SearchDatabases(1,$manual_db);
+					if ($manual_db > '') SearchDatabases(1, $manual_db);
 					else SearchDatabases(1);
 					if (!isset($databases['Name']) || !in_array($manual_db, $databases['Name'])) {
                         // conect to manual db was not successful
@@ -325,7 +325,7 @@ switch ($phase)
 
 			if ($stored == 6) break;
 		}
-		$ret=true;
+		$ret = true;
 		if ($fp=fopen("config.php","wb"))
 		{
 			if (!fwrite($fp, implode('', $tmp))) $ret = false;
@@ -350,7 +350,7 @@ switch ($phase)
 	case 4: //Verzeichnisse
 		if (isset($_POST['submit']))
 		{
-			$ret=true;
+			$ret = true;
 			if ($fp=fopen("config.php","wb"))
 			{
 				if (!fwrite($fp,stripslashes(stripslashes($_POST['configfile'])))) $ret = false;
