@@ -315,7 +315,7 @@ function get_insert_syntax($table)
 	global $config;
 
 	$insert = '';
-	$sql='SHOW COLUMNS FROM `'.$table.'`';
+	$sql = 'SHOW COLUMNS FROM `'.$table.'`';
 	$res = mysqli_query($config['dbconnection'], $sql);
 	if ($res)
 	{

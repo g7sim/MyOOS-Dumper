@@ -1,8 +1,25 @@
 <?php
+/* ----------------------------------------------------------------------
+
+   MyOOS [Dumper]
+   http://www.oos-shop.de/
+
+   Copyright (c) 2021 by the MyOOS Development Team.
+   ----------------------------------------------------------------------
+   Based on:
+
+   MySqlDumper
+   http://www.mysqldumper.de
+
+   Copyright (C)2004-2011 Daniel Schlichtholz (admin@mysqldumper.de)
+   ----------------------------------------------------------------------
+   Released under the GNU General Public License
+   ---------------------------------------------------------------------- */
+
 if (!defined('MOD_VERSION')) die('No direct access.');
 
-//alle Tabellen der aktuellen Datenbank ermitteln und Zugriffs-Array aufbauen
-$sql='SHOW TABLES FROM `'.$db.'`';
+// get all tables of the current database and build access array
+$sql = 'SHOW TABLES FROM `'.$db.'`';
 $tables = [];
 $link = mod_mysqli_connect();
 $res = mysqli_query($link, $sql);
@@ -15,8 +32,8 @@ if (!$res === false) {
 	die("No Tables in Database!");
 }
 
-// Suchkriterien aus Session holen oder aus POST-Umgebung
-// so bleiben die Suchkriterien auch erhalten wenn man zwischendurch woanders klickt
+// get search criteria from session or from POST environment
+// this way the search criteria are preserved even if you click somewhere else in between
 if (isset($_POST['suchbegriffe'])) $_SESSION['mysql_search']['suchbegriffe'] = $_POST['suchbegriffe'];
 if (!isset($_SESSION['mysql_search']['suchbegriffe'])) $_SESSION['mysql_search']['suchbegriffe']  = '';
 $suchbegriffe= $_SESSION['mysql_search']['suchbegriffe'];
@@ -28,7 +45,7 @@ $suchart = $_SESSION['mysql_search']['suchart'];
 if (isset($_POST['table_selected'])) $_SESSION['mysql_search']['table_selected'] = $_POST['table_selected'];
 if (!isset($_SESSION['mysql_search']['table_selected'])) $_SESSION['mysql_search']['table_selected'] =0;
 $table_selected= $_SESSION['mysql_search']['table_selected'];
-// Falls zwischendurch Tabellen geloescht wurden und der Index nicht mehr existiert, zuruecksetzen
+// If tables were deleted in the meantime and the index does not exist anymore, reset it
 if ($table_selected>count($tables)-1) $table_selected=0;
 
 $offset = (isset($_POST['offset'])) ? intval($_POST['offset']) : 0;
@@ -37,11 +54,11 @@ $tablename = isset($_GET['tablename']) ? urldecode($_GET['tablename']) : '';
 
 // Delete
 if (isset($_GET['mode']) && $_GET['mode'] =="kill" && $rk > '') {
-	//echo "<br> RK ist: ".$rk."<br><br>";
+	// echo "<br> RK ist: ".$rk."<br><br>";
 	$sqlk = "DELETE FROM `$tablename` WHERE ".$rk." LIMIT 1";
-	//echo $sqlk;
+	// echo $sqlk;
 	$res = mod_query($sqlk);
-	//	echo "<br>".$res;
+	// echo "<br>".$res;
 	$aus .= '<p class="success">'.$lang['L_SQL_RECORDDELETED'].'</p>';
 }
 
@@ -54,7 +71,7 @@ function mysqli_search($db, $tabelle, $suchbegriffe, $suchart, $offset = 0, $anz
 		$suchbegriffe = trim(str_replace('*', '', $suchbegriffe));
 		$suchworte = explode(' ', $suchbegriffe);
 		if (($suchbegriffe>'')&&(is_array($suchworte))) {
-			// Leere Einträge (durch doppelte Leerzeichen) entfernen
+			// Remove empty entries (due to double spaces)
 			$anzahl_suchworte = sizeof($suchworte);
 			for ($i = 0; $i<$anzahl_suchworte; $i++) {
 				if (trim($suchworte[$i])=='') unset($suchworte[$i]);
@@ -64,11 +81,11 @@ function mysqli_search($db, $tabelle, $suchbegriffe, $suchart, $offset = 0, $anz
 			$where		= '';
 			$felder		= [];
       
-			// Felder ermitteln
+			// Determine fields
 			$sql = 'SHOW COLUMNS FROM `'.$db.'`.`'.$tables[$tabelle].'`';
 			$res = mysqli_query($link, $sql);
 			if (!$res === false) {
-				// Felder der Tabelle ermitteln
+				// Determine fields of the table
 				while ($row = mysqli_fetch_object($res)) {
 					$felder[] = $row->Field;
 				}
@@ -78,14 +95,14 @@ function mysqli_search($db, $tabelle, $suchbegriffe, $suchart, $offset = 0, $anz
 			if ($suchart == 'CONCAT') {
 
 				if (count($felder) > 0) {
-					//Concat-String bildem
+					// Build Concat-String
 					$concat = implode('`),LOWER(`', $felder);
 					$concat = 'CONCAT_WS(\'\',LOWER(`'.$concat.'`))';
 					$where = '';
 					foreach ($suchworte as $suchbegriff) {
 						$where.= $concat.' LIKE \'%'.strtolower($suchbegriff).'%\' AND ';
 					}
-					$where = substr($where,0,-4); // letztes AND entfernen
+					$where = substr($where,0,-4); // Remove last AND
 					$sql = 'SELECT * FROM `'.$db.'`.`'.$tables[$tabelle].'` WHERE '.$where.' LIMIT '.$offset.','.$anzahl_ergebnisse;
 				} else {
 					$_SESSION['mysql_search']['suchbegriffe']  = '';
@@ -116,25 +133,22 @@ function mysqli_search($db, $tabelle, $suchbegriffe, $suchart, $offset = 0, $anz
 					$_SESSION['mysql_search']['suchbegriffe']  = '';
 					die(sprintf($lang['L_ERROR_NO_FIELDS'], $tabelle));
 				}
-				$where=implode(' OR ', $bedingung);
-				$sql='SELECT * FROM `'.$db.'`.`'.$tables[$tabelle].'` WHERE ('.$where.') LIMIT '.$offset.','.$anzahl_ergebnisse;
+				$where = implode(' OR ', $bedingung);
+				$sql = 'SELECT * FROM `'.$db.'`.`'.$tables[$tabelle].'` WHERE ('.$where.') LIMIT '.$offset.','.$anzahl_ergebnisse;
 			}
 		} else {
-			$sql='SELECT * FROM `'.$db.'`.`'.$tables[$tabelle].'` LIMIT '.$offset.','.$anzahl_ergebnisse;
+			$sql = 'SELECT * FROM `'.$db.'`.`'.$tables[$tabelle].'` LIMIT '.$offset.','.$anzahl_ergebnisse;
 		}
+
 		$res = mysqli_query($link, $sql);
-		if (!$res === false)
-		{
-			while ($row = mysqli_fetch_array($res,MYSQLI_ASSOC))
-			{
-				//Treffer markieren
-				foreach ($row as $key=>$val)
-				{
-					foreach ($suchworte as $suchbegriff)
-					{
-						$row[$key] =markiere_suchtreffer($suchbegriff, $row[$key]);
+		if (!$res === false) {
+			while ($row = mysqli_fetch_array($res, MYSQLI_ASSOC)) {
+				// Mark hits
+				foreach ($row as $key=>$val) {
+					foreach ($suchworte as $suchbegriff) {
+						$row[$key] = markiere_suchtreffer($suchbegriff, $row[$key]);
 					}
-					$row[$key] =ersetze_suchtreffer($row[$key]);
+					$row[$key] = ersetze_suchtreffer($row[$key]);
 				}
 				$ret[] = $row;
 			}
@@ -143,23 +157,21 @@ function mysqli_search($db, $tabelle, $suchbegriffe, $suchart, $offset = 0, $anz
 	return $ret;
 }
 
-// Markiert den Suchbegriff mit einem Code (ASCII 01/02)
-// - falls nicht gefunden : Rückgabe des Originalstrings
-//
-function markiere_suchtreffer($suchbegriff, $suchstring)
-{
-	$str=strtolower($suchstring);
-	$suchbegriff=strtolower($suchbegriff);
+// Marks the search string with a code (ASCII 01/02)
+// - if not found : returns the original string
+function markiere_suchtreffer($suchbegriff, $suchstring) {
+	$str = strtolower($suchstring);
+	$suchbegriff = strtolower($suchbegriff);
 	if ((strlen($str)>0)&&(strlen($suchbegriff)>0))
 	{
-		// Treffer Position bestimmen
+		// Determine hit position
 		$offset=0;
 		$trefferpos=0;
 		while (($offset<=strlen($str)))
-		//Wenn nur der erste Treffer markiert werden soll, so muss die Zeile so lauten
+		// If only the first hit is to be marked, the line must read as follow
 		// 		while ( ($offset<=strlen($str)) || ($in_html==false) )
 		{
-			for ($offset= $trefferpos; $offset<=strlen($str); $offset++)
+			for ($offset= $trefferpos; $offset<=strlen($str); $offset++) 
 			{
 				$start=strpos($str, $suchbegriff, $offset);
 				if ($start===false) $offset=strlen($str)+1;

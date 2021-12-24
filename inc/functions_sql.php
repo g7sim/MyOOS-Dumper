@@ -917,7 +917,7 @@ function getFieldinfos($db, $tabelle)
 	}
 
 	// now get key definitions of the table and add info to fields
-	$sql='SHOW KEYS FROM `'.$db.'`.`'.$tabelle.'`';
+	$sql = 'SHOW KEYS FROM `'.$db.'`.`'.$tabelle.'`';
 	$res = mod_query($sql);
 	while ($row = mysqli_fetch_array($res,MYSQLI_ASSOC))
 	{
@@ -1016,7 +1016,7 @@ function getExtendedFieldInfo($db, $table)
 	}
 
 	// now get key definitions of the table and add info to field-array
-	$sql='SHOW KEYS FROM `'.$db.'`.`'.$table.'`';
+	$sql = 'SHOW KEYS FROM `'.$db.'`.`'.$table.'`';
 	$res = mod_query($sql);
 	while ($row = mysqli_fetch_array($res,MYSQLI_ASSOC))
 	{
