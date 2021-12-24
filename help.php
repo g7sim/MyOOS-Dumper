@@ -18,13 +18,15 @@
 
 define('OOS_VALID_MOD', true);
 
-if (!@ob_start("ob_gzhandler")) @ob_start();
+if (!@ob_start('ob_gzhandler')) {
+    @ob_start();
+}
 
-include ( './inc/header.php' );
-include ( MOD_PATH.'language/'.$config['language'].'/lang.php' );
-include ( MOD_PATH.'language/'.$config['language'].'/lang_help.php' );
+include './inc/header.php';
+include MOD_PATH.'language/'.$config['language'].'/lang.php';
+include MOD_PATH.'language/'.$config['language'].'/lang_help.php';
 echo MODHeader(0);
 echo headline($lang['L_CREDITS']);
-readfile ( MOD_PATH.'language/'.$config['language'].'/help.html' );
+readfile(MOD_PATH.'language/'.$config['language'].'/help.html');
 echo MODFooter();
 ob_end_flush();

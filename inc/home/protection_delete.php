@@ -16,9 +16,11 @@
    Released under the GNU General Public License
    ---------------------------------------------------------------------- */
 
-if (!defined('MOD_VERSION')) die('No direct access.');
+if (!defined('MOD_VERSION')) {
+    exit('No direct access.');
+}
 @unlink($config['paths']['root'].'.htaccess');
 @unlink($config['paths']['root'].'.htpasswd');
-$action='status';
+$action = 'status';
 
 // todo -> give user info about success or failure of deleting action

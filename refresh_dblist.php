@@ -17,29 +17,27 @@
    ---------------------------------------------------------------------- */
 
 /**
- * configurations to update
+ * configurations to update.
  *
  * enter more than one configurationsfile like this
  * $configurationfiles=array('myoosdumper','db2');
  */
-$configurationfiles=array(
-						'myoosdumper'
-);
-
+$configurationfiles = [
+                        'myoosdumper',
+];
 
 define('OOS_VALID_MOD', true);
 
-define('APPLICATION_PATH', dirname(__FILE__)=='/'?'':dirname(__FILE__));
+define('APPLICATION_PATH', '/' == dirname(__FILE__) ? '' : dirname(__FILE__));
 include_once APPLICATION_PATH.'/inc/functions.php';
 
-$config['language'] ='en';
-$config['theme'] ="mod";
-$config['files']['iconpath'] ='css/'.$config['theme'].'/icons/';
+$config['language'] = 'en';
+$config['theme'] = 'mod';
+$config['files']['iconpath'] = 'css/'.$config['theme'].'/icons/';
 
-foreach ($configurationfiles as $conf)
-{
-	$config['config_file'] = $conf;
-	include ( $config['paths']['config'] . $conf.'.php' );
-	GetLanguageArray();
-	SetDefault();
+foreach ($configurationfiles as $conf) {
+    $config['config_file'] = $conf;
+    include $config['paths']['config'].$conf.'.php';
+    GetLanguageArray();
+    SetDefault();
 }
