@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b9ebb31126641872d4c09114abfb3078",
+    "content-hash": "1af5ab54f6a71d85c053c1f10bfc69bb",
     "packages": [
         {
             "name": "league/flysystem",
@@ -328,8 +328,11 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.2|^8.0",
-        "ext-ftp": "*"
+        "php": "^7.4 || ^8.0",
+        "ext-ftp": "*",
+        "ext-mysqli": "*",
+        "ext-openssl": "*",
+        "ext-zlib": "*"
     },
     "platform-dev": [],
     "plugin-api-version": "2.1.0"
