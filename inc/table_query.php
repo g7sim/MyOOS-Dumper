@@ -178,3 +178,4 @@ $tpl->assign_vars([
 
 $tpl->pparse('show');
 ob_end_flush();
+exit();

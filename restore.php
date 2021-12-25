@@ -337,3 +337,4 @@ if (1 == $RestoreFertig) {
 }
 echo $complete_page;
 ob_end_flush();
+exit();

@@ -30,3 +30,4 @@ echo headline($lang['L_CREDITS']);
 readfile(MOD_PATH.'language/'.$config['language'].'/help.html');
 echo MODFooter();
 ob_end_flush();
+exit();

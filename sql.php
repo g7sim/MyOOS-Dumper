@@ -332,6 +332,7 @@ function BrowseInput(el)
     echo '<br><br><br>';
     echo MODFooter();
     ob_end_flush();
+	exit();
 }
 
 function FormHiddenParams()
@@ -345,5 +346,6 @@ function FormHiddenParams()
     $s .= '<input type = "hidden" name = "limitstart" value = "'.$limitstart.'">';
     $s .= '<input type = "hidden" name = "order" value = "'.$order.'">';
     $s .= '<input type = "hidden" name = "orderdir" value = "'.$orderdir.'">';
+
     return $s;
 }

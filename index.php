@@ -48,3 +48,4 @@ if (!file_exists('./work/config/myoosdumper.php')) {
 <?php
 
 ob_end_flush();
+exit();

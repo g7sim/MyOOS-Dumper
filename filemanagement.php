@@ -543,3 +543,4 @@ switch ($action) {
 }
 echo MODFooter();
 ob_end_flush();
+exit();

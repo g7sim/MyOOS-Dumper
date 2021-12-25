@@ -349,10 +349,10 @@ function my_implode($arr, $mode = 0) // 0=String, 1=intval
             $arr[$key] = intval($val);
         }
     }
-    if (0 == $mode) {
-        $ret = '["'.implode('\',\'', $arr).'"];'.$nl;
+    if ($mode == 0) {
+        $ret='("' . implode('","', $arr) . '");' . $nl;
     } else {
-        $ret = '['.implode(',', $arr).'];'.$nl;
+        $ret='(' . implode(',', $arr) . ');' . $nl;
     }
     return $ret;
 }
@@ -407,7 +407,7 @@ function WriteCronScript($restore_values = false)
     }
 
     $newDbNames = $databases['Name'];
-    //remove database we don't want to backup
+    // remove database we don't want to backup
     foreach ($databases['Name'] as $k => $v) {
         if (in_array($v, $dontBackupDatabases)) {
             unset($cron_db_array[$k],

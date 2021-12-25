@@ -1269,3 +1269,4 @@ echo '</script>';
 echo MODFooter();
 $_SESSION['config'] = $config;
 ob_end_flush();
+exit();

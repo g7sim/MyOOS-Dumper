@@ -1105,10 +1105,10 @@ function build_where_from_record($data)
     }
     $ret = '';
     foreach ($data as $key => $val) {
-		if (is_string($val)) {
-			$val = str_replace('<span class="treffer">', '', $val);
-			$val = str_replace('</span>', '', $val);
-		}
+        if (is_string($val)) {
+            $val = str_replace('<span class="treffer">', '', $val);
+            $val = str_replace('</span>', '', $val);
+        }
         $nLen = strlen($val);
         if (!empty($val) && ($nLen < 200)) {
             $ret .= '`'.$key.'`="'.addslashes($val).'" AND ';

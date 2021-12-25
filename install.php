@@ -542,3 +542,4 @@ function extractValue($s)
 }
 
 ob_end_flush();
+exit();

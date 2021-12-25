@@ -162,3 +162,4 @@ if ('' != $out) {
 echo '</form>';
 echo MODFooter();
 ob_end_flush();
+exit();
