@@ -27,7 +27,7 @@ session_start();
 $aus2 = $page_parameter = $a = $out = '';
 include_once './inc/functions_dump.php';
 
-// beim Erstaufruf Konfigurationsdatei auslesen und in Session speichern
+// read configuration file on first call and save it in session
 if (isset($_GET['config'])) {
     // Session loeschen, damit keine alten Werte des letzten Laufs uebernommen werden
     if (isset($_SESSION['dump'])) {
@@ -68,7 +68,7 @@ if (isset($_SESSION['dump']) && !isset($_GET['config'])) {
     $dump['skip_data'] = [];
     $dump['totalrecords'] = 0;
     $dump['dbindex'] = 0;
-    //$_POST-Parameter lesen
+    // Read $_POST parameter
     $dump['kommentar'] = (isset($_GET['comment'])) ? urldecode($_GET['comment']) : '';
     if (isset($_POST['kommentar'])) {
         $dump['kommentar'] = urldecode($_POST['kommentar']);
@@ -86,7 +86,7 @@ if (isset($_SESSION['dump']) && !isset($_GET['config'])) {
     $dump['dump_encoding'] = (isset($_POST['dump_encoding'])) ? urldecode($_POST['dump_encoding']) : '';
 
     if (isset($_GET['sel_dump_encoding'])) {
-        // Erstaufruf -> encoding auswerten
+        // First call -> evaluate encoding
         include_once './inc/functions_sql.php';
         get_sql_encodings();
         $encodingline = $config['mysql_possible_character_sets'][$_GET['sel_dump_encoding']];
@@ -106,13 +106,13 @@ if ('' != $databases['db_actual_tableselected'] && 0 == $config['multi_dump']) {
     $tbl_sel = true;
     $msgTbl = sprintf($lang['L_NR_TABLES_SELECTED'], count($dump['tblArray']));
 }
-// Korrektur -> Multi-DB-array ist gefuellt (damit die Infos in der Konfig nicht verloren gehen), aber Multidump ist nicht aktiviert)
+// Correction -> Multi-DB-array is filled (so that the info is not lost in the config), but multidump is not activated)
 if (isset($config['multi_dump']) && (0 == $config['multi_dump'])) {
     unset($databases['multi']);
     $databases['multi'] = [];
     $databases['multi'][0] = $databases['db_actual'];
 } else {
-    // wenn Multidump aktiviert ist, aber keine DB gewaehlt wurde -> aktuelle DB uebernehmen
+    // if multidump is activated, but no DB is selected -> take over current DB
     if (!isset($databases['multi'][0])) {
         $databases['multi'][0] = $databases['db_actual'];
     }
@@ -121,7 +121,7 @@ if (isset($config['multi_dump']) && (0 == $config['multi_dump'])) {
     $dump['dbindex'] = $flipped[$databases['multi'][0]];
 }
 
-//Zeitzähler aktivieren
+// Activate time counter
 $dump['max_zeit'] = intval($config['max_execution_time'] * $config['time_buffer']);
 $dump['startzeit'] = time();
 $xtime = (isset($_POST['xtime'])) ? $_POST['xtime'] : time();
@@ -146,14 +146,14 @@ if ((isset($config['optimize_tables_beforedump']) && (1 == $config['optimize_tab
 $dump['data'] = '';
 $dump['dbindex'] = (isset($_POST['dbindex'])) ? $_POST['dbindex'] : $flipped[$databases['multi'][0]];
 
-//Ausgaben-Header bauen
+// Build output header
 $aus_header[] = headline('Backup: '.((isset($config['multi_dump']) && (1 == $config['multi_dump'])) ? 'Multidump ('.count($databases['multi']).' '.$lang['L_DBS'].')' : $lang['L_DB'].': '.$databases['Name'][$dump['dbindex']].(('' != $databases['praefix'][$dump['dbindex']]) ? ' ('.$lang['L_WITHPRAEFIX'].' <span>'.$databases['praefix'][$dump['dbindex']].'</span>)' : '')));
 if (isset($aus_error) && count($aus_error) > 0) {
     $aus_header = array_merge($aus_header, $aus_error);
 }
 
 if (0 == $num_tables) {
-    //keine Tabellen gefunden
+    // no tables found
     $aus[] = '<br><br><p class="error">'.$lang['L_ERROR'].': '.sprintf($lang['L_DUMP_NOTABLES'], $databases['Name'][$dump['dbindex']]).'</p>';
     if (1 == !$config['multi_dump']) {
         echo $pageheader;
@@ -164,12 +164,12 @@ if (0 == $num_tables) {
     }
 } else {
     if (-1 == $dump['table_offset']) {
-        // File anlegen, da Erstaufruf
+        // Create file, since first call
         new_file();
-        $dump['table_offset'] = 0; // jetzt kanns losgehen
+        $dump['table_offset'] = 0; // now it can start
         flush();
     } else {
-        // SQL-Befehle ermitteln
+        // Determine SQL commands
         $dump['restzeilen'] = $dump['anzahl_zeilen'];
         while (($dump['table_offset'] < $num_tables) && ($dump['restzeilen'] > 0)) {
             $table = substr($dump['tables'][$dump['table_offset']], strpos($dump['tables'][$dump['table_offset']], '|') + 1);
@@ -358,7 +358,7 @@ if (0 == $num_tables) {
     } else {
         ++$dump['table_offset'];
     }
-    // Ende Anzeige
+    // End display
     WriteToDumpFile();
     if (!isset($summe_eintraege)) {
         $summe_eintraege = 0;
@@ -369,7 +369,7 @@ if (0 == $num_tables) {
         $dump['verbraucht'] += $dauer;
         $summe_eintraege += $dump['anzahl_zeilen'];
 
-        //Zeitanpassung
+        // Time adjustment
         if ($dauer < $dump['max_zeit']) {
             $dump['anzahl_zeilen'] = $dump['anzahl_zeilen'] * $config['tuning_add'];
             if ($dauer < $dump['max_zeit'] / 2) {
@@ -387,7 +387,7 @@ if (0 == $num_tables) {
         $dump['anzahl_zeilen'] = intval($dump['anzahl_zeilen']);
         ++$dump['aufruf'];
     } else {
-        //Backup fertig
+        // Backup ready
         $dump['data'] = "\nSET FOREIGN_KEY_CHECKS=1;";
         $dump['data'] .= "\n".$mysql_commentstring.' EOB'."\n\n";
         WriteToDumpFile();
@@ -457,7 +457,7 @@ if (0 == $num_tables) {
 //================= Display ===========================================
 //=====================================================================
 
-//Craft page
+// Craft page
 $aus = array_merge($aus_header, $aus);
 
 $dump['xtime'] = $xtime;
