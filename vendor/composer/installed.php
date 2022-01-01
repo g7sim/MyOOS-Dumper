@@ -5,7 +5,7 @@
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'f36b4d79d2d9db76bc17cb9fa5553d2e43da2faf',
+        'reference' => '6411f3ee6efa0fb16a9d8679c61bad076d0f9e51',
         'name' => '__root__',
         'dev' => true,
     ),
@@ -16,7 +16,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'f36b4d79d2d9db76bc17cb9fa5553d2e43da2faf',
+            'reference' => '6411f3ee6efa0fb16a9d8679c61bad076d0f9e51',
             'dev_requirement' => false,
         ),
         'league/flysystem' => array(
