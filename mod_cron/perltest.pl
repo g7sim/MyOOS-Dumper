@@ -3,7 +3,7 @@
 #   MyOOS [Dumper]
 #   https://www.oos-shop.de/
 #
-#   Copyright (c) 2021 by the MyOOS Development Team.
+#   Copyright (c) 2013 - 2022 by the MyOOS Development Team.
 #   ----------------------------------------------------------------------
 #   Based on:
 #
