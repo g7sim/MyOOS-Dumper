@@ -3,14 +3,14 @@
 // MyOOS [Dumper] Configuration
 
 // Host-Adress, default 'localhost'
-$config['dbhost'] = '';
+$config['dbhost'] = 'localhost';
 // port - if empty, mysql uses default
 $config['dbport'] = '';
 // socket - if empty, mysql uses default
 $config['dbsocket'] = '';
 
 // Username
-$config['dbuser'] = '';
+$config['dbuser'] = 'root';
 //User-Pass. For no Password leave empty
 $config['dbpass'] = '';
 
