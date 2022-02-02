@@ -1,0 +1,8 @@
+/.php-cs-fixer.cache
+/work/config/myoosdumper.conf.php
+/work/config/myoosdumper.php
+/work/config/sql_statements
+/work/log/*.gz
+*.bak
+/work/config/*.php
+/work/backup/*.gz
