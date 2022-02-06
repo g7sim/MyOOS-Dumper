@@ -6,3 +6,4 @@
 *.bak
 /work/config/*.php
 /work/backup/*.gz
+/work/structure/*.gz
