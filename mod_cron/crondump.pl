@@ -83,7 +83,7 @@ $mod_ftpssl @multipartfiles %db_tables @tablenames $tablename $opttbl $command $
 
 $memory_limit=100000;
 $mysql_commentstring="-- ";
-$character_set="utf8";
+$character_set="utf8mb4";
 $sql_text='';
 $sql_file='';
 $punktzaehler=0;
