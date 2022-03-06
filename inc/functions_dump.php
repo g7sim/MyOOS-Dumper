@@ -321,10 +321,10 @@ function ExecuteCommand($when)
             if (!$result) {
                 WriteLog("Error while executing System Command '$command'");
                 ++$dump['errors'];
-                $out .= $lf.'<span class="error">ERROR executing System Command \''.$ommand.'\'</span><br>';
+                $out .= $lf.'<span class="error">ERROR executing System Command \''.$command.'\'</span><br>';
             } else {
                 WriteLog("Successfully executed System Command '$command'. [$returnval]");
-                $out .= $lf.'<span class="success">Successfully executed System Command \''.$ommand.'.</span><br>';
+                $out .= $lf.'<span class="success">Successfully executed System Command \''.$command.'.</span><br>';
             }
         }
     }
