@@ -897,7 +897,7 @@ function SendViaSFTP($i, $source_file, $conn_msg = 1)
     } catch (Exception $e) {
         // handle the error
         echo 'Exception: ',  $e->getMessage(), "\n";
-        $s .= '<br><span class="error">'.$lang['L_CONN_NOT_POSSIBLE'].'</span>';
+        $out .= '<br><span class="error">'.$lang['L_CONN_NOT_POSSIBLE'].'</span>';
         $pass = 3;
     }
 
