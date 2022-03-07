@@ -7,3 +7,6 @@
 /work/config/*.php
 /work/backup/*.gz
 /work/structure/*.gz
+/.project
+/.buildpath
+/.settings
