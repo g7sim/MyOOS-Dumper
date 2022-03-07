@@ -886,7 +886,7 @@ function SendViaSFTP($i, $source_file, $conn_msg = 1)
         ])
     ));
 
-    // Upload der Datei
+    // Upload the file
     $path = $source_file;
     $source = $config['paths']['backup'].$source_file;
 
@@ -896,12 +896,12 @@ function SendViaSFTP($i, $source_file, $conn_msg = 1)
         $filesystem->write($path, $source);
     } catch (Exception $e) {
         // handle the error
-        echo 'Exception: ',  $e->getMessage(), "\n";
+        $out .= '<br>Exception: ' .  $e->getMessage(); 
         $out .= '<br><span class="error">'.$lang['L_CONN_NOT_POSSIBLE'].'</span>';
         $pass = 3;
     }
 
-    // Upload-Status überprüfen
+    // Check upload status
     if (3 == $pass) {
         $out .= '<span class="error">'.$lang['L_FTPCONNERROR3']."<br>($source -> $path)</span><br>";
     } else {
@@ -912,7 +912,6 @@ function SendViaSFTP($i, $source_file, $conn_msg = 1)
 
 function Realpfad($p)
 {
-    global $config;
     $dir = dirname(__FILE__);
     $dir = str_replace('inc', '', $dir);
     $dir = str_replace('\\', '/', $dir);
@@ -923,7 +922,7 @@ function Realpfad($p)
     return $dir;
 }
 
-// liest die Dateiliste aller vorhanden Konfigurationsfiles
+// reads the file list of all existing configuration files
 function get_config_filelist()
 {
     global $config;
