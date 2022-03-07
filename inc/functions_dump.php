@@ -293,7 +293,7 @@ function ExecuteCommand($when)
         //jetzt ausführen
         if ('system:' != substr(strtolower($cd), 0, 7)) {
             $cad = [];
-            @mysqli_select_db($databases['Name'][$dump['dbindex']]);
+            @mysqli_select_db($config['dbconnection'], $databases['Name'][$dump['dbindex']]);
             if (strpos($cd, ';')) {
                 $cad = explode(';', $cd);
             } else {
