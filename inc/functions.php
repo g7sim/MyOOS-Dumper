@@ -654,7 +654,7 @@ function CreateDirsFTP()
     // Verbindung überprüfen
     if ((!$conn_id) || (!$login_result)) {
         echo $lang['L_FTP_NOTCONNECTED'];
-        echo $lang['L_CONNWITH']." $tinstall_ftp_server ".$lang['L_ASUSER']." $install_ftp_user_name ".$lang['L_NOTPOSSIBLE'];
+        echo $lang['L_CONNWITH']." $install_ftp_server ".$lang['L_ASUSER']." $install_ftp_user_name ".$lang['L_NOTPOSSIBLE'];
         return 0;
     } else {
         if (1 == $config['ftp_mode']) {
