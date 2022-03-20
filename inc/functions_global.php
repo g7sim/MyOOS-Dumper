@@ -83,7 +83,7 @@ function mu_sort($array, $key_sort)
         }
     }
     // wenn die Sortierung nicht ab- sondern aufsteigend sein soll, muss sort() benutzt werden
-    sort($output, SORT_NATURAL); // Sort=Aufsteigend -> oder rsort=absteigend
+    sort($output, SORT_NATURAL | SORT_FLAG_CASE); // Sort=Aufsteigend -> oder rsort=absteigend
     return $output;
 }
 
