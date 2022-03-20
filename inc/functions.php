@@ -171,7 +171,7 @@ function SetDefault($load_default = false)
     }
     $found_dbs = array_merge($oldDbArray, $found_dbs);
     $found_dbs = array_unique($found_dbs);
-    sort($found_dbs);
+    sort($found_dbs, SORT_NATURAL | SORT_FLAG_CASE);
     // now check each db
     $a = 0;
     for ($i = 0; $i < count($found_dbs); ++$i) {
