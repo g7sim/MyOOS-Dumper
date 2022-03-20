@@ -30,7 +30,7 @@ function FilelisteCombo($fpath, $selected)
         if ('.' != $filename && '..' != $filename && !is_dir($fpath.$filename)) {
             $r .= '<option value="'.$filename.'" ';
             if ($filename == $selected) {
-                $r .= ' SELECTED';
+                $r .= ' selected';
             }
             $r .= '>'.$filename.'</option>'."\n";
         }

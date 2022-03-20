@@ -927,15 +927,12 @@ function get_config_filelist()
 {
     global $config;
     $default = $config['config_file'];
-    $dh = opendir($config['paths']['config']);
-
     $filters = array('..', '.');
     $directory = $config['paths']['config'];
-
     $dirs = array_diff(scandir($directory), $filters);
     $r = '';
     foreach ($dirs as $filename) {
-        if ('.' != $filename && '..' != $filename && !is_dir($config['paths']['config'].$filename) && '.conf.php' == substr($filename, -9)) {
+        if (!is_dir($config['paths']['config'].$filename) && '.conf.php' == substr($filename, -9)) {
             $f = substr($filename, 0, strlen($filename) - 9);
             $r .= '<option value="'.$f.'" ';
             if ($f == $default) {
@@ -957,7 +954,7 @@ function GetThemes()
         if ('.' != $filename && '..' != $filename && is_dir($config['paths']['root'].'css/'.$filename) && '.' != substr($filename, 0, 1) && '_' != substr($filename, 0, 1)) {
             $r .= '<option value="'.$filename.'" ';
             if ($filename == $default) {
-                $r .= ' SELECTED';
+                $r .= ' selected';
             }
             $r .= '>&nbsp;&nbsp;'.$filename.'&nbsp;&nbsp;</option>'."\n";
         }
@@ -983,7 +980,7 @@ function GetLanguageCombo($k = 'op', $class = '', $name = '', $start = '', $end 
         if ('op' == $k) {
             $r .= $start.'<option value="'.$filename.'" ';
             if ($filename == $default) {
-                $r .= ' SELECTED';
+                $r .= ' selected';
             }
             $r .= ' class="'.$class.'">&nbsp;&nbsp;'.$lang[$filename].'&nbsp;&nbsp;</option>'.$end."\n";
         } elseif ('radio' == $k) {
