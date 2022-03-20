@@ -927,10 +927,14 @@ function get_config_filelist()
 {
     global $config;
     $default = $config['config_file'];
-    clearstatcache();
     $dh = opendir($config['paths']['config']);
-    $r = '';
-    while (false !== ($filename = readdir($dh))) {
+	
+	$filters = array('..', '.');
+	$directory = $config['paths']['config'];
+
+	$dirs = array_diff(scandir($directory), $filters);
+	$r = '';
+	foreach ($dirs as $filename) {	
         if ('.' != $filename && '..' != $filename && !is_dir($config['paths']['config'].$filename) && '.conf.php' == substr($filename, -9)) {
             $f = substr($filename, 0, strlen($filename) - 9);
             $r .= '<option value="'.$f.'" ';
@@ -939,7 +943,7 @@ function get_config_filelist()
             }
             $r .= '>&nbsp;&nbsp;'.$f.'&nbsp;&nbsp;</option>'."\n";
         }
-    }
+	}
     return $r;
 }
 
