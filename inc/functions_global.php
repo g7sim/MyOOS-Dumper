@@ -925,9 +925,9 @@ function Realpfad($p)
 // reads the file list of all existing configuration files
 function get_config_filelist()
 {
-    global $config;
-    $default = $config['config_file'];
-    $dh = opendir($config['paths']['config']);
+	global $config;
+	$default = $config['config_file'];
+	$dh = opendir($config['paths']['config']);
 	
 	$filters = array('..', '.');
 	$directory = $config['paths']['config'];
@@ -942,9 +942,9 @@ function get_config_filelist()
                 $r .= ' selected';
             }
             $r .= '>&nbsp;&nbsp;'.$f.'&nbsp;&nbsp;</option>'."\n";
-        }
+		}
 	}
-    return $r;
+	return $r;
 }
 
 function GetThemes()
