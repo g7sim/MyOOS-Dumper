@@ -179,13 +179,13 @@ function SetDefault($load_default = false)
         // Testverbindung - Tabelle erstellen, nachschauen, ob es geklappt hat und dann wieder löschen
         $use = mysqli_select_db($config['dbconnection'], $found_db);
         if ($use) {
-			/*
-			Undefined variable: $old_db
+            /*
+            Undefined variable: $old_db
             if (isset($old_db) && $found_db == $old_db) {
                 $databases['db_selected_index'] = $a;
             }
-			*/
-			
+            */
+
             $databases['Name'][$a] = $found_db;
             $databases['praefix'][$a] = '';
             $databases['command_before_dump'][$a] = '';

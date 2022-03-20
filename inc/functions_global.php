@@ -896,7 +896,7 @@ function SendViaSFTP($i, $source_file, $conn_msg = 1)
         $filesystem->write($path, $source);
     } catch (Exception $e) {
         // handle the error
-        $out .= '<br>Exception: ' .  $e->getMessage(); 
+        $out .= '<br>Exception: ' .  $e->getMessage();
         $out .= '<br><span class="error">'.$lang['L_CONN_NOT_POSSIBLE'].'</span>';
         $pass = 3;
     }
@@ -925,16 +925,16 @@ function Realpfad($p)
 // reads the file list of all existing configuration files
 function get_config_filelist()
 {
-	global $config;
-	$default = $config['config_file'];
-	$dh = opendir($config['paths']['config']);
-	
-	$filters = array('..', '.');
-	$directory = $config['paths']['config'];
+    global $config;
+    $default = $config['config_file'];
+    $dh = opendir($config['paths']['config']);
 
-	$dirs = array_diff(scandir($directory), $filters);
-	$r = '';
-	foreach ($dirs as $filename) {	
+    $filters = array('..', '.');
+    $directory = $config['paths']['config'];
+
+    $dirs = array_diff(scandir($directory), $filters);
+    $r = '';
+    foreach ($dirs as $filename) {
         if ('.' != $filename && '..' != $filename && !is_dir($config['paths']['config'].$filename) && '.conf.php' == substr($filename, -9)) {
             $f = substr($filename, 0, strlen($filename) - 9);
             $r .= '<option value="'.$f.'" ';
@@ -942,9 +942,9 @@ function get_config_filelist()
                 $r .= ' selected';
             }
             $r .= '>&nbsp;&nbsp;'.$f.'&nbsp;&nbsp;</option>'."\n";
-		}
-	}
-	return $r;
+        }
+    }
+    return $r;
 }
 
 function GetThemes()
