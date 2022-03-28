@@ -354,7 +354,7 @@ switch ($action) {
         echo '<br><table>';
         echo $tbl_abfrage;
         echo '<tr><td><label for="sel_dump_encoding">'.$lang['L_FM_CHOOSE_ENCODING'].'</label></td>';
-        echo '<td><select name="sel_dump_encoding" id="sel_dump_encoding">';
+        echo '<td><select name="sel_dump_encoding" id="sel_dump_encoding">tt';
         echo make_options($config['mysql_possible_character_sets'], $dump['sel_dump_encoding']);
         echo '</select></td></tr>';
         echo '<tr><td>'.$lang['L_MYSQL_CONNECTION_ENCODING'].':</td><td><strong>'.$config['mysql_standard_character_set'].'</strong></td></tr>';
