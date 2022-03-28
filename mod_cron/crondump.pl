@@ -514,6 +514,7 @@ sub DoDump {
     #    Aufbau Backupflags (1 Zeichen pro Flag, 0 oder 1, 2=unbekannt)
     #    (complete inserts)(extended inserts)(ignore inserts)(delayed inserts)(downgrade)(lock tables)(optimize tables)
     #
+	my $version=0;
 	$version=$mysql_version[0];
 	$version=~s/:/--/;  # ersetze : durch -- 
 	$my_comment=~s/:/--/; # ersetze : durch -- 	
