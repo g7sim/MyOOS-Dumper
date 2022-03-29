@@ -516,8 +516,8 @@ sub DoDump {
     #
 	my $version=0;
 	$version=$mysql_version[0];
-	$version=~s/:/--/;  # ersetze : durch -- 
-	$my_comment=~s/:/--/; # ersetze : durch -- 	
+	while ($version =~ s/:/--/) {} 
+	while ($my_comment =~ s/:/--/) {} 
     $status_start=$mysql_commentstring."Status:$t:$r:";
     my $flags="1$optimize_tables_beforedump";
     $status_end=":$dbname:perl:$pcd_version:$my_comment:$version:$flags";
