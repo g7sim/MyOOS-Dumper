@@ -22,6 +22,10 @@ if (!@ob_start('ob_gzhandler')) {
     @ob_start();
 }
 
+use \VisualAppeal\AutoUpdate;
+
+$autoloader = require_once './vendor/autoload.php';
+
 include_once './inc/header.php';
 include_once './inc/runtime.php';
 include_once './language/'.$config['language'].'/lang_main.php';
@@ -46,6 +50,28 @@ if ('edithtaccess' == $action) {
 if ('deletehtaccess' == $action) {
     include './inc/home/protection_delete.php';
 }
+
+$update = new AutoUpdate($config['paths']['temp'], $config['paths']['root'], 60);
+$update->setCurrentVersion(MOD_VERSION);
+
+// Replace with your server update directory
+$update->setUpdateUrl('https://oos-shop.de/modserver');
+
+// Custom logger (optional)
+$logger = new \Monolog\Logger("default");
+$logger->pushHandler(new Monolog\Handler\StreamHandler(__DIR__ . '/work/log/update.log'));
+$update->setLogger($logger);
+
+
+// Cache (optional but recommended)
+$cache = new Desarrolla2\Cache\File($config['paths']['cache']);
+$update->setCache($cache, 3600);
+
+// Check for a new update
+if ($update->checkUpdate() === false) {
+    die('Could not check for updates! See log file for details.');
+}
+
 
 // Output headnavi
 $tpl = new MODTemplate();

@@ -41,6 +41,11 @@ while (false !== ($filename = readdir($dh))) {
 }
 $directory_warnings = DirectoryWarnings();
 
+if ($update->newVersionAvailable()) {
+    // Install new update
+    $update_info = 'New Version: ' . $update->getLatestVersion();
+}
+
 $tpl = new MODTemplate();
 $tpl->set_filenames([
     'show' => 'tpl/home/home.tpl', ]);
@@ -61,6 +66,14 @@ $tpl->assign_vars([
     'SIZE_BACKUPS' => byte_output($Sum_Size),
     'FREE_DISKSPACE' => MD_FreeDiskSpace(),
 ]);
+
+
+if ($update_info > '') {
+    $tpl->assign_block_vars('UPDATE_INFO', [
+    'MSG' => $update_info, ]);
+}
+
+
 if ($directory_warnings > '') {
     $tpl->assign_block_vars('DIRECTORY_WARNINGS', [
     'MSG' => $directory_warnings, ]);
