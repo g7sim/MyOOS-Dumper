@@ -6,6 +6,10 @@
 <!-- BEGIN NEW_VERSION_EXISTS -->
 	<br>
 	<span class="error">{L_NEW_MOD_VERSION_INFO}</span><br>
+	<span class="warnung"><strong>{L_UPDATED_IMPORTANT}</strong></span><br>
+	<br>
+	<a href="main.php?action=update" class="Formbutton">{L_UPDATE}</a><br>
+	<br>
 <!-- END NEW_VERSION_EXISTS -->
 
 <!-- BEGIN DIRECTORY_PROTECTION_STATUS -->

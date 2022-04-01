@@ -16,6 +16,8 @@
    Released under the GNU General Public License
    ---------------------------------------------------------------------- */
 
+error_reporting(E_ALL & ~E_STRICT);
+
 define('OOS_VALID_MOD', true);
 
 if (!@ob_start('ob_gzhandler')) {
@@ -59,7 +61,7 @@ $update->setUpdateUrl('https://oos-shop.de/modserver');
 
 // Custom logger (optional)
 $logger = new \Monolog\Logger("default");
-$logger->pushHandler(new Monolog\Handler\StreamHandler(__DIR__ . '/work/log/update.log'));
+$logger->pushHandler(new Monolog\Handler\StreamHandler($config['paths']['log'] . 'update.log'));
 $update->setLogger($logger);
 
 
@@ -70,6 +72,10 @@ $update->setCache($cache, 3600);
 // Check for a new update
 if ($update->checkUpdate() === false) {
     die('Could not check for updates! See log file for details.');
+}
+
+if ('update' == $action) {
+	require_once './inc/home/update.php';
 }
 
 
