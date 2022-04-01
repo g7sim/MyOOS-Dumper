@@ -364,6 +364,12 @@ function DirectoryWarnings($path = '')
     if (!is_writable($config['paths']['log'])) {
         $warn .= sprintf($lang['L_WRONG_RIGHTS'], $config['paths']['log'], '0777');
     }
+    if (!is_writable($config['paths']['temp'])) {
+        $warn .= sprintf($lang['L_WRONG_RIGHTS'], $config['paths']['temp'], '0777');
+    }
+    if (!is_writable($config['paths']['cache'])) {
+        $warn .= sprintf($lang['L_WRONG_RIGHTS'], $config['paths']['cache'], '0777');
+    }
 
     if ('' != $warn) {
         $warn = '<span class="warnung"><strong>'.$warn.'</strong></span>';

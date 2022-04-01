@@ -44,7 +44,10 @@ $config['paths']['work'] = 'work/';
 $config['paths']['backup'] = $config['paths']['work'].'backup/';
 $config['paths']['log'] = $config['paths']['work'].'log/';
 $config['paths']['config'] = $config['paths']['work'].'config/';
+$config['paths']['temp'] = $config['paths']['work'].'temp/';
+$config['paths']['cache'] = $config['paths']['work'].'cache/';
 $config['paths']['perlexec'] = 'mod_cron/';
+
 
 if (isset($_SESSION['config_file'])) {
     $config['config_file'] = $_SESSION['config_file'];

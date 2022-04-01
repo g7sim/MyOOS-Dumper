@@ -23,6 +23,7 @@ $Sum_Files = $Sum_Size = 0;
 $Last_BU = [];
 $is_htaccess = (file_exists('./.htaccess'));
 $is_protected = IsAccessProtected();
+$is_new_version_available = $update->newVersionAvailable();
 
 // find latest backup file
 $dh = opendir($config['paths']['backup']);
@@ -41,9 +42,8 @@ while (false !== ($filename = readdir($dh))) {
 }
 $directory_warnings = DirectoryWarnings();
 
-if ($update->newVersionAvailable()) {
-    // Install new update
-    $update_info = 'New Version: ' . $update->getLatestVersion();
+if ($is_new_version_available) {
+    $update_info = $lang['L_NEW_MOD_VERSION'] . ': ' . $update->getLatestVersion();
 }
 
 $tpl = new MODTemplate();
@@ -67,6 +67,14 @@ $tpl->assign_vars([
     'FREE_DISKSPACE' => MD_FreeDiskSpace(),
 ]);
 
+
+if ($new_version > '') {
+    $tpl->assign_block_vars('NEW_VERSION', [
+    'MSG' => $NEW_VERSION, ]);
+}
+if ($is_new_version_available) {
+	$tpl->assign_block_vars('NEW_VERSION_EXISTS', []);
+}
 
 if ($update_info > '') {
     $tpl->assign_block_vars('UPDATE_INFO', [
