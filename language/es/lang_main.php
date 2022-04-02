@@ -83,3 +83,7 @@ $lang['L_MAX_EXECUTION_TIME'] = 'El máximo de ejecución';
 $lang['L_PHP_EXTENSIONS'] = 'Extensiones de PHP';
 $lang['L_MEMORY'] = 'Memoria';
 $lang['L_FILE_MISSING'] = 'no se encuentra el fichero';
+$lang['L_INSTALLING_UPDATES'] = 'Instalando actualizaciones';
+$lang['L_UPDATE_SUCCESSFUL'] = 'Actualización exitosa';
+$lang['L_UPDATE_FAILED'] = 'Actualización fallida';
+$lang['L_UP_TO_DATE'] = 'La versión actual está actualizada';

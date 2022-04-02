@@ -109,7 +109,7 @@ function FileList($multi = 0)
                 $sline = fgets($fp, 5000);
                 fclose($fp);
             }
-					
+
             $statusline = ReadStatusline($sline);
 
             $but = ExtractBUT($files[$i]['name']);

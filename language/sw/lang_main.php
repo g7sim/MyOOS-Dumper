@@ -79,3 +79,7 @@ $lang['L_MAX_EXECUTION_TIME'] = 'Maximal exekveringstid';
 $lang['L_PHP_EXTENSIONS'] = 'PHP-extensioner';
 $lang['L_MEMORY'] = 'Minne';
 $lang['L_FILE_MISSING'] = 'kunde ej hitta filen';
+$lang['L_INSTALLING_UPDATES'] = 'Installing Updates';
+$lang['L_UPDATE_SUCCESSFUL'] = 'Update successful';
+$lang['L_UPDATE_FAILED'] = 'Update failed';
+$lang['L_UP_TO_DATE'] = 'Current Version is up to date';

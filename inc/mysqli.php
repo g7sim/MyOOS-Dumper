@@ -319,7 +319,7 @@ function GetMySQLVersion()
     $res = mod_query('SELECT VERSION()');
     $row = mysqli_fetch_array($res);
     $str = $row[0];
-	$version = str_replace(':', '--', $str);
+    $version = str_replace(':', '--', $str);
     if (!defined('MOD_MYSQL_VERSION')) {
         define('MOD_MYSQL_VERSION', $version);
     }

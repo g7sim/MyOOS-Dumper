@@ -83,3 +83,7 @@ $lang['L_MAX_EXECUTION_TIME'] = 'Μεγ. χρόνος εκτέλεσης';
 $lang['L_PHP_EXTENSIONS'] = 'Επεκτάσεις PHP';
 $lang['L_MEMORY'] = 'Μνήμη';
 $lang['L_FILE_MISSING'] = 'δε βρέθηκε το αρχείο';
+$lang['L_INSTALLING_UPDATES'] = 'Εγκατάσταση ενημερώσεων';
+$lang['L_UPDATE_SUCCESSFUL'] = 'Επιτυχής ενημέρωση';
+$lang['L_UPDATE_FAILED'] = 'Αποτυχημένη ενημέρωση';
+$lang['L_UP_TO_DATE'] = 'Η τρέχουσα έκδοση είναι ενημερωμένη';

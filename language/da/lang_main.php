@@ -79,3 +79,7 @@ $lang['L_MAX_EXECUTION_TIME'] = 'Max execution time';
 $lang['L_PHP_EXTENSIONS'] = 'PHP-Extensions';
 $lang['L_MEMORY'] = 'Memory';
 $lang['L_FILE_MISSING'] = 'kunne ikke finde fil';
+$lang['L_INSTALLING_UPDATES'] = 'Installation af opdateringer';
+$lang['L_UPDATE_SUCCESSFUL'] = 'Opdatering vellykket';
+$lang['L_UPDATE_FAILED'] = 'Opdatering mislykkedes';
+$lang['L_UP_TO_DATE'] = 'Den aktuelle version er opdateret';

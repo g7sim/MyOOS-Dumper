@@ -16,15 +16,19 @@
    Released under the GNU General Public License
    ---------------------------------------------------------------------- */
 
-error_reporting(E_ALL & ~E_STRICT);
-
 define('OOS_VALID_MOD', true);
+
+error_reporting(E_ALL & ~E_STRICT);
+if (function_exists('ini_set')) {
+    ini_set('display_errors', true);
+}
+
 
 if (!@ob_start('ob_gzhandler')) {
     @ob_start();
 }
 
-use \VisualAppeal\AutoUpdate;
+use VisualAppeal\AutoUpdate;
 
 $autoloader = require_once './vendor/autoload.php';
 
@@ -53,29 +57,38 @@ if ('deletehtaccess' == $action) {
     include './inc/home/protection_delete.php';
 }
 
-$update = new AutoUpdate($config['paths']['temp'], $config['paths']['root'], 60);
-$update->setCurrentVersion(MOD_VERSION);
+$check_update = false;
+if (extension_loaded('zlib')) {
+    $update = new AutoUpdate($config['paths']['temp'], $config['paths']['root'], 60);
+    $update->setCurrentVersion(MOD_VERSION);
 
-// Replace with your server update directory
-$update->setUpdateUrl('https://oos-shop.de/modserver');
+    // Replace with your server update directory
+    $update->setUpdateUrl('https://oos-shop.de/modserver');
 
-// Custom logger (optional)
-$logger = new \Monolog\Logger("default");
-$logger->pushHandler(new Monolog\Handler\StreamHandler($config['paths']['log'] . 'update.log'));
-$update->setLogger($logger);
+    // Custom logger (optional)
+    $logger = new \Monolog\Logger("default");
+    $logger->pushHandler(new Monolog\Handler\StreamHandler($config['paths']['log'] . 'update.log'));
+    $update->setLogger($logger);
 
 
-// Cache (optional but recommended)
-$cache = new Desarrolla2\Cache\File($config['paths']['cache']);
-$update->setCache($cache, 3600);
+    // Cache (optional but recommended)
+    $cache = new Desarrolla2\Cache\File($config['paths']['cache']);
+    $update->setCache($cache, 3600);
 
-// Check for a new update
-if ($update->checkUpdate() === false) {
-    die('Could not check for updates! See log file for details.');
-}
+    // Check for a new update
+    if ($update->checkUpdate() === false) {
+        // die('Could not check for updates! See log file for details.');
+        $check_update = false;
+    } else {
+        $check_update = true;
+    }
 
-if ('update' == $action) {
-	require_once './inc/home/update.php';
+    if ('update' == $action) {
+        echo MODHeader();
+        require_once './inc/home/update.php';
+        echo MODFooter();
+        exit;
+    }
 }
 
 

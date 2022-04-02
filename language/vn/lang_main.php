@@ -83,3 +83,7 @@ $lang['L_MAX_EXECUTION_TIME'] = 'Max execution time';
 $lang['L_PHP_EXTENSIONS'] = 'PHP-Extensions';
 $lang['L_MEMORY'] = 'Memory';
 $lang['L_FILE_MISSING'] = 'không tìm thấy file';
+$lang['L_INSTALLING_UPDATES'] = 'Installing Updates';
+$lang['L_UPDATE_SUCCESSFUL'] = 'Update successful';
+$lang['L_UPDATE_FAILED'] = 'Update failed';
+$lang['L_UP_TO_DATE'] = 'Current Version is up to date';

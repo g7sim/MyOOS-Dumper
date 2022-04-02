@@ -23,7 +23,7 @@ $Sum_Files = $Sum_Size = 0;
 $Last_BU = [];
 $is_htaccess = (file_exists('./.htaccess'));
 $is_protected = IsAccessProtected();
-$is_new_version_available = $update->newVersionAvailable();
+$is_new_version_available = (isset($update) && is_object($update) && $check_update === true) ? $update->newVersionAvailable() : false;
 
 // find latest backup file
 $dh = opendir($config['paths']['backup']);
@@ -68,12 +68,9 @@ $tpl->assign_vars([
 ]);
 
 
-if ($new_version > '') {
-    $tpl->assign_block_vars('NEW_VERSION', [
-    'MSG' => $NEW_VERSION, ]);
-}
+
 if ($is_new_version_available) {
-	$tpl->assign_block_vars('NEW_VERSION_EXISTS', []);
+    $tpl->assign_block_vars('NEW_VERSION_EXISTS', []);
 }
 
 if ($update_info > '') {

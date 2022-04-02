@@ -19,56 +19,57 @@
 if (!defined('MOD_VERSION')) {
     exit('No direct access.');
 }
-if ($update->newVersionAvailable()) {
+
+if ($update->newVersionAvailable() && $check_update === true) {
     // Install new update
     echo '<p align="center"><a href="main.php">&lt;&lt; Home</a></p>';
 
-    echo 'New Version: ' . $update->getLatestVersion() . '<br>';
-    echo 'Installing Updates: <br>';
-/*
-    echo '<pre>';
-    var_dump(array_map(function ($version) {
-        return (string) $version;
-    }, $update->getVersionsToUpdate()));
-    echo '</pre>';
-*/
+    echo $lang['L_NEW_MOD_VERSION'] . ': ' . $update->getLatestVersion() . '<br>';
+    echo $lang['L_INSTALLING_UPDATES'] . ': <br>';
+    /*
+        echo '<pre>';
+        var_dump(array_map(function ($version) {
+            return (string) $version;
+        }, $update->getVersionsToUpdate()));
+        echo '</pre>';
+    */
     // Optional - empty log file
-	$f = fopen($config['paths']['log'] . 'update.log', 'rb+');
+    $f = fopen($config['paths']['log'] . 'update.log', 'rb+');
     if ($f !== false) {
-		ftruncate($f, 0);
-		fclose($f);
-   }
-
-/*
-    // Optional Callback function - on each version update
-    function eachUpdateFinishCallback($updatedVersion)
-    {
-        echo '<h3>CALLBACK for version ' . $updatedVersion . '</h3>';
+        ftruncate($f, 0);
+        fclose($f);
     }
-    $update->onEachUpdateFinish('eachUpdateFinishCallback');
 
-    // Optional Callback function - on each version update
-    function onAllUpdateFinishCallbacks($updatedVersions)
-    {
-        echo '<h3>CALLBACK for all updated versions:</h3>';
-        echo '<ul>';
-        foreach ($updatedVersions as $v) {
-            echo '<li>' . $v . '</li>';
+    /*
+        // Optional Callback function - on each version update
+        function eachUpdateFinishCallback($updatedVersion)
+        {
+            echo '<h3>CALLBACK for version ' . $updatedVersion . '</h3>';
         }
-        echo '</ul>';
-    }
-    $update->setOnAllUpdateFinishCallbacks('onAllUpdateFinishCallbacks');
-*/
+        $update->onEachUpdateFinish('eachUpdateFinishCallback');
+
+        // Optional Callback function - on each version update
+        function onAllUpdateFinishCallbacks($updatedVersions)
+        {
+            echo '<h3>CALLBACK for all updated versions:</h3>';
+            echo '<ul>';
+            foreach ($updatedVersions as $v) {
+                echo '<li>' . $v . '</li>';
+            }
+            echo '</ul>';
+        }
+        $update->setOnAllUpdateFinishCallbacks('onAllUpdateFinishCallbacks');
+    */
 
     // This call will only simulate an update.
     // Set the first argument (simulate) to "false" to install the update
-    // i.e. $update->update(false);	
+    // i.e. $update->update(false);
     $result = $update->update(false);
 
     if ($result === true) {
-        echo 'Update successful<br>';
+        echo $lang['L_UPDATE_SUCCESSFUL'] . '<br>';
     } else {
-        echo 'Update failed: ' . $result . '!<br>';
+        echo $lang['L_UPDATE_FAILED'] . ': ' . $result . '!<br>';
 
         if ($result = AutoUpdate::ERROR_SIMULATE) {
             echo '<pre>';
@@ -76,13 +77,11 @@ if ($update->newVersionAvailable()) {
             echo '</pre>';
         }
     }
-
 } else {
-    echo 'Current Version is up to date<br>';
+    echo $lang['L_UP_TO_DATE']. '<br>';
 }
 
 echo 'Log:<br>';
 echo nl2br(file_get_contents($config['paths']['log'] . '/update.log'));
 
 echo '<p align="center"><a href="main.php">&lt;&lt; Home</a></p>';
-exit();	
