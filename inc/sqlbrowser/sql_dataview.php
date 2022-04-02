@@ -102,6 +102,8 @@ if (0 == $sql_to_display_data) {
     echo SQLOutput($out);
     $skip_mysql_execution = true;
 } else {
+	// auch alle Tabellen-Namen werden lowercase -> das kann zu Problemen fuehren
+	// siehe https://dev.mysql.com/doc/refman/5.7/en/identifier-case-sensitivity.html
     $sql_temp = strtolower($sql['sql_statement']);
 
     if ('select ' == substr($sql_temp, 0, 7)) {
