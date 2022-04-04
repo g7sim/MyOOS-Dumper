@@ -493,9 +493,19 @@ function EmptyDB($dbn)
     @mysqli_query($config['dbconnection'], 'SET FOREIGN_KEY_CHECKS=1');
 }
 
+
 function AutoDelete()
 {
-    global $del_files, $config, $lang, $out;
+    global $del_files, $config, $lang, $out, $databases;
+
+
+    $available = [];
+    if ('' == $databases['multisetting']) {
+        $available[0] = $databases['db_actual'];
+    } else {
+        $available = explode(';', $databases['multisetting']);
+    }
+
     $out = '';
     if (isset($config['max_backup_files']) && ($config['max_backup_files'] > 0)) {
         //Files einlesen
@@ -506,31 +516,38 @@ function AutoDelete()
         // Build assoc Array $db=>$timestamp=>$filenames
         while (false !== ($filename = readdir($dh))) {
             if ('.' != $filename && '..' != $filename && !is_dir($config['paths']['backup'].$filename)) {
-                //statuszeile auslesen
-                if ('gz' == substr($filename, -2)) {
-                    $fp = gzopen($config['paths']['backup'].$filename, 'r');
-                    $sline = gzgets($fp, 40960);
-                    gzclose($fp);
-                } else {
-                    $fp = fopen($config['paths']['backup'].$filename, 'r');
-                    $sline = fgets($fp, 500);
-                    fclose($fp);
-                }
-                $statusline = ReadStatusline($sline);
-                if ('unknown' != $statusline['dbname']) {
-                    $tabellenanzahl = (-1 == $statusline['tables']) ? '' : $statusline['tables'];
-                    $eintraege = (-1 == $statusline['records']) ? '' : $statusline['records'];
-                    $part = ('MP_0' == $statusline['part'] || $statusline['part'] = '') ? 0 : substr($statusline['part'], 3);
-                    $db_name = $statusline['dbname'];
-                    $datum = substr($filename, strlen($db_name) + 1);
-                    $timestamp = substr($datum, 0, 16);
-                    if (!isset($files[$db_name])) {
-                        $files[$db_name] = [];
+                foreach ($available as $item) {
+                    $pos = strpos($filename, $item);
+                    if ($pos === false) {
+                        // Der Datenbankname wurde nicht in der Konfiguration gefunden;
+                    } else {
+                        //statuszeile auslesen
+                        if ('gz' == substr($filename, -2)) {
+                            $fp = gzopen($config['paths']['backup'].$filename, 'r');
+                            $sline = gzgets($fp, 40960);
+                            gzclose($fp);
+                        } else {
+                            $fp = fopen($config['paths']['backup'].$filename, 'r');
+                            $sline = fgets($fp, 500);
+                            fclose($fp);
+                        }
+                        $statusline = ReadStatusline($sline);
+                        if ('unknown' != $statusline['dbname']) {
+                            $tabellenanzahl = (-1 == $statusline['tables']) ? '' : $statusline['tables'];
+                            $eintraege = (-1 == $statusline['records']) ? '' : $statusline['records'];
+                            $part = ('MP_0' == $statusline['part'] || $statusline['part'] = '') ? 0 : substr($statusline['part'], 3);
+                            $db_name = $statusline['dbname'];
+                            $datum = substr($filename, strlen($db_name) + 1);
+                            $timestamp = substr($datum, 0, 16);
+                            if (!isset($files[$db_name])) {
+                                $files[$db_name] = [];
+                            }
+                            if (!isset($files[$db_name][$timestamp])) {
+                                $files[$db_name][$timestamp] = [];
+                            }
+                            $files[$db_name][$timestamp][] = $filename;
+                        }
                     }
-                    if (!isset($files[$db_name][$timestamp])) {
-                        $files[$db_name][$timestamp] = [];
-                    }
-                    $files[$db_name][$timestamp][] = $filename;
                 }
             }
         }
