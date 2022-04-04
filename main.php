@@ -19,6 +19,7 @@
 define('OOS_VALID_MOD', true);
 
 error_reporting(E_ALL & ~E_STRICT);
+
 if (function_exists('ini_set')) {
     ini_set('display_errors', true);
 }
