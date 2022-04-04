@@ -391,6 +391,12 @@ function TestWorkDir()
     if (true === $ret) {
         $ret = SetFileRechte($config['paths']['config']);
     }
+    if (true === $ret) {
+        $ret = SetFileRechte($config['paths']['temp']);
+    }
+    if (true === $ret) {
+        $ret = SetFileRechte($config['paths']['cache']);
+    }
 
     if (true === $ret) {
         if (!file_exists($config['files']['parameter'])) {
